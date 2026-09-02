@@ -1,0 +1,217 @@
+@charset "utf-8";
+/* ============================================================
+   SAPOTR — RESPONSIVE LAYOUTS
+   Intentional layouts per breakpoint (not a shrunken desktop).
+   1440 · 1280 · 1024 · 900 · 768 · 560 · 430 · 375 · 320
+   ============================================================ */
+
+/* ---------- 1440+ : a little more air --------------------- */
+@media (min-width:1440px){
+  :root{--pad:32px}
+  .stage{max-width:1180px}
+}
+
+/* ---------- <= 1280 : tighten the hero showcase ----------- */
+@media (max-width:1280px){
+  .stage{gap:14px}
+  .stage__employee{width:min(252px,100%)}
+  .stage__chips{width:min(210px,100%)}
+  .phone{width:284px}
+  .journey{--media-h:196px}
+}
+
+/* ---------- <= 1100 : bento to 2 columns ------------------ */
+@media (max-width:1100px){
+  .bento{grid-template-columns:repeat(6,1fr)}
+  .tile,.tile--fast,.tile--verified,.tile--transparent,
+  .tile--trackable,.tile--fair,.tile--reliable{grid-column:span 3}
+  .faq__grid{grid-template-columns:minmax(0,1fr) 280px}
+  .foot__cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 22px}
+  .foot__col--dl{grid-column:span 3;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .foot__col--dl h3{width:100%;margin-bottom:4px}
+}
+
+/* ---------- <= 1024 : tablet landscape -------------------- */
+@media (max-width:1024px){
+  :root{--nav-h:68px}
+
+  /* nav collapses to hamburger */
+  .nav__links{display:none}
+  .nav__cta{display:none}
+  .nav__burger{display:inline-flex}
+  .nav__right{margin-left:auto}
+  .nav__mobile{display:flex}
+  .nav__mobile[hidden]{display:none}
+  .nav.is-open{box-shadow:var(--sh-2)}
+
+  /* hero: employee photo moves behind, chips become a row */
+  .stage{
+    grid-template-columns:1fr;
+    grid-template-areas:'phone' 'chips' 'emp';
+    justify-items:center;gap:26px;max-width:620px;
+  }
+  .stage__phone{grid-area:phone}
+  .stage__chips{
+    grid-area:chips;flex-direction:row;width:100%;padding:0;
+    justify-content:center;flex-wrap:wrap;
+  }
+  .chip-card{flex:0 1 auto;animation:none}
+  .stage__employee{grid-area:emp;justify-self:center;width:min(420px,100%)}
+  .stage__employee-img{aspect-ratio:16/10}
+  .stage__employee-img img{object-position:50% 18%}
+  .emp-badge{left:auto;right:14px;bottom:-14px}
+
+  /* problem: chat first, aside below */
+  .problem__grid{grid-template-columns:1fr;gap:26px}
+  .problem__aside{flex-direction:row;align-items:stretch}
+  /* the worry chips become a flowing list under the photo */
+  .worry{flex:1 1 52%;padding-right:0;display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
+  .worry__photo{flex:1 1 100%}
+  .worry__q{position:static;max-width:none;flex:1 1 auto;animation:none}
+  .worry__q::after{display:none}
+  .solve{flex:1 1 48%}
+
+  /* journey: 2 x 2 */
+  .journey__steps{grid-template-columns:repeat(2,1fr);gap:34px 22px}
+  .step:not(:last-child)::after{display:none}
+  .journey{--media-h:200px}
+
+  /* explore + stories */
+  .story{flex:0 0 calc((100% - 22px)/2)}
+
+  .faq__grid{grid-template-columns:1fr}
+  .faq__aside{position:static}
+}
+
+/* ---------- <= 900 : numbers wrap ------------------------- */
+@media (max-width:900px){
+  .stats{grid-template-columns:repeat(3,1fr);gap:34px 0}
+  .stat:nth-child(4)::before,.stat:nth-child(1)::before{display:none}
+  .booker__grid{grid-template-columns:repeat(3,1fr)}
+  .sec-head--row{flex-direction:column;align-items:flex-start;gap:22px}
+  .explore__nav{order:2}
+}
+
+/* ---------- <= 768 : tablet portrait / large phone -------- */
+@media (max-width:768px){
+  :root{--sec:clamp(58px,11vw,80px)}
+
+  .hero{padding-top:34px}
+  .hero__title{font-size:clamp(2.15rem,8.4vw,3rem)}
+  .hero__actions{gap:10px}
+  .hero__actions .btn{flex:1 1 auto;min-width:190px}
+  .hero__trust{gap:14px 20px;font-size:.8125rem}
+
+  .stage{max-width:none;gap:22px}
+  .phone{width:274px}
+  .stage__employee{width:100%}
+
+  .problem__aside{flex-direction:column}
+  .problem__grid{gap:20px}
+  .worry__photo{aspect-ratio:auto;height:230px}
+  .chat__body{min-height:0;padding:18px 14px 22px}
+  .bubble{max-width:94%}
+  .bubble p{font-size:.875rem}
+
+  .bento{grid-template-columns:1fr;gap:12px}
+  .tile,.tile--fast,.tile--verified,.tile--transparent,
+  .tile--trackable,.tile--fair,.tile--reliable{grid-column:span 1;min-height:0}
+  .tile p{max-width:none}
+
+  .journey__steps{grid-template-columns:1fr;gap:14px}
+  .journey{--media-h:210px}
+  .step{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
+  .step__media{grid-column:2;height:190px}
+  .step__btn{grid-row:1;grid-column:1/-1;padding:0 0 12px 70px;text-align:left;min-height:52px}
+  .step__num{top:0;left:0;transform:none;width:52px;height:52px}
+  .step__label{gap:3px}
+  .step__label i{margin:0;max-width:none}
+  .step:not(.is-active) .step__media{opacity:1}
+  .step.is-active .step__media{transform:none}
+  /* vertical connector */
+  .step:not(:last-child){position:relative}
+  .step:not(:last-child)::after{
+    display:block;top:60px;left:26px;width:2px;height:calc(100% - 32px);
+    background:var(--line);
+  }
+  .step.is-done:not(:last-child)::after{background:linear-gradient(180deg,var(--cyan),var(--line))}
+
+  .story{flex:0 0 100%}
+
+  .final__card{padding:30px 20px}
+  .booker__foot{flex-direction:column;align-items:stretch}
+  .booker__pick{text-align:center}
+  .booker__cta{margin:0;width:100%}
+
+  .foot__top{grid-template-columns:1fr;gap:36px}
+  .foot__cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foot__col--dl{grid-column:span 2}
+  .foot__info{flex-direction:column;gap:18px}
+  .foot__info address{text-align:left}
+  .foot__info ul{gap:12px;flex-direction:column}
+}
+
+/* ---------- <= 640 : phones ------------------------------- */
+@media (max-width:640px){
+  .stats{grid-template-columns:repeat(2,1fr);gap:30px 0}
+  .stat::before{display:none!important}
+  .stat{text-align:left;padding:0 8px}
+  .stat__ico{margin:0 0 14px}
+
+  .booker__grid{grid-template-columns:repeat(2,1fr)}
+  .booker__opt{flex-direction:row;justify-content:flex-start;text-align:left;padding:13px 14px}
+
+  .svc{flex:0 0 82vw}
+  .svc-track{gap:14px}
+
+  .dots{margin-top:26px}
+}
+
+/* ---------- <= 430 : compact phones ---------------------- */
+@media (max-width:430px){
+  :root{--pad:18px}
+  .hero__title{font-size:clamp(1.95rem,9vw,2.5rem)}
+  .hero__sub{font-size:1rem}
+  .hero__actions{flex-direction:column}
+  .hero__actions .btn{width:100%;min-width:0}
+  .hero__copy .eyebrow{font-size:.6875rem;padding:7px 13px}
+  .sec-head .eyebrow{font-size:.6875rem;letter-spacing:.07em}
+
+  .phone{width:100%;max-width:268px}
+  .chip-card{padding:10px 12px}
+  .chip-card__txt b{font-size:.8125rem}
+
+  .step{grid-template-columns:1fr}
+  .step__media{grid-column:1;height:170px}
+  .step__btn{padding:0 0 12px 64px}
+  .step:not(:last-child)::after{left:25px}
+
+  .story{padding:22px}
+  .booker__grid{grid-template-columns:1fr}
+  .foot__cols{grid-template-columns:1fr}
+  .foot__col--dl{grid-column:span 1;flex-direction:column;align-items:stretch}
+  .foot__bar{flex-direction:column;align-items:flex-start;gap:6px}
+}
+
+/* ---------- <= 360 : smallest supported ------------------ */
+@media (max-width:360px){
+  .hero__trust{flex-direction:column;align-items:center;gap:9px}
+  .svc{flex:0 0 86vw}
+  .acc__btn{font-size:.9375rem;padding:16px 15px}
+  .stats{grid-template-columns:1fr;gap:26px 0}
+  .stat{display:grid;grid-template-columns:46px 1fr;gap:0 14px;align-items:center}
+  .stat__ico{margin:0;grid-row:span 2}
+  .stat__label{margin-top:2px}
+}
+
+/* ---------- hover-less devices: reveal card CTAs ---------- */
+@media (hover:none){
+  .svc__go{opacity:1;transform:none}
+}
+
+/* ---------- print ---------------------------------------- */
+@media print{
+  .nav,.explore__nav,.dots,.booker__cta,.foot__social{display:none}
+  .reveal{opacity:1;transform:none}
+  body{color:#000}
+}

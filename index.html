@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapotr — Need Extra Hands for Everyday Works? Just Tap.</title>
+<meta name="description" content="Sapotr is a direct, on-demand workforce platform for businesses that need an employee. Book a verified employee instantly — no calls, no searching, no agencies or waiting.">
+<meta name="theme-color" content="#0F1738">
+
+<link rel="icon" type="image/png" href="assets/logos/sapotr-mark.png">
+<link rel="apple-touch-icon" href="assets/logos/sapotr-mark.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+<link rel="preload" as="image" href="assets/images/hero-employee.jpg">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/responsive.css">
+<script src="js/images.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#hero">Skip to main content</a>
+
+<!-- ============================================================
+     ICON SPRITE — inline SVG symbols (no icon library used)
+     ============================================================ -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.2 2 4.5 13.4h5.4L8.8 22l8.7-11.4h-5.4L13.2 2Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2l7.2 2.7v5.6c0 4.6-3.1 7.8-7.2 9.3-4.1-1.5-7.2-4.7-7.2-9.3V5.9L12 3.2Z"/><path d="m8.9 12.1 2.1 2.1 4.2-4.2"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-1.9-3 1.9-3-1.9L6 21V3Z"/><path d="M9.2 8.2h5.6M9.2 12h5.6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s7-6 7-11.4a7 7 0 1 0-14 0c0 5.4 7 11.4 7 11.4Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.1v5.2l3.4 2"/></symbol>
+  <symbol id="i-clasp" viewBox="0 0 24 24"><circle cx="12" cy="9.4" r="5.6"/><path d="m9.3 14.3-1.5 6.3 4.2-2.3 4.2 2.3-1.5-6.3"/><path d="m10.1 9.3 1.4 1.4 2.4-2.4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.6 10.4 12 4l8.4 6.4V20a1 1 0 0 1-1 1h-4.6v-6H9.2v6H4.6a1 1 0 0 1-1-1v-9.6Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.8 6.6h10.4v9.2H2.8zM13.2 9.8h3.6l3.4 3.3v2.7h-7z"/><circle cx="7" cy="18" r="1.9"/><circle cx="17.2" cy="18" r="1.9"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M10.4 3 12 7.3l4.3 1.6-4.3 1.6L10.4 15l-1.6-4.5L4.5 8.9l4.3-1.6L10.4 3Z"/><path d="M17.8 14.6l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8.8-2.1Z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4.2 21V5.6a1 1 0 0 1 1-1h5.6a1 1 0 0 1 1 1V21"/><path d="M11.8 21V9.8h6.4a1 1 0 0 1 1 1V21"/><path d="M6.9 8.4h2.2M6.9 12.2h2.2M6.9 16h2.2M14.6 13.4h1.6M14.6 17.2h1.6M2.8 21h18.4"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.6 3.6a4.6 4.6 0 0 0-3.1 7.8l-7.7 7.7 2 2 7.7-7.7a4.6 4.6 0 0 0 6-6.2l-2.6 2.6-2.6-.5-.5-2.6 2.6-2.6a4.6 4.6 0 0 0-1.8-.5Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.6 4.4 4.4L19 7.4"/></symbol>
+  <symbol id="i-chev-down" viewBox="0 0 24 24"><path d="m6.5 9.5 5.5 5.5 5.5-5.5"/></symbol>
+  <symbol id="i-chev-left" viewBox="0 0 24 24"><path d="M14.5 6.5 9 12l5.5 5.5"/></symbol>
+  <symbol id="i-chev-right" viewBox="0 0 24 24"><path d="M9.5 6.5 15 12l-5.5 5.5"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.2 3.4h3l1.5 3.7-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2 3.7 1.5v3a1.8 1.8 0 0 1-2 1.8A15.4 15.4 0 0 1 4.4 5.4a1.8 1.8 0 0 1 1.8-2Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.4" width="18" height="13.2" rx="2"/><path d="m3.6 6.6 8.4 6 8.4-6"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.6 12h16.8M12 3.4c2.4 2.4 3.4 5.4 3.4 8.6S14.4 18.2 12 20.6c-2.4-2.4-3.4-5.4-3.4-8.6S9.6 5.8 12 3.4Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17.1l-5.2 2.8 1-5.9L3.5 9.8l5.9-.8L12 3.6Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.4" r="3.2"/><path d="M3.4 19.4a5.6 5.6 0 0 1 11.2 0"/><path d="M16.2 6.2a3 3 0 0 1 0 5.8M17.6 14.6a5 5 0 0 1 3 4.8"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.6" y="5.4" width="16.8" height="15" rx="2"/><path d="M3.6 10h16.8M8.4 3.4v3.6M15.6 3.4v3.6"/><path d="m9.4 14.6 1.7 1.7 3.5-3.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="10.2" rx="2.2"/><path d="M8.2 10.4V8a3.8 3.8 0 0 1 7.6 0v2.4"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M9.4 5.6c-3 1.3-4.8 3.9-4.8 7.2v5.6h5.6v-5.6H7.4c0-2 .9-3.4 2.9-4.3l-.9-2.9Zm9.4 0c-3 1.3-4.8 3.9-4.8 7.2v5.6h5.6v-5.6h-2.8c0-2 .9-3.4 2.9-4.3l-.9-2.9Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.4"/><path d="m15.6 15.6 4.2 4.2"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.1-2.8.9-3.5.9s-1.9-.9-3.1-.8c-1.6 0-3.1 1-3.9 2.4-1.7 2.9-.4 7.2 1.2 9.6.8 1.1 1.8 2.4 3.1 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.1.8 2.2-1.2 3-2.3c.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.9-1.1-3-3.9ZM14.3 5.3c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M4.2 2.9 14.9 12 4.2 21.1a1.6 1.6 0 0 1-.7-1.4V4.3a1.6 1.6 0 0 1 .7-1.4Z" fill="currentColor" stroke="none"/><path d="m16.6 10.4 3.3 1.6-3.3 1.6L14.9 12l1.7-1.6Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14.2 21v-7.6h2.6l.4-3h-3V8.5c0-.9.2-1.5 1.5-1.5h1.6V4.3c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.1H8.3v3h2.6V21h3.3Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="16.6" cy="7.4" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M4.6 9.4h3v10h-3v-10Zm1.5-4.8a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6ZM10 9.4h2.9v1.4a3.2 3.2 0 0 1 2.9-1.6c2.1 0 3.6 1.4 3.6 4.2v5.9h-3v-5.3c0-1.3-.5-2.1-1.6-2.1s-1.8.8-1.8 2.1v5.4H10v-10Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M21 8.6a2.8 2.8 0 0 0-2-2C17.2 6.2 12 6.2 12 6.2s-5.2 0-7 .4a2.8 2.8 0 0 0-2 2C2.6 10.4 2.6 12 2.6 12s0 1.6.4 3.4a2.8 2.8 0 0 0 2 2c1.8.4 7 .4 7 .4s5.2 0 7-.4a2.8 2.8 0 0 0 2-2c.4-1.8.4-3.4.4-3.4s0-1.6-.4-3.4Z"/><path d="m10.4 9.4 4.4 2.6-4.4 2.6V9.4Z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<header class="nav" id="site-nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#hero" aria-label="Sapotr — go to home page">
+      <img src="assets/logos/sapotr-wordmark.png" alt="Sapotr" width="1149" height="273" decoding="async">
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#why">For Businesses</a>
+      <a href="#partners">For Employee Partners</a>
+      <a href="#support">Support</a>
+    </nav>
+
+    <div class="nav__right">
+      <a class="btn btn--primary btn--sm nav__cta" href="#book">Book an Employee</a>
+      <button class="nav__burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="ic ic--menu" aria-hidden="true"><use href="#i-menu"></use></svg>
+        <svg class="ic ic--close" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile" id="mobile-menu" hidden>
+    <a href="#why">For Businesses</a>
+    <a href="#partners">For Employee Partners</a>
+    <a href="#support">Support</a>
+    <a class="btn btn--primary" href="#book">Book an Employee</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================================================
+     1. HERO — centred message + product showcase
+     ============================================================ -->
+<section class="hero" id="hero">
+  <span class="hero__glow" aria-hidden="true"></span>
+  <span class="hero__mesh" aria-hidden="true"></span>
+
+  <div class="container">
+    <div class="hero__copy">
+      <span class="eyebrow reveal">
+        <span class="dot dot--live"></span> On-demand workforce · Auckland, NZ
+      </span>
+
+      <h1 class="hero__title reveal" data-delay="60">
+        Need Extra Hands<br>for Everyday Works?
+        <span class="hero__accent">Just Tap.</span>
+      </h1>
+
+      <p class="hero__sub reveal" data-delay="120">Your Work Support Employee Arrives, Instantly.</p>
+
+      <div class="hero__actions reveal" data-delay="180">
+        <a class="btn btn--primary btn--lg" href="#book">
+          Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#how">How It Works</a>
+      </div>
+
+      <ul class="hero__trust reveal" data-delay="240">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>Verified Employees</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>Instant Booking</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>No Hidden Charges</li>
+      </ul>
+    </div>
+
+    <!-- ---------------- PRODUCT SHOWCASE ---------------- -->
+    <div class="stage reveal" data-delay="300">
+
+      <!-- Left — the verified employee -->
+      <figure class="stage__employee">
+        <div class="stage__employee-img">
+          <img data-img="heroEmployee" alt="A verified Sapotr Employee Partner ready to start work" width="1000" height="1250" fetchpriority="high" decoding="async">
+        </div>
+        <figcaption class="emp-badge">
+          <span class="emp-badge__ico"><svg class="ic" aria-hidden="true"><use href="#i-shield"></use></svg></span>
+          <span class="emp-badge__txt"><b>Verified</b><i>Employee Partner</i></span>
+        </figcaption>
+      </figure>
+
+      <!-- Centre — the Sapotr app -->
+      <div class="stage__phone">
+        <div class="phone" role="img" aria-label="The Sapotr app booking screen, showing service categories and nearby available verified employees">
+          <span class="phone__island" aria-hidden="true"></span>
+          <div class="phone__screen">
+            <div class="app__status" aria-hidden="true">
+              <span>9:41</span>
+              <span class="app__bars"><i></i><i></i><i></i><i></i></span>
+            </div>
+
+            <div class="app__head">
+              <img class="app__logo" data-img="logoWordmark" alt="Sapotr" width="1149" height="273">
+              <span class="app__me"><img data-img="avatarEmployee2" alt="" width="200" height="200"></span>
+            </div>
+
+            <p class="app__greet">How can we help you today?</p>
+
+            <span class="app__label">Select Service</span>
+            <div class="app__grid">
+              <span class="app__svc is-active"><svg class="ic" aria-hidden="true"><use href="#i-home"></use></svg><em>Home &amp; Personal</em></span>
+              <span class="app__svc"><svg class="ic" aria-hidden="true"><use href="#i-truck"></use></svg><em>Moving &amp; Shifting</em></span>
+              <span class="app__svc"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"></use></svg><em>Events &amp; Celebrations</em></span>
+              <span class="app__svc"><svg class="ic" aria-hidden="true"><use href="#i-building"></use></svg><em>Apartments &amp; Communities</em></span>
+              <span class="app__svc"><svg class="ic" aria-hidden="true"><use href="#i-wrench"></use></svg><em>Maintenance &amp; Upkeep</em></span>
+            </div>
+
+            <div class="app__row">
+              <span class="app__label">Nearby Employees</span>
+              <span class="app__count">2 Available</span>
+            </div>
+
+            <div class="app__emp">
+              <img data-img="avatarEmployee1" alt="" width="200" height="200">
+              <span class="app__emp-meta">
+                <b>John D.</b>
+                <i><svg class="ic" aria-hidden="true"><use href="#i-star"></use></svg>4.9 · Verified</i>
+              </span>
+              <span class="tag tag--live"><span class="dot dot--live"></span>Available</span>
+            </div>
+
+            <span class="app__book">Book Now</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right — live status -->
+      <div class="stage__chips">
+        <div class="chip-card" style="--f:0s">
+          <span class="chip-card__ico chip-card__ico--cyan"><span class="dot dot--live"></span></span>
+          <span class="chip-card__txt"><b>Available Now</b><i>2 nearby employees</i></span>
+        </div>
+        <div class="chip-card" style="--f:1.2s">
+          <span class="chip-card__ico chip-card__ico--red"><svg class="ic" aria-hidden="true"><use href="#i-pin"></use></svg></span>
+          <span class="chip-card__txt"><b>Auckland</b><i>Nearby</i></span>
+        </div>
+        <div class="chip-card" style="--f:2.4s">
+          <span class="chip-card__ico chip-card__ico--yellow"><svg class="ic" aria-hidden="true"><use href="#i-star"></use></svg></span>
+          <span class="chip-card__txt"><b>4.9 Rating</b><i>Employee Partners</i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>window.SapotrImages && SapotrImages.resolve();</script>
+
+<!-- ============================================================
+     2. THE PROBLEM — chat-style storytelling
+     ============================================================ -->
+<section class="problem section" id="problem">
+  <div class="container">
+    <header class="sec-head sec-head--left">
+      <span class="eyebrow reveal"><span class="eyebrow__bar"></span>The Problem</span>
+      <h2 class="reveal" data-delay="60">Finding Reliable<br>Help Isn&rsquo;t Easy</h2>
+    </header>
+
+    <div class="problem__grid">
+
+      <!-- ---- Chat conversation ---- -->
+      <div class="chat reveal" data-delay="120">
+        <div class="chat__head">
+          <span class="chat__avatar"><img data-img="logoMark" alt="Sapotr" width="872" height="686"></span>
+          <span class="chat__who">
+            <b>SAPOTR</b>
+            <i><span class="dot dot--live"></span>online</i>
+          </span>
+          <span class="chat__actions" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+
+        <div class="chat__body" id="chat-body">
+          <span class="chat__day">Today</span>
+
+          <div class="bubble bubble--in" data-msg="1">
+            <span class="bubble__avatar"><img data-img="problemPerson" alt="" width="900" height="1000"></span>
+            <p>Need help for just for a few hours or for day?<span class="bubble__time">10:30 AM</span></p>
+          </div>
+
+          <div class="bubble bubble--in" data-msg="2">
+            <span class="bubble__avatar"><img data-img="problemPerson" alt="" width="900" height="1000"></span>
+            <p>Finding someone reliable for a short-term job can be difficult.<span class="bubble__time">10:31 AM</span></p>
+          </div>
+
+          <div class="bubble bubble--typing" data-msg="3" aria-hidden="true">
+            <p class="typing"><i></i><i></i><i></i></p>
+          </div>
+
+          <div class="bubble bubble--out" data-msg="4">
+            <p><strong>SAPOTR</strong> makes it simple.<span class="bubble__time">10:32 AM <svg class="ic tick" aria-hidden="true"><use href="#i-check"></use></svg></span></p>
+          </div>
+
+          <div class="bubble bubble--out" data-msg="5">
+            <p>
+              <span class="bubble__ok"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg></span>
+              Book a verified employee instantly and get the pending work done — No calls, No searching, No agencies or waiting, No long-term commitment.
+              <span class="bubble__time">10:33 AM <svg class="ic tick" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- The worry + the answer ---- -->
+      <div class="problem__aside">
+        <div class="worry reveal" data-delay="180">
+          <div class="worry__photo">
+            <img data-img="problemPerson" alt="A business owner searching for reliable short-term help on a phone" width="900" height="1000" loading="lazy" decoding="async">
+          </div>
+          <span class="worry__q worry__q--1">Where can I find someone reliable?</span>
+          <span class="worry__q worry__q--2">Can someone come today?</span>
+          <span class="worry__q worry__q--3">Will they be trustworthy?</span>
+          <span class="worry__q worry__q--4">Too many calls and follow-ups</span>
+        </div>
+
+        <div class="solve reveal" data-delay="240">
+          <div class="solve__head">
+            <span class="solve__mark"><img data-img="logoMark" alt="Sapotr" width="872" height="686"></span>
+            <b>SAPOTR SOLVES THIS!</b>
+          </div>
+          <ul class="solve__list">
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>Verified Employees</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>Instant Booking</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>No Calls</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>No Searching</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg>No Waiting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. HOW SAPOTR FITS INTO YOUR DAY TO DAY
+     ============================================================ -->
+<section class="how section" id="how">
+  <div class="container">
+    <header class="sec-head">
+      <span class="eyebrow reveal"><span class="eyebrow__bar"></span>How Sapotr fits into your day to day</span>
+      <h2 class="reveal" data-delay="60">How Sapotr Fits Into<br>Your Everyday Life?</h2>
+      <p class="sec-head__lead reveal" data-delay="120">When you need extra help / employee for your work?</p>
+    </header>
+
+    <div class="journey" id="journey">
+
+      <ol class="journey__steps">
+        <!-- STEP 1 -->
+        <li class="step is-active" data-step="1">
+          <button class="step__btn" type="button" aria-expanded="true">
+            <span class="step__num">1</span>
+            <span class="step__label">
+              <b>Just Tap</b>
+              <i>Open Sapotr and Select Service</i>
+            </span>
+          </button>
+          <div class="step__media">
+            <div class="step__photo">
+              <img data-img="stepTap" alt="A customer opening the Sapotr app to select a service" width="900" height="700" loading="lazy" decoding="async">
+            </div>
+            <div class="mini mini--select">
+              <span class="mini__label">Select Service</span>
+              <span class="mini__chips">
+                <i class="is-on"><svg class="ic" aria-hidden="true"><use href="#i-home"></use></svg>Home &amp; Personal</i>
+                <i><svg class="ic" aria-hidden="true"><use href="#i-truck"></use></svg>Moving</i>
+              </span>
+            </div>
+          </div>
+        </li>
+
+        <!-- STEP 2 -->
+        <li class="step" data-step="2">
+          <button class="step__btn" type="button" aria-expanded="false">
+            <span class="step__num">2</span>
+            <span class="step__label">
+              <b>Book</b>
+              <i>Instantly book available and reliable support employee nearby</i>
+            </span>
+          </button>
+          <div class="step__media">
+            <div class="map" role="img" aria-label="A map showing available Sapotr employees nearby">
+              <svg class="map__svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <rect width="400" height="300" fill="#EDF0F7"/>
+                <g fill="#E2E7F1">
+                  <rect x="16" y="20" width="110" height="76" rx="6"/>
+                  <rect x="150" y="14" width="96" height="60" rx="6"/>
+                  <rect x="272" y="24" width="112" height="86" rx="6"/>
+                  <rect x="20" y="132" width="88" height="70" rx="6"/>
+                  <rect x="286" y="146" width="98" height="66" rx="6"/>
+                  <rect x="30" y="238" width="120" height="52" rx="6"/>
+                  <rect x="190" y="230" width="86" height="60" rx="6"/>
+                  <rect x="306" y="246" width="78" height="44" rx="6"/>
+                </g>
+                <rect x="146" y="106" width="118" height="98" rx="10" fill="#DCEFE4"/>
+                <g stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" fill="none">
+                  <path d="M0 112h400M0 218h400M136 0v300M278 0v300"/>
+                </g>
+                <g stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" fill="none" opacity=".9">
+                  <path d="M0 60h136M278 62h122M68 112v106M196 218v82"/>
+                </g>
+              </svg>
+
+              <span class="map__pin map__pin--you">
+                <span class="map__you-dot"></span><span class="map__wave"></span>
+              </span>
+              <span class="map__emp map__emp--1"><img data-img="avatarEmployee1" alt="" width="200" height="200"><i class="dot dot--live"></i></span>
+              <span class="map__emp map__emp--2"><img data-img="avatarEmployee4" alt="" width="200" height="200"><i class="dot dot--live"></i></span>
+              <span class="map__emp map__emp--3"><img data-img="avatarEmployee3" alt="" width="200" height="200"><i class="dot dot--live"></i></span>
+              <span class="map__route" aria-hidden="true"></span>
+
+              <div class="mini mini--nearby">
+                <span class="mini__ico"><svg class="ic" aria-hidden="true"><use href="#i-users"></use></svg></span>
+                <span class="mini__txt"><b>2 Available</b><i>Nearby employees</i></span>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- STEP 3 -->
+        <li class="step" data-step="3">
+          <button class="step__btn" type="button" aria-expanded="false">
+            <span class="step__num">3</span>
+            <span class="step__label">
+              <b>Assign</b>
+              <i>Employee arrives. Share OTP and Assign Work</i>
+            </span>
+          </button>
+          <div class="step__media">
+            <div class="step__photo">
+              <img data-img="stepAssign" alt="A Sapotr Employee Partner arriving at the door to start the work" width="900" height="700" loading="lazy" decoding="async">
+            </div>
+            <div class="mini mini--otp">
+              <span class="mini__txt"><i>Share this OTP</i><b>8&nbsp;2&nbsp;7&nbsp;3</b></span>
+              <span class="mini__ok"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg></span>
+            </div>
+          </div>
+        </li>
+
+        <!-- STEP 4 -->
+        <li class="step" data-step="4">
+          <button class="step__btn" type="button" aria-expanded="false">
+            <span class="step__num">4</span>
+            <span class="step__label">
+              <b>Done</b>
+              <i>Work done</i>
+            </span>
+          </button>
+          <div class="step__media">
+            <div class="step__photo">
+              <img data-img="stepDone" alt="Completed work — items moved, packed and stacked neatly" width="900" height="700" loading="lazy" decoding="async">
+            </div>
+            <div class="mini mini--done">
+              <span class="mini__ok mini__ok--lg"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg></span>
+              <span class="mini__txt"><b>Work Completed</b><i>Paid for actual work time</i></span>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. WHY SAPOTR — bento benefit grid
+     ============================================================ -->
+<section class="why section" id="why">
+  <div class="container">
+    <header class="sec-head">
+      <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Why Sapotr</span>
+      <h2 class="reveal" data-delay="60">Why Sapotr.</h2>
+      <p class="sec-head__lead reveal" data-delay="120">Simple to book. Easy to trust.</p>
+      <p class="sec-head__note reveal" data-delay="160">Anyone can directly book and assign. No agency or middleman.</p>
+    </header>
+
+    <div class="bento">
+      <!-- FAST -->
+      <article class="tile tile--fast reveal" data-delay="80">
+        <span class="tile__ico tile__ico--yellow"><svg class="ic" aria-hidden="true"><use href="#i-bolt"></use></svg></span>
+        <h3>Fast</h3>
+        <p>Get extra workforce when you need it.</p>
+        <div class="tile__viz viz-fast" aria-hidden="true">
+          <span class="viz-fast__row"><i></i><b>Request sent</b></span>
+          <span class="viz-fast__row"><i></i><b>Employee matched</b></span>
+          <span class="viz-fast__row"><i></i><b>On the way</b></span>
+        </div>
+      </article>
+
+      <!-- VERIFIED -->
+      <article class="tile tile--verified reveal" data-delay="140">
+        <span class="tile__ico tile__ico--cyan"><svg class="ic" aria-hidden="true"><use href="#i-shield"></use></svg></span>
+        <h3>Verified</h3>
+        <p>Every SAPOTR Employee Partner is verified and validated.</p>
+        <div class="tile__viz viz-verified" aria-hidden="true">
+          <span class="viz-verified__stack">
+            <i><img data-img="avatarEmployee1" alt="" width="200" height="200"></i>
+            <i><img data-img="avatarEmployee2" alt="" width="200" height="200"></i>
+            <i><img data-img="avatarEmployee3" alt="" width="200" height="200"></i>
+            <i><img data-img="avatarEmployee4" alt="" width="200" height="200"></i>
+          </span>
+          <span class="viz-verified__tick"><svg class="ic" aria-hidden="true"><use href="#i-check"></use></svg></span>
+        </div>
+      </article>
+
+      <!-- TRANSPARENT -->
+      <article class="tile tile--transparent reveal" data-delay="200">
+        <span class="tile__ico tile__ico--yellow"><svg class="ic" aria-hidden="true"><use href="#i-receipt"></use></svg></span>
+        <h3>Transparent</h3>
+        <p>Flat-rate pricing with no hidden charges.</p>
+        <div class="tile__viz viz-flat" aria-hidden="true">
+          <span class="viz-flat__bar"><i style="--w:100%"></i></span>
+          <span class="viz-flat__bar viz-flat__bar--muted"><i style="--w:0%"></i></span>
+          <em>Flat rate · No hidden charges</em>
+        </div>
+      </article>
+
+      <!-- TRACKABLE -->
+      <article class="tile tile--trackable reveal" data-delay="80">
+        <span class="tile__ico tile__ico--cyan"><svg class="ic" aria-hidden="true"><use href="#i-pin"></use></svg></span>
+        <h3>Trackable</h3>
+        <p>Track the employee from arrival to work completion through the app.</p>
+        <div class="tile__viz viz-track" aria-hidden="true">
+          <svg viewBox="0 0 200 56" preserveAspectRatio="none">
+            <path class="viz-track__path" d="M6 44C40 44 46 12 84 12s52 32 110 32"/>
+            <path class="viz-track__dash" d="M6 44C40 44 46 12 84 12s52 32 110 32"/>
+          </svg>
+          <span class="viz-track__a">Arrival</span>
+          <span class="viz-track__b">Completion</span>
+        </div>
+      </article>
+
+      <!-- FAIR -->
+      <article class="tile tile--fair reveal" data-delay="140">
+        <span class="tile__ico tile__ico--red"><svg class="ic" aria-hidden="true"><use href="#i-clock"></use></svg></span>
+        <h3>Fair</h3>
+        <p>Pay only for actual work time, excluding employee breaks.</p>
+        <div class="tile__viz viz-fair" aria-hidden="true">
+          <span class="viz-fair__seg viz-fair__seg--work"><b>Work time</b></span>
+          <span class="viz-fair__seg viz-fair__seg--break"><b>Break</b></span>
+          <span class="viz-fair__seg viz-fair__seg--work"><b>Work time</b></span>
+        </div>
+      </article>
+
+      <!-- RELIABLE -->
+      <article class="tile tile--reliable reveal" data-delay="200">
+        <span class="tile__ico tile__ico--navy"><svg class="ic" aria-hidden="true"><use href="#i-clasp"></use></svg></span>
+        <h3>Reliable</h3>
+        <p>Reduce the uncertainty of finding short-term help.</p>
+        <div class="tile__viz viz-reliable" aria-hidden="true">
+          <span class="viz-reliable__off">No calls</span>
+          <span class="viz-reliable__off">No searching</span>
+          <span class="viz-reliable__off">No waiting</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. EXPLORE — interactive service selector
+     ============================================================ -->
+<section class="explore section" id="explore">
+  <div class="container">
+    <header class="sec-head sec-head--row">
+      <div>
+        <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Explore</span>
+        <h2 class="reveal" data-delay="60">Trusted across NZ.<br>Extra hands. When you need them.</h2>
+      </div>
+      <div class="explore__nav reveal" data-delay="120">
+        <button class="rnd" type="button" data-svc-prev aria-label="Previous service">
+          <svg class="ic" aria-hidden="true"><use href="#i-chev-left"></use></svg>
+        </button>
+        <button class="rnd" type="button" data-svc-next aria-label="Next service">
+          <svg class="ic" aria-hidden="true"><use href="#i-chev-right"></use></svg>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <div class="explore__viewport reveal" data-delay="160">
+    <ul class="svc-track" id="svc-track">
+      <li class="svc is-active" tabindex="0">
+        <div class="svc__img"><img data-img="serviceHomePersonal" alt="Short-term help with household tasks and cleaning" width="900" height="700" loading="lazy" decoding="async"></div>
+        <div class="svc__body">
+          <span class="svc__ico svc__ico--yellow"><svg class="ic" aria-hidden="true"><use href="#i-home"></use></svg></span>
+          <h3>Home &amp; Personal</h3>
+          <p>Short-term help for household tasks, organising, cleaning and everyday needs.</p>
+          <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+        </div>
+      </li>
+      <li class="svc" tabindex="0">
+        <div class="svc__img"><img data-img="serviceMoving" alt="Extra hands for moving, loading and unloading" width="900" height="700" loading="lazy" decoding="async"></div>
+        <div class="svc__body">
+          <span class="svc__ico svc__ico--cyan"><svg class="ic" aria-hidden="true"><use href="#i-truck"></use></svg></span>
+          <h3>Moving &amp; Shifting</h3>
+          <p>Extra hands for moving, loading, unloading, shifting and setup.</p>
+          <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+        </div>
+      </li>
+      <li class="svc" tabindex="0">
+        <div class="svc__img"><img data-img="serviceEvents" alt="Help for parties, family functions and private events" width="900" height="700" loading="lazy" decoding="async"></div>
+        <div class="svc__body">
+          <span class="svc__ico svc__ico--red"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"></use></svg></span>
+          <h3>Events &amp; Celebrations</h3>
+          <p>Help for parties, family functions, gatherings and private events.</p>
+          <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+        </div>
+      </li>
+      <li class="svc" tabindex="0">
+        <div class="svc__img"><img data-img="serviceCommunities" alt="Temporary help for apartment and community needs" width="900" height="700" loading="lazy" decoding="async"></div>
+        <div class="svc__body">
+          <span class="svc__ico svc__ico--navy"><svg class="ic" aria-hidden="true"><use href="#i-building"></use></svg></span>
+          <h3>Apartments &amp; Communities</h3>
+          <p>Temporary help for community activities, common-area work, events and resident needs.</p>
+          <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+        </div>
+      </li>
+      <li class="svc" tabindex="0">
+        <div class="svc__img"><img data-img="serviceMaintenance" alt="Extra hands for basic maintenance, repairs and property upkeep" width="900" height="700" loading="lazy" decoding="async"></div>
+        <div class="svc__body">
+          <span class="svc__ico svc__ico--yellow"><svg class="ic" aria-hidden="true"><use href="#i-wrench"></use></svg></span>
+          <h3>Maintenance &amp; Property Upkeep</h3>
+          <p>Extra hands for basic maintenance, repairs, cleaning and property upkeep.</p>
+          <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="dots" id="svc-dots" role="tablist" aria-label="Services"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. NUMBERS — animated counters on navy
+     ============================================================ -->
+<section class="numbers section" id="numbers">
+  <span class="numbers__mark" aria-hidden="true"><img data-img="logoMark" alt="" width="872" height="686" loading="lazy"></span>
+  <span class="numbers__mesh" aria-hidden="true"></span>
+
+  <div class="container">
+    <header class="sec-head sec-head--invert">
+      <span class="eyebrow eyebrow--invert reveal"><span class="eyebrow__bar"></span>Numbers</span>
+      <h2 class="reveal" data-delay="60">Built for NZ. Growing every day.<br>Making work easier.</h2>
+    </header>
+
+    <ul class="stats" id="stats">
+      <li class="stat reveal" data-delay="60">
+        <span class="stat__ico"><svg class="ic" aria-hidden="true"><use href="#i-users"></use></svg></span>
+        <b class="stat__num" data-count="260" data-suffix="+">0</b>
+        <span class="stat__label">Nearby Verified Sapotr</span>
+      </li>
+      <li class="stat reveal" data-delay="120">
+        <span class="stat__ico"><svg class="ic" aria-hidden="true"><use href="#i-building"></use></svg></span>
+        <b class="stat__num" data-count="110" data-suffix="+">0</b>
+        <span class="stat__label">Communities</span>
+      </li>
+      <li class="stat reveal" data-delay="180">
+        <span class="stat__ico"><svg class="ic" aria-hidden="true"><use href="#i-calendar"></use></svg></span>
+        <b class="stat__num" data-count="450" data-suffix="+">0</b>
+        <span class="stat__label">Direct Bookings</span>
+      </li>
+      <li class="stat reveal" data-delay="240">
+        <span class="stat__ico"><svg class="ic" aria-hidden="true"><use href="#i-clock"></use></svg></span>
+        <b class="stat__num" data-count="1100" data-suffix="+">0</b>
+        <span class="stat__label">Hours of Work Supported</span>
+      </li>
+      <li class="stat reveal" data-delay="300">
+        <span class="stat__ico"><svg class="ic" aria-hidden="true"><use href="#i-lock"></use></svg></span>
+        <b class="stat__num" data-count="700" data-suffix="+">0</b>
+        <span class="stat__label">Secure Payments</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     7. CUSTOMER STORIES — testimonial carousel
+     NOTE: testimonial copy is PLACEHOLDER content. See js/main.js
+     (TESTIMONIALS / TESTIMONIAL_MODE) to replace or blank it out.
+     ============================================================ -->
+<section class="stories section" id="stories">
+  <div class="container">
+    <header class="sec-head sec-head--row">
+      <div>
+        <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Customer Stories</span>
+        <h2 class="reveal" data-delay="60">Real Stories. Real Help.</h2>
+      </div>
+      <div class="explore__nav reveal" data-delay="120">
+        <button class="rnd" type="button" data-story-prev aria-label="Previous story">
+          <svg class="ic" aria-hidden="true"><use href="#i-chev-left"></use></svg>
+        </button>
+        <button class="rnd" type="button" data-story-next aria-label="Next story">
+          <svg class="ic" aria-hidden="true"><use href="#i-chev-right"></use></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="stories__viewport reveal" data-delay="160">
+      <ul class="story-track" id="story-track"><!-- rendered by js/main.js --></ul>
+    </div>
+
+    <div class="dots" id="story-dots" role="tablist" aria-label="Customer stories"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8. FAQ — accordion
+     NOTE: only "What is SAPOTR?" has a client-supplied answer.
+     The remaining answers are marked as pending — not invented.
+     ============================================================ -->
+<section class="faq section" id="faq">
+  <div class="container faq__grid">
+
+    <div class="faq__main">
+      <header class="sec-head sec-head--left">
+        <h2 class="reveal">FAQ</h2>
+      </header>
+
+      <div class="acc" id="acc">
+        <div class="acc__item reveal" data-delay="60">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>What is SAPOTR?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p>SAPOTR helps people and communities get verified extra hands for one-day and short-term needs.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="90">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>How long can I book an employee?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="120">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>Can I book an employee for just one day?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="150">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>Are Employee Partners verified?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="180">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>How does pricing work?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="210">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>Can I track my booking?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item reveal" data-delay="240">
+          <h3><button class="acc__btn" type="button" aria-expanded="false">
+            <span>Can I cancel a booking?</span>
+            <span class="acc__sign"><svg class="ic" aria-hidden="true"><use href="#i-chev-down"></use></svg></span>
+          </button></h3>
+          <div class="acc__panel"><div class="acc__inner">
+            <p class="acc__pending" data-content-slot="faq-answer">Answer to be supplied by SAPOTR.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="faq__aside reveal" data-delay="200" id="support">
+      <span class="faq__mark"><img data-img="logoMark" alt="Sapotr" width="872" height="686" loading="lazy"></span>
+      <b>Support</b>
+      <p>Still have a question? Write to us.</p>
+      <ul class="faq__contact">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-phone"></use></svg><a href="tel:+64212387544">+64 21 238 7544</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-mail"></use></svg><a href="mailto:admin@sapotr.co.nz">admin@sapotr.co.nz</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-globe"></use></svg><a href="https://www.sapotr.co.nz" rel="noopener">www.sapotr.co.nz</a></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. FINAL CTA — booking-style interaction
+     ============================================================ -->
+<section class="final section" id="book">
+  <div class="container">
+    <div class="final__card">
+      <span class="final__mesh" aria-hidden="true"></span>
+
+      <div class="final__copy">
+        <h2 class="reveal">Don&rsquo;t Go Back to Old Ways &mdash;<br>Calls, Searching &amp; Waiting.</h2>
+        <p class="reveal" data-delay="80">Need work support help? Book a Sapotr.</p>
+      </div>
+
+      <div class="booker reveal" data-delay="140">
+        <span class="booker__q" id="booker-q">What do you need help with?</span>
+
+        <div class="booker__grid" id="booker-grid" role="radiogroup" aria-labelledby="booker-q">
+          <button class="booker__opt" type="button" role="radio" aria-checked="false" data-service="Home &amp; Personal">
+            <svg class="ic" aria-hidden="true"><use href="#i-home"></use></svg><span>Home &amp; Personal</span>
+          </button>
+          <button class="booker__opt" type="button" role="radio" aria-checked="false" data-service="Moving &amp; Shifting">
+            <svg class="ic" aria-hidden="true"><use href="#i-truck"></use></svg><span>Moving &amp; Shifting</span>
+          </button>
+          <button class="booker__opt" type="button" role="radio" aria-checked="false" data-service="Events &amp; Celebrations">
+            <svg class="ic" aria-hidden="true"><use href="#i-sparkle"></use></svg><span>Events &amp; Celebrations</span>
+          </button>
+          <button class="booker__opt" type="button" role="radio" aria-checked="false" data-service="Apartments &amp; Communities">
+            <svg class="ic" aria-hidden="true"><use href="#i-building"></use></svg><span>Apartments &amp; Communities</span>
+          </button>
+          <button class="booker__opt" type="button" role="radio" aria-checked="false" data-service="Maintenance &amp; Property Upkeep">
+            <svg class="ic" aria-hidden="true"><use href="#i-wrench"></use></svg><span>Maintenance &amp; Property Upkeep</span>
+          </button>
+        </div>
+
+        <div class="booker__foot">
+          <span class="booker__pick" id="booker-pick" aria-live="polite"></span>
+          <button class="btn btn--primary btn--lg booker__cta" id="booker-cta" type="button">
+            <span id="booker-cta-txt">Try Now</span>
+            <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     10. FOOTER
+     ============================================================ -->
+<footer class="foot" id="foot">
+  <div class="container">
+    <div class="foot__top">
+
+      <div class="foot__brand">
+        <span class="foot__logo"><img data-img="logoWordmark" alt="Sapotr" width="1149" height="273" loading="lazy"></span>
+        <p>Direct, on-demand workforce platform for businesses that need an employee.</p>
+
+        <ul class="foot__social">
+          <li><a href="#" aria-label="Sapotr on Facebook"><svg class="ic" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a href="#" aria-label="Sapotr on Instagram"><svg class="ic" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a href="#" aria-label="Sapotr on LinkedIn"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+          <li><a href="#" aria-label="Sapotr on YouTube"><svg class="ic" aria-hidden="true"><use href="#i-youtube"></use></svg></a></li>
+        </ul>
+      </div>
+
+      <nav class="foot__cols" aria-label="Footer">
+        <div class="foot__col">
+          <h3>Sapotr</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#support">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+
+        <div class="foot__col">
+          <h3>For Businesses</h3>
+          <ul>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#explore">Services</a></li>
+            <li><a href="#book">Book an Employee</a></li>
+            <li><a href="#faq">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="foot__col" id="partners">
+          <h3>For Partners</h3>
+          <ul>
+            <li><a href="#">Become a Partner</a></li>
+            <li><a href="#">Partner Login</a></li>
+            <li><a href="#faq">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div class="foot__col">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">Help Centre</a></li>
+            <li><a href="#support">Contact Support</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms &amp; Conditions</a></li>
+          </ul>
+        </div>
+
+        <div class="foot__col foot__col--dl">
+          <h3>Download</h3>
+          <a class="store" href="#">
+            <svg class="ic" aria-hidden="true"><use href="#i-apple"></use></svg>
+            <span><i>Download on the</i><b>App Store</b></span>
+          </a>
+          <a class="store" href="#">
+            <svg class="ic" aria-hidden="true"><use href="#i-play"></use></svg>
+            <span><i>Get it on</i><b>Google Play</b></span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="foot__info">
+      <ul>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-phone"></use></svg><a href="tel:+64212387544">+64 21 238 7544</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-mail"></use></svg><a href="mailto:admin@sapotr.co.nz">admin@sapotr.co.nz</a></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-globe"></use></svg><a href="https://www.sapotr.co.nz" rel="noopener">www.sapotr.co.nz</a></li>
+      </ul>
+      <address>
+        <b>SAPOTR Pvt Ltd</b>
+        3 Kairakau Street, Takanini, Auckland, 2110, NZ
+      </address>
+    </div>
+
+    <div class="foot__bar">
+      <small>&copy; 2025 SAPOTR Pvt Ltd. All rights reserved.</small>
+      <small>Auckland, New Zealand</small>
+    </div>
+  </div>
+</footer>
+
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+<script>window.SapotrImages && SapotrImages.resolve();</script>
+</body>
+</html>
