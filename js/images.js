@@ -6,15 +6,17 @@
    below with the Cloudinary URLs. Nothing else needs to change.
 
    Usage in markup:
-     <img data-img="heroEmployee" alt="...">        -> sets src
-     <div data-img-bg="serviceMoving"></div>        -> sets background-image
+     <img data-img="storyAvatar1" alt="...">        -> sets src
+     <div data-img-bg="heroBackground"></div>       -> sets background-image
    ============================================================ */
 (function (window, document) {
   'use strict';
 
   var IMAGE_URLS = {
-    /* --- Hero: product showcase ------------------------------ */
-    heroEmployee:       'assets/images/hero-employee.jpg',
+    /* --- Section 1: hero ------------------------------------- */
+    heroBackground:     'assets/images/image.png',
+
+    /* --- shared employee avatars (journey map, Why Sapotr) ---- */
     avatarEmployee1:    'assets/images/avatar-employee-1.jpg',
     avatarEmployee2:    'assets/images/avatar-employee-2.jpg',
     avatarEmployee3:    'assets/images/avatar-employee-3.jpg',
@@ -25,7 +27,7 @@
 
     /* --- Section 3: how Sapotr fits into your everyday life -- */
     stepTap:            'assets/images/step-tap.jpg',
-    stepAssign:         'assets/images/step-assign.jpg',
+    stepAssign:         'assets/images/step-assign-otp.jpg',
     stepDone:           'assets/images/step-done.jpg',
 
     /* --- Section 5: explore services ------------------------- */
@@ -34,6 +36,17 @@
     serviceEvents:        'assets/images/service-events.jpg',
     serviceCommunities:   'assets/images/service-communities.jpg',
     serviceMaintenance:   'assets/images/service-maintenance.jpg',
+
+    /* --- Section 7: customer stories ------------------------- */
+    storyAvatar1:       'assets/images/story-avatar-1.jpg',
+    storyAvatar2:       'assets/images/story-avatar-2.jpg',
+    storyAvatar3:       'assets/images/story-avatar-3.jpg',
+
+    /* --- Section 8: FAQ ------------------------------------- */
+    faqIllustration:    'assets/images/faq-illustration.svg',
+
+    /* --- Section 9: final CTA -------------------------------- */
+    finalCtaEmployee:   'assets/images/cta-employee.jpg',
 
     /* --- Brand assets (supplied by client) ------------------- */
     logoWordmark:       'assets/logos/sapotr-wordmark.png',
@@ -64,6 +77,9 @@
   }
 
   window.SapotrImages = { urls: IMAGE_URLS, get: function (k) { return IMAGE_URLS[k]; }, resolve: resolve };
+
+  /* convenience alias — the same object under the name used in the brief */
+  window.IMAGE_ASSETS = IMAGE_URLS;
 
   document.addEventListener('DOMContentLoaded', function () { resolve(); });
 })(window, document);

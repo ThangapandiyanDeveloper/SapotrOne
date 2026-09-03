@@ -31,23 +31,26 @@
       quote: 'Sapotr helped us get reliable helpers for our moving day. Super easy and very professional.',
       name: 'Sarah T.',
       service: 'Moving & Shifting',
-      location: 'Auckland'
+      location: 'Auckland',
+      photo: 'storyAvatar1'
     },
     {
       quote: 'We needed extra hands for our event. Booked in minutes and everything went smoothly.',
       name: 'James L.',
       service: 'Events & Celebrations',
-      location: 'Wellington'
+      location: 'Wellington',
+      photo: 'storyAvatar2'
     },
     {
       quote: 'Great experience! Employees arrive on time, do the job well, and the app is easy to use.',
       name: 'Priya K.',
       service: 'Home & Personal',
-      location: 'Hamilton'
+      location: 'Hamilton',
+      photo: 'storyAvatar3'
     }
   ];
 
-  var BLANK_STORY = { quote: '', name: '', service: '', location: '' };
+  var BLANK_STORY = { quote: '', name: '', service: '', location: '', photo: '' };
 
   /* ==========================================================
      1. NAVIGATION
@@ -305,7 +308,6 @@
     var data = blank ? [BLANK_STORY, BLANK_STORY, BLANK_STORY] : TESTIMONIALS;
 
     var html = data.map(function (s) {
-      var initial = s.name ? s.name.charAt(0).toUpperCase() : '&mdash;';
       var quote = s.quote
         ? escapeHtml(s.quote)
         : '<span class="acc__pending" data-content-slot="story-quote">Customer quote to be supplied.</span>';
@@ -313,21 +315,31 @@
       var service = s.service ? escapeHtml(s.service) : 'Service type';
       var location = s.location ? escapeHtml(s.location) : 'Location';
 
+      /* a photograph where we have one, initials otherwise */
+      var avatar = s.photo
+        ? '<span class="story__av"><img data-img="' + s.photo + '" alt="" width="400" height="400" loading="lazy" decoding="async"></span>'
+        : '<span class="story__av story__av--blank" aria-hidden="true">' +
+            (s.name ? s.name.charAt(0).toUpperCase() : '&mdash;') + '</span>';
+
       return '' +
         '<li class="story" tabindex="0" data-placeholder="' + (blank ? 'true' : 'reference') + '">' +
           '<svg class="story__quote ic" aria-hidden="true"><use href="#i-quote"></use></svg>' +
           '<p class="story__text">' + quote + '</p>' +
           '<div class="story__foot">' +
-            '<span class="story__av" aria-hidden="true">' + initial + '</span>' +
+            avatar +
             '<span class="story__meta">' +
               '<b>' + name + '</b>' +
-              '<i>' + service + ' &middot; ' + location + '</i>' +
+              '<i><svg class="ic" aria-hidden="true"><use href="#i-pin"></use></svg>' + location + '</i>' +
             '</span>' +
           '</div>' +
+          '<span class="story__badge">' + service + '</span>' +
         '</li>';
     }).join('');
 
     track.innerHTML = html;
+
+    /* the cards were just injected — resolve their image keys */
+    if (window.SapotrImages) window.SapotrImages.resolve(track);
 
     createCarousel({
       track: '#story-track',

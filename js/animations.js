@@ -146,7 +146,62 @@
   }
 
   /* ---------------------------------------------------------
-     4. JOURNEY PROGRESS
+     4. PARALLAX (used by the final CTA)
+     Layers drift a few pixels with the cursor and on scroll,
+     which gives the showcase depth without moving content far
+     enough to distract. Pointer-driven motion only on devices
+     that actually have a pointer.
+     --------------------------------------------------------- */
+  function initParallax(root) {
+    if (!root || reduced.matches) return;
+
+    /* only nodes without a CSS transform animation of their own —
+       an animation would win over the inline transform set here */
+    var layers = [].slice.call(root.querySelectorAll('[data-depth]'));
+    if (!layers.length) return;
+
+    var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    root.setAttribute('data-parallax', '');
+
+    var mx = 0, my = 0, sy = 0, queued = false;
+
+    function paint() {
+      queued = false;
+      for (var i = 0; i < layers.length; i++) {
+        var d = parseFloat(layers[i].getAttribute('data-depth')) || 0;
+        var k = d / 100;
+        layers[i].style.transform =
+          'translate3d(' + (mx * k).toFixed(2) + 'px,' + (my * k + sy * k * 0.9).toFixed(2) + 'px,0)';
+      }
+    }
+
+    function schedule() {
+      if (!queued) { queued = true; window.requestAnimationFrame(paint); }
+    }
+
+    if (fine) {
+      root.addEventListener('mousemove', function (e) {
+        var r = root.getBoundingClientRect();
+        mx = ((e.clientX - r.left) / r.width - 0.5) * 2 * 16;
+        my = ((e.clientY - r.top) / r.height - 0.5) * 2 * 11;
+        schedule();
+      });
+      root.addEventListener('mouseleave', function () { mx = 0; my = 0; schedule(); });
+    }
+
+    /* gentle scroll drift while the block is on screen */
+    var onScroll = function () {
+      var r = root.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      sy = (r.top / window.innerHeight) * -22;
+      schedule();
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ---------------------------------------------------------
+     5. JOURNEY PROGRESS
      Marks every step before the active one as done, so the
      connecting line reads as progress.
      --------------------------------------------------------- */
@@ -167,6 +222,8 @@
       initReveals();
       initCounters();
       initChat();
+      initParallax(document.querySelector(".hero"));
+      initParallax(document.querySelector(".final__stage"));
     }
   };
 
