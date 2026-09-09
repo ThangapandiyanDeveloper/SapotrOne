@@ -134,12 +134,6 @@
       <path d="M9.5 8.8v12" />
       <path d="M16.6 20.8V3.2c2 1 3 2.8 3 5.4 0 2.1-1 3.3-3 3.8" />
     </symbol>
-    <symbol id="i-pause" viewBox="0 0 24 24">
-      <path d="M9 5.6v12.8M15 5.6v12.8" stroke-width="2.4" />
-    </symbol>
-    <symbol id="i-play" viewBox="0 0 24 24">
-      <path d="M7.6 5.2 18 12 7.6 18.8V5.2Z" fill="currentColor" stroke="none" />
-    </symbol>
     <symbol id="i-users" viewBox="0 0 24 24">
       <circle cx="9" cy="8.4" r="3.2" />
       <path d="M3.4 19.4a5.6 5.6 0 0 1 11.2 0" />
@@ -310,8 +304,8 @@
                    Sapotr palette, and costs no extra request. The viewBox is
                    re-framed per breakpoint in js/hero.js. -->
               <div class="hmap" data-depth="8">
-                <svg class="hmap__svg" id="hmap-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice"
-                  role="presentation" focusable="false">
+                <svg class="hmap__svg" id="hmap-svg" viewBox="-150 40 1620 740"
+                  preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false">
                   <defs>
                     <linearGradient id="hm-sea" x1="0" y1="0" x2=".6" y2="1">
                       <stop offset="0" stop-color="#C2E0F2" />
@@ -324,103 +318,137 @@
                   </defs>
 
                   <!-- the sea -->
-                  <rect x="-40" y="-40" width="1280" height="780" fill="url(#hm-sea)" />
+                  <rect x="-200" y="-140" width="1900" height="1160" fill="url(#hm-sea)" />
 
-                  <!-- North Shore. Its south coast is the north bank of the
-                       Waitemata and runs down to the left, so the harbour
-                       narrows westward and opens east into the gulf. -->
-                  <path fill="url(#hm-land)" d="M-40-40H1000
-                    C960 40 900 96 838 138
-                    C782 176 726 196 660 206
-                    C588 217 528 262 462 288
-                    C398 313 330 300 258 306
-                    C186 312 112 340 44 380
-                    C6 400-16 420-40 470Z" />
+                  <!-- North Shore and the Hibiscus Coast. The south coast is
+                       the north bank of the Waitemata, running down to the
+                       left, so the harbour narrows westward and opens east
+                       into the gulf. -->
+                  <path fill="url(#hm-land)" d="M-200-140H980
+                    C1010-40 1006 60 960 126
+                    C920 184 870 176 838 218
+                    C782 256 726 276 660 286
+                    C588 297 528 342 462 368
+                    C398 393 330 380 258 386
+                    C186 392 112 420 44 460
+                    C6 480-16 500-40 550
+                    C-90 580-140 570-200 590Z" />
 
-                  <!-- the central isthmus and the south -->
-                  <path fill="url(#hm-land)" d="M-40 470
-                    C40 448 110 420 186 410
-                    C258 400 316 424 388 414
-                    C444 406 486 440 548 432
-                    C610 424 668 452 730 442
-                    C796 431 852 460 914 448
-                    C978 436 1040 462 1104 450
-                    C1164 439 1200 458 1240 448
-                    L1240 740H-40Z" />
+                  <!-- the central isthmus and the south, out to Papakura -->
+                  <path fill="url(#hm-land)" d="M-200 570
+                    C-120 560-40 552 40 528
+                    C110 508 186 490 262 480
+                    C334 470 392 494 464 484
+                    C520 476 562 510 624 502
+                    C686 494 744 522 806 512
+                    C872 501 928 530 990 518
+                    C1054 506 1116 532 1180 520
+                    C1240 510 1300 536 1360 528
+                    C1440 518 1560 540 1700 528
+                    L1700 1020H-200Z" />
 
                   <!-- Manukau Harbour, cut back out of the isthmus -->
-                  <path fill="url(#hm-sea)" d="M-40 560
-                    C60 542 150 568 230 590
-                    C300 610 360 606 415 634
-                    C462 658 482 690 478 740H-40Z" />
+                  <path fill="url(#hm-sea)" d="M-200 646
+                    C-90 624 20 604 130 618
+                    C220 630 300 658 380 648
+                    C450 639 500 662 520 702
+                    C540 740 528 786 470 824
+                    C400 870 260 884 120 914
+                    C20 936-90 944-200 954Z" />
 
-                  <!-- Tamaki River -->
-                  <path fill="url(#hm-sea)" d="M878 452
-                    C870 500 882 546 870 596C862 632 868 664 860 696
-                    C856 712 846 712 844 696C840 664 850 632 854 596
-                    C862 546 854 500 862 452Z" />
+                  <!-- Tamaki estuary -->
+                  <path fill="url(#hm-sea)" d="M886 522
+                    C878 570 890 616 878 666C870 702 876 734 868 766
+                    C864 782 854 782 852 766C848 734 858 702 862 666
+                    C870 616 862 570 870 522Z" />
 
-                  <!-- Hauraki Gulf islands -->
-                  <path fill="url(#hm-land)" d="M1032 172
-                    C1060 148 1110 152 1134 182C1158 212 1142 256 1098 262
-                    C1054 268 1020 242 1022 210C1023 192 1024 180 1032 172Z" />
-                  <circle cx="1156" cy="352" r="18" fill="url(#hm-land)" />
+                  <!-- Hauraki Gulf islands: Rangitoto, Motutapu, Waiheke -->
+                  <path fill="url(#hm-land)" d="M1046 252
+                    C1074 228 1124 232 1148 262C1172 292 1156 336 1112 342
+                    C1068 348 1034 322 1036 290C1037 272 1038 260 1046 252Z" />
+                  <path fill="url(#hm-land)" d="M1170 300
+                    C1210 288 1246 306 1250 336C1254 364 1224 380 1192 372
+                    C1164 365 1152 336 1158 316C1161 306 1164 302 1170 300Z" />
+                  <path fill="url(#hm-land)" d="M1266 384
+                    C1330 356 1430 366 1486 396C1540 424 1546 470 1496 490
+                    C1440 512 1350 504 1300 478C1256 456 1240 412 1266 384Z" />
+                  <circle cx="1128" cy="432" r="15" fill="url(#hm-land)" />
 
                   <!-- parks and reserves -->
                   <g fill="#D6E4C9" opacity=".92">
-                    <ellipse cx="222" cy="140" rx="56" ry="30" />
-                    <ellipse cx="596" cy="120" rx="42" ry="22" />
-                    <ellipse cx="322" cy="546" rx="46" ry="26" />
-                    <ellipse cx="742" cy="546" rx="52" ry="28" />
-                    <ellipse cx="1080" cy="208" rx="42" ry="22" />
+                    <ellipse cx="222" cy="220" rx="56" ry="30" />
+                    <ellipse cx="596" cy="200" rx="42" ry="22" />
+                    <ellipse cx="322" cy="626" rx="46" ry="26" />
+                    <ellipse cx="742" cy="626" rx="52" ry="28" />
+                    <ellipse cx="1096" cy="292" rx="42" ry="22" />
+                    <ellipse cx="1380" cy="436" rx="60" ry="26" />
+                    <ellipse cx="140" cy="760" rx="66" ry="34" />
+                    <ellipse cx="640" cy="900" rx="58" ry="28" />
                   </g>
 
                   <!-- motorways: white casing, brand-yellow core -->
                   <g fill="none" stroke-linecap="round">
                     <path stroke="#FFFFFF" stroke-width="11"
-                      d="M300-30C336 70 392 152 428 236C452 292 448 330 446 372C444 412 452 436 456 470C462 520 486 580 512 640C532 686 548 712 560 740" />
+                      d="M262-140C300 20 356 200 428 316C452 372 448 410 446 452C444 492 452 516 456 550C462 600 486 660 512 720C540 786 556 880 566 1020" />
                     <path stroke="#FFC107" stroke-width="5"
-                      d="M300-30C336 70 392 152 428 236C452 292 448 330 446 372C444 412 452 436 456 470C462 520 486 580 512 640C532 686 548 712 560 740" />
+                      d="M262-140C300 20 356 200 428 316C452 372 448 410 446 452C444 492 452 516 456 550C462 600 486 660 512 720C540 786 556 880 566 1020" />
                     <path stroke="#FFFFFF" stroke-width="10"
-                      d="M-30 520C90 500 200 522 300 512C400 502 480 520 552 500" />
+                      d="M-200 640C-60 618 90 596 240 600C400 604 480 600 566 580" />
                     <path stroke="#FFC107" stroke-width="4.5"
-                      d="M-30 520C90 500 200 522 300 512C400 502 480 520 552 500" />
+                      d="M-200 640C-60 618 90 596 240 600C400 604 480 600 566 580" />
                     <path stroke="#FFFFFF" stroke-width="10"
-                      d="M300 740C348 680 420 646 470 606C516 570 560 552 616 540" />
+                      d="M300 1020C348 960 420 726 470 686C516 650 560 632 630 620" />
                     <path stroke="#FFC107" stroke-width="4.5"
-                      d="M300 740C348 680 420 646 470 606C516 570 560 552 616 540" />
-                    <!-- the harbour bridge, drawn darker so it reads as a crossing -->
-                    <path stroke="#AAB1C4" stroke-width="6" d="M444 300C446 340 446 386 448 424" />
-                    <path stroke="#FFC107" stroke-width="2.5" d="M444 300C446 340 446 386 448 424" />
+                      d="M300 1020C348 960 420 726 470 686C516 650 560 632 630 620" />
+                    <!-- the harbour bridge, darker so it reads as a crossing -->
+                    <path stroke="#AAB1C4" stroke-width="6" d="M444 380C446 420 446 466 448 504" />
+                    <path stroke="#FFC107" stroke-width="2.5" d="M444 380C446 420 446 466 448 504" />
                     <!-- arterials, kept on land -->
                     <g stroke="#FFFFFF" stroke-width="4" opacity=".85">
-                      <path d="M120 10C150 90 190 150 226 236" />
-                      <path d="M556 62C612 106 654 146 700 178" />
-                      <path d="M540 486C620 494 690 512 792 500" />
-                      <path d="M470 494C406 516 346 540 290 578" />
-                      <path d="M700 606C762 636 818 664 858 716" />
-                      <path d="M300 512C330 560 350 600 366 646" />
-                      <path d="M950 456C1010 470 1080 486 1150 480" />
+                      <path d="M120 90C150 170 190 230 226 316" />
+                      <path d="M556 142C612 186 654 226 700 258" />
+                      <path d="M540 566C620 574 690 592 792 580" />
+                      <path d="M470 574C406 596 346 620 290 658" />
+                      <path d="M700 686C762 716 818 744 858 796" />
+                      <path d="M300 592C330 640 350 680 366 726" />
+                      <path d="M950 536C1010 550 1080 566 1150 560" />
+                      <path d="M566 760C640 776 720 790 800 776" />
+                      <path d="M566 880C660 872 760 856 860 826" />
+                      <path d="M-60 560C20 508 110 470 200 452" />
                     </g>
                   </g>
 
-                  <!-- suburb labels -->
+                  <!-- suburb labels, spread wide so the banner reads as the
+                       whole region rather than one neighbourhood -->
                   <g class="hmap__labels">
-                    <text x="222" y="172">Albany</text>
-                    <text x="316" y="196">Glenfield</text>
-                    <text x="752" y="158">Takapuna</text>
-                    <text x="392" y="244">Northcote</text>
-                    <text x="576" y="184">Devonport</text>
-                    <text x="62" y="300">West Harbour</text>
-                    <text class="hmap__labels-city" x="440" y="504">AUCKLAND</text>
-                    <text x="796" y="492">Mission Bay</text>
-                    <text x="962" y="500">St Heliers</text>
-                    <text x="118" y="536">New Lynn</text>
-                    <text x="222" y="470">Mount Albert</text>
-                    <text x="352" y="596">Onehunga</text>
-                    <text x="662" y="600">Mount Wellington</text>
-                    <text x="536" y="694">Manukau</text>
-                    <text x="1006" y="300">Rangitoto</text>
+                    <text class="hmap__labels-minor" x="196" y="-30">Orewa</text>
+                    <text class="hmap__labels-minor" x="330" y="66">Silverdale</text>
+                    <text x="256" y="196">Albany</text>
+                    <text class="hmap__labels-minor" x="-24" y="330">Kumeu</text>
+                    <text x="330" y="276">Glenfield</text>
+                    <text x="760" y="238">Takapuna</text>
+                    <text x="392" y="324">Northcote</text>
+                    <text x="576" y="264">Devonport</text>
+                    <text x="62" y="380">West Harbour</text>
+                    <text class="hmap__labels-minor" x="118" y="504">Henderson</text>
+                    <text class="hmap__labels-minor" x="-40" y="676">Titirangi</text>
+                    <text x="120" y="616">New Lynn</text>
+                    <text x="222" y="550">Mount Albert</text>
+                    <text class="hmap__labels-city" x="440" y="584">AUCKLAND</text>
+                    <text class="hmap__labels-minor" x="470" y="536">Ponsonby</text>
+                    <text x="796" y="572">Mission Bay</text>
+                    <text x="962" y="580">St Heliers</text>
+                    <text class="hmap__labels-minor" x="596" y="616">Newmarket</text>
+                    <text x="352" y="676">Onehunga</text>
+                    <text class="hmap__labels-minor" x="628" y="676">Ellerslie</text>
+                    <text x="662" y="700">Mount Wellington</text>
+                    <text class="hmap__labels-minor" x="884" y="716">Howick</text>
+                    <text class="hmap__labels-minor" x="906" y="800">Botany</text>
+                    <text class="hmap__labels-minor" x="520" y="806">Papatoetoe</text>
+                    <text x="636" y="852">Manukau</text>
+                    <text class="hmap__labels-minor" x="640" y="962">Papakura</text>
+                    <text x="1032" y="380">Rangitoto</text>
+                    <text x="1300" y="524">Waiheke</text>
                   </g>
                 </svg>
                 <span class="hmap__vignette"></span>
@@ -534,16 +562,7 @@
 
         <!-- ---- carousel controls ---- -->
         <div class="hero__ui">
-          <button class="hero__pp" id="hero-pp" type="button" aria-label="Pause the banner rotation">
-            <svg class="ic ic--pause" aria-hidden="true">
-              <use href="#i-pause"></use>
-            </svg>
-            <svg class="ic ic--play" aria-hidden="true">
-              <use href="#i-play"></use>
-            </svg>
-          </button>
           <div class="hero__dots" id="hero-dots" role="tablist" aria-label="Choose a banner"></div>
-          <div class="hero__prog" id="hero-prog" aria-hidden="true"><i></i></div>
         </div>
       </div>
 

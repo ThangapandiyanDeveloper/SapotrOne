@@ -38,21 +38,29 @@
     heroB4Tablet:       'assets/images/hero/b4-tablet.jpg',
     heroB4Mobile:       'assets/images/hero/b4-mobile.jpg',
 
-    /* Banner 2 — staff on the availability cards. Square 160px, i.e.
-       twice the largest rendered size, so they stay crisp at 2x.
-       PENDING CLIENT ASSETS: these are the existing stock headshots.
-       When the shoot of staff in the navy #0F1738 Sapotr tee is
-       delivered, drop the new files in here and the navy chest band
-       the card draws over the photo can be removed from hero.css. */
-    heroStaff1:         'assets/images/hero/staff-1.jpg',
-    heroStaff2:         'assets/images/hero/staff-2.jpg',
-    heroStaff3:         'assets/images/hero/staff-3.jpg',
-    heroStaff4:         'assets/images/hero/staff-4.jpg',
-    heroStaff5:         'assets/images/hero/staff-5.jpg',
-    heroStaff6:         'assets/images/hero/staff-6.jpg',
-    heroStaff7:         'assets/images/hero/staff-7.jpg',
-    /* brand mark worn on the chest of each card avatar (72px, trimmed) */
-    heroUniformMark:    'assets/images/hero/uniform-mark.png',
+    /* Banner 2 — the staff on the availability cards. Fourteen different
+       people, one per card, each 256px square (well above the largest
+       rendered size, so they stay crisp at 3x). The navy #0F1738 tee
+       and the chest mark are part of each file.
+
+       PENDING CLIENT ASSETS: composited from the existing library while
+       the uniform shoot is outstanding. Replace each file in
+       assets/images/hero/staff/ with a real photograph of that employee
+       in the tee — same names, nothing else changes. */
+    heroStaff01:        'assets/images/hero/staff/s01.jpg',
+    heroStaff02:        'assets/images/hero/staff/s02.jpg',
+    heroStaff03:        'assets/images/hero/staff/s03.jpg',
+    heroStaff04:        'assets/images/hero/staff/s04.jpg',
+    heroStaff05:        'assets/images/hero/staff/s05.jpg',
+    heroStaff06:        'assets/images/hero/staff/s06.jpg',
+    heroStaff07:        'assets/images/hero/staff/s07.jpg',
+    heroStaff09:        'assets/images/hero/staff/s09.jpg',
+    heroStaff10:        'assets/images/hero/staff/s10.jpg',
+    heroStaff11:        'assets/images/hero/staff/s11.jpg',
+    heroStaff12:        'assets/images/hero/staff/s12.jpg',
+    heroStaff13:        'assets/images/hero/staff/s13.jpg',
+    heroStaff14:        'assets/images/hero/staff/s14.jpg',
+    heroStaff15:        'assets/images/hero/staff/s15.jpg',
 
     /* --- shared employee avatars (journey map, Why Sapotr) ---- */
     avatarEmployee1:    'assets/images/avatar-employee-1.jpg',
