@@ -105,9 +105,16 @@
       return;
     }
 
-    /* reserve the panel height so playback does not shift the page */
+    /* Reserve the height the panel settles at. Measured with the typing
+       indicator already out of flow, so the finished conversation is not
+       left sitting above a blank strip once the dots become the reply. */
     var body = chat.querySelector('.chat__body');
-    if (body) body.style.minHeight = body.offsetHeight + 'px';
+    var typing = chat.querySelector('.bubble--typing');
+    if (body) {
+      if (typing) typing.classList.add('is-hidden');
+      body.style.minHeight = body.offsetHeight + 'px';
+      if (typing) typing.classList.remove('is-hidden');
+    }
 
     var timers = [];
     var played = false;

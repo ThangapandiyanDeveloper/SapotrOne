@@ -643,16 +643,56 @@
     <script>window.SapotrImages && SapotrImages.resolve();</script>
 
     <!-- ============================================================
-     2. THE PROBLEM — chat-style storytelling
+     2. TODAY'S PROBLEM — problem signals + chat-style storytelling
      ============================================================ -->
     <section class="problem section" id="problem">
       <div class="container">
         <header class="sec-head sec-head--left">
-          <span class="eyebrow reveal"><span class="eyebrow__bar"></span>The Problem</span>
+          <!-- the equation stays on one line; only the colon is a break point -->
+          <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Today&rsquo;s Problem :
+            Time&nbsp;Lost&nbsp;=&nbsp;Money&nbsp;Lost</span>
           <h2 class="reveal" data-delay="60">Finding Reliable<br>Help Isn&rsquo;t Easy</h2>
         </header>
 
         <div class="problem__grid">
+
+          <div class="problem__aside">
+            <div class="worry reveal" data-delay="180">
+              <div class="worry__photo">
+                <img data-img="problemPerson" alt="A business owner searching for reliable short-term help on a phone"
+                  width="900" height="1000" loading="lazy" decoding="async">
+              </div>
+
+              <!-- the five problem signals — a sequence, not a bullet list -->
+              <ul class="worry__signals">
+                <li class="worry__q worry__q--1">
+                  <svg class="ic worry__ic" aria-hidden="true">
+                    <use href="#i-phone"></use>
+                  </svg><span>No reply to my calls</span>
+                </li>
+                <li class="worry__q worry__q--2">
+                  <svg class="ic worry__ic" aria-hidden="true">
+                    <use href="#i-facebook"></use>
+                  </svg><span>No one available on Facebook</span>
+                </li>
+                <li class="worry__q worry__q--3">
+                  <svg class="ic worry__ic" aria-hidden="true">
+                    <use href="#i-clock"></use>
+                  </svg><span>Still waiting for responses</span>
+                </li>
+                <li class="worry__q worry__q--4">
+                  <svg class="ic worry__ic" aria-hidden="true">
+                    <use href="#i-building"></use>
+                  </svg><span>Agency taking too long</span>
+                </li>
+                <li class="worry__q worry__q--5 worry__q--urgent">
+                  <svg class="ic worry__ic" aria-hidden="true">
+                    <use href="#i-bolt"></use>
+                  </svg><span>Need someone today!</span>
+                </li>
+              </ul>
+            </div>
+          </div>
 
           <!-- ---- Chat conversation ---- -->
           <div class="chat reveal" data-delay="120">
@@ -670,13 +710,17 @@
 
               <div class="bubble bubble--in" data-msg="1">
                 <span class="bubble__avatar"><img data-img="problemPerson" alt="" width="900" height="1000"></span>
-                <p>Need help for just for a few hours or for day?<span class="bubble__time">10:30 AM</span></p>
+                <div class="bubble__stack">
+                  <span class="bubble__from">Sam<i>Manager</i></span>
+                  <p>Hi, I&rsquo;m short-staffed today. Can I get someone for around 4 - 8 hours for the evening
+                    shift?<span class="bubble__time">10:30 AM</span></p>
+                </div>
               </div>
 
               <div class="bubble bubble--in" data-msg="2">
                 <span class="bubble__avatar"><img data-img="problemPerson" alt="" width="900" height="1000"></span>
-                <p>Finding someone reliable for a short-term job can be difficult.<span class="bubble__time">10:31
-                    AM</span></p>
+                <p>I&rsquo;ve tried calls, Facebook posts and job boards, but I&rsquo;m still waiting for someone.<span
+                    class="bubble__time">10:31 AM</span></p>
               </div>
 
               <div class="bubble bubble--typing" data-msg="3" aria-hidden="true">
@@ -695,8 +739,8 @@
                   <span class="bubble__ok"><svg class="ic" aria-hidden="true">
                       <use href="#i-check"></use>
                     </svg></span>
-                  Book a verified employee instantly and get the pending work done — No calls, No searching, No agencies
-                  or waiting, No long-term commitment.
+                  Anyone can book available verified staff through <strong>SAPOTR</strong> and get the extra support you
+                  need no calls, no posts, no waiting, no agencies.
                   <span class="bubble__time">10:33 AM <svg class="ic tick" aria-hidden="true">
                       <use href="#i-check"></use>
                     </svg></span>
@@ -705,19 +749,6 @@
             </div>
           </div>
 
-          <!-- ---- The worry + the answer ---- -->
-          <div class="problem__aside">
-            <div class="worry reveal" data-delay="180">
-              <div class="worry__photo">
-                <img data-img="problemPerson" alt="A business owner searching for reliable short-term help on a phone"
-                  width="900" height="1000" loading="lazy" decoding="async">
-              </div>
-              <span class="worry__q worry__q--1">Where can I find someone reliable?</span>
-              <span class="worry__q worry__q--2">Can someone come today?</span>
-              <span class="worry__q worry__q--3">Will they be trustworthy?</span>
-              <span class="worry__q worry__q--4">Too many calls and follow-ups</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -750,16 +781,9 @@
                   <img data-img="stepTap" alt="A customer opening the Sapotr app to select a service" width="900"
                     height="700" loading="lazy" decoding="async">
                 </div>
-                <div class="mini mini--select">
-                  <span class="mini__label">Select Service</span>
-                  <span class="mini__chips">
-                    <i class="is-on"><svg class="ic" aria-hidden="true">
-                        <use href="#i-home"></use>
-                      </svg>Home &amp; Personal</i>
-                    <i><svg class="ic" aria-hidden="true">
-                        <use href="#i-truck"></use>
-                      </svg>Moving</i>
-                  </span>
+                <div class="otp" aria-hidden="true">
+                  <span class="otp__row otp__row--1"><i class="dot dot--live"></i>Select Staff</span>
+                  
                 </div>
               </div>
             </li>
@@ -835,13 +859,7 @@
                 <!-- arrival -> OTP -> verified, played while this step is active -->
                 <div class="otp" aria-hidden="true">
                   <span class="otp__row otp__row--1"><i class="dot dot--live"></i>Employee arrived</span>
-                  <span class="otp__row otp__row--2"><em>Share this OTP</em><b>8&nbsp;2&nbsp;7&nbsp;3</b></span>
-                  <span class="otp__row otp__row--3">
-                    <span class="otp__tick"><svg class="ic" aria-hidden="true">
-                        <use href="#i-check"></use>
-                      </svg></span>
-                    Verified &middot; Work assigned
-                  </span>
+                  
                 </div>
               </div>
             </li>

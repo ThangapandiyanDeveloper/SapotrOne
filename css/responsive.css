@@ -42,13 +42,18 @@
   .nav__mobile[hidden]{display:none}
   .nav.is-open{box-shadow:var(--sh-2)}
 
-  /* problem: chat first, the worry visual below */
+  /* problem: chat first, the problem signals below */
   .problem__grid{grid-template-columns:1fr;gap:26px}
   .problem__aside{height:auto}
-  /* the worry chips become a flowing list under the photo */
-  .worry{padding-right:0;height:auto;display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
-  .worry__photo{flex:1 1 100%;height:300px;min-height:0}
-  .worry__q{position:static;max-width:none;flex:1 1 auto;animation:none}
+  /* the signals recompose into a flowing row of chips under the photo */
+  .worry{padding-right:0;height:auto;display:flex;flex-direction:column;gap:14px}
+  .worry__photo{height:clamp(260px,34vw,320px);min-height:0}
+  .worry__signals{display:flex;flex-wrap:wrap;gap:10px}
+  .worry__q{
+    position:static;max-width:none;flex:0 1 auto;
+    animation:none;padding:10px 14px;font-size:.8125rem;
+  }
+  .worry.is-in .worry__q{animation:none}
   .worry__q::after{display:none}
 
   /* journey: 2 x 2 */
@@ -98,10 +103,11 @@
 
   .problem__aside{flex-direction:column}
   .problem__grid{gap:20px}
-  .worry__photo{height:230px}
+  .worry__photo{height:clamp(220px,44vw,260px)}
   .chat__body{min-height:0;padding:18px 14px 22px}
-  .bubble{max-width:94%}
+  .bubble{max-width:min(94%,30rem)}
   .bubble p{font-size:.875rem}
+  .bubble__from{font-size:.625rem}
 
   .bento{grid-template-columns:1fr;gap:12px}
   .tile,.tile--fast,.tile--verified,.tile--transparent,
@@ -174,6 +180,9 @@
 @media (max-width:430px){
   :root{--pad:18px}
   .sec-head .eyebrow{font-size:.6875rem;letter-spacing:.07em}
+  .problem .sec-head .eyebrow{letter-spacing:.055em;line-height:1.5}
+  .worry__signals{gap:8px}
+  .worry__q{padding:9px 12px;font-size:.78rem;gap:7px}
 
   .step{grid-template-columns:1fr}
   .step__media{grid-column:1;height:170px}
@@ -188,6 +197,10 @@
 
 /* ---------- <= 360 : smallest supported ------------------ */
 @media (max-width:360px){
+  .worry__q{font-size:.75rem;padding:8px 11px}
+  .worry__ic{width:13px;height:13px}
+  .bubble{max-width:100%}
+  .chat__body{padding:16px 12px 20px}
   .svc{flex:0 0 86vw}
   .acc__btn{font-size:.9375rem;padding:16px 15px}
   .faq__visual{width:min(280px,92%)}
