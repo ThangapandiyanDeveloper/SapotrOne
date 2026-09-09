@@ -401,64 +401,32 @@
   }
 
   /* ==========================================================
-     6. FINAL CTA — booking-style interaction
-     Front-end only: choosing a service turns "Try Now" into
-     "Book an Employee". No booking is processed.
+     6. FINAL CTA — Try Now
+     Purely visual: the button performs no action. The only script
+     here moves a soft highlight to follow the cursor inside it.
      ========================================================== */
-  function initBooker() {
-    var grid = qs('#booker-grid');
-    var cta = qs('#booker-cta');
-    var ctaTxt = qs('#booker-cta-txt');
-    var pick = qs('#booker-pick');
-    if (!grid || !cta || !ctaTxt) return;
+  function initCtaButton() {
+    var btn = qs('.cta__btn');
+    if (!btn || reduced.matches) return;
 
-    var opts = qsa('.booker__opt', grid);
-    var chosen = null;
+    var queued = false, x = 50, y = 50;
 
-    cta.classList.add('is-idle');
-
-    function select(btn) {
-      chosen = btn;
-      opts.forEach(function (o) {
-        o.setAttribute('aria-checked', o === btn ? 'true' : 'false');
-        o.tabIndex = o === btn ? 0 : -1;
-      });
-
-      var label = btn.getAttribute('data-service') || '';
-      if (pick) pick.innerHTML = 'Selected: <b>' + escapeHtml(label) + '</b>';
-      ctaTxt.textContent = 'Book an Employee';
-      cta.classList.remove('is-idle');
+    function paint() {
+      queued = false;
+      btn.style.setProperty('--mx', x + '%');
+      btn.style.setProperty('--my', y + '%');
     }
 
-    opts.forEach(function (btn, i) {
-      btn.tabIndex = i === 0 ? 0 : -1;
-      btn.addEventListener('click', function () { select(btn); });
-
-      /* radiogroup keyboard behaviour */
-      btn.addEventListener('keydown', function (e) {
-        var dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1
-                : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
-        if (!dir) return;
-        e.preventDefault();
-        var target = opts[(i + dir + opts.length) % opts.length];
-        target.focus();
-        select(target);
-      });
+    btn.addEventListener('pointermove', function (e) {
+      var r = btn.getBoundingClientRect();
+      x = ((e.clientX - r.left) / r.width) * 100;
+      y = ((e.clientY - r.top) / r.height) * 100;
+      if (!queued) { queued = true; window.requestAnimationFrame(paint); }
     });
 
-    cta.addEventListener('click', function () {
-      if (!chosen) {
-        /* nudge the visitor to choose first */
-        grid.classList.remove('is-nudge');
-        void grid.offsetWidth;
-        grid.classList.add('is-nudge');
-        opts[0].focus();
-        return;
-      }
-      if (pick) {
-        pick.innerHTML = 'Selected: <b>' + escapeHtml(chosen.getAttribute('data-service') || '') +
-                         '</b> &middot; Booking opens in the Sapotr app.';
-      }
+    btn.addEventListener('pointerleave', function () {
+      btn.style.setProperty('--mx', '50%');
+      btn.style.setProperty('--my', '50%');
     });
   }
 
@@ -485,7 +453,7 @@
     initJourney();
     initStories();
     initAccordion();
-    initBooker();
+    initCtaButton();
     initAnchors();
 
     createCarousel({

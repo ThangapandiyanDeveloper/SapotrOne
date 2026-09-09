@@ -223,7 +223,7 @@
       initCounters();
       initChat();
       initParallax(document.querySelector(".hero"));
-      initParallax(document.querySelector(".final__stage"));
+      initParallax(document.querySelector(".cta__panel"));
     }
   };
 

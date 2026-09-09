@@ -8,12 +8,10 @@
 /* ---------- 1440+ : a little more air --------------------- */
 @media (min-width:1440px){
   :root{--pad:32px}
-  .hero{min-height:min(86vh,920px);padding-bottom:clamp(260px,22vw,360px)}
 }
 
-/* ---------- <= 1280 : tighten the hero showcase ----------- */
+/* ---------- <= 1280 : tighten the journey media ----------- */
 @media (max-width:1280px){
-  .hero{min-height:min(90vh,820px);padding-bottom:clamp(200px,22vw,270px)}
   .journey{--media-h:196px}
 }
 
@@ -26,10 +24,6 @@
   /* FAQ: give the questions more room, shrink the illustration */
   .faq__grid{grid-template-columns:minmax(0,1fr) minmax(0,.66fr)}
 
-  /* final CTA: narrower visual, smaller floating labels */
-  .final__inner{grid-template-columns:minmax(0,1fr) minmax(0,.6fr)}
-  .final__float{font-size:.625rem;padding:7px 11px}
-  .final__float--2{left:-14%}
   .foot__cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 22px}
   .foot__col--dl{grid-column:span 3;flex-direction:row;flex-wrap:wrap;align-items:center}
   .foot__col--dl h3{width:100%;margin-bottom:4px}
@@ -48,11 +42,6 @@
   .nav__mobile[hidden]{display:none}
   .nav.is-open{box-shadow:var(--sh-2)}
 
-  /* hero: the staff band needs less room as the copy narrows */
-  .hero{min-height:min(88vh,760px);padding-bottom:clamp(180px,24vw,240px)}
-  .hero__bg-img{background-position:50% 14%}
-  .hero__title{font-size:clamp(2.3rem,5.2vw,3.5rem)}
-
   /* problem: chat first, the worry visual below */
   .problem__grid{grid-template-columns:1fr;gap:26px}
   .problem__aside{height:auto}
@@ -70,21 +59,9 @@
   /* explore + stories */
   .story{flex:0 0 calc((100% - 22px)/2)}
 
-  /* final CTA stacks into one intentional column */
-  .final__inner{
-    grid-template-columns:1fr;
-    grid-template-areas:'copy' 'art' 'sel' 'cta';
-    justify-items:center;text-align:center;
-  }
-  .final__copy{max-width:640px}
-  .final__art{
-    width:min(360px,80%);margin:clamp(26px,4vw,34px) auto 0;padding:0;
-  }
-  .final__frame{inset:22px -10px -10px 26px}
-  /* justify-items:center sizes grid items to content — take the width back */
-  .booker,.booker__foot{width:100%}
-  .booker{margin-top:clamp(28px,4vw,40px)}
-  .booker__q{text-align:center}
+  /* final CTA: keep the panel generous but pull the rings in */
+  .cta__ring--1{width:min(620px,116%)}
+  .cta__ring--2{width:min(880px,164%)}
 
   /* FAQ stacks: heading, then the illustration, then the questions */
   .faq__grid{
@@ -111,9 +88,6 @@
 @media (max-width:900px){
   .stats{grid-template-columns:repeat(3,1fr);gap:34px 0}
   .stat:nth-child(4)::before,.stat:nth-child(1)::before{display:none}
-  .booker__grid{grid-template-columns:repeat(3,1fr)}
-  .final__float--1{left:-8%}
-  .final__float--3{left:-6%}
   .sec-head--row{flex-direction:column;align-items:flex-start;gap:22px}
   .explore__nav{order:2}
 }
@@ -121,32 +95,6 @@
 /* ---------- <= 768 : tablet portrait / large phone -------- */
 @media (max-width:768px){
   :root{--sec:clamp(58px,11vw,80px)}
-
-  /* hero: a dedicated portrait composition, not a squashed desktop.
-     The source photo is portrait, so it crops well here. */
-  .hero{
-    min-height:0;
-    padding:40px 0 clamp(210px,52vw,300px);
-    text-align:center;
-  }
-  .hero__bg-img{background-size:165% auto;background-position:50% 2%}
-  .hero__scrim{
-    background:
-      linear-gradient(180deg,
-        rgba(11,17,45,.95) 0%,
-        rgba(11,17,45,.90) 34%,
-        rgba(11,17,45,.60) 58%,
-        rgba(11,17,45,.34) 76%,
-        rgba(11,17,45,.60) 89%,
-        rgba(11,17,45,.97) 100%);
-  }
-  .hero__orb{filter:blur(52px)}
-  .hero__title{font-size:clamp(2.15rem,8.4vw,3rem)}
-  .hero__sub{font-size:1.0625rem}
-  .hero__actions{gap:10px;margin-top:28px}
-  .hero__actions .btn{flex:1 1 auto;min-width:190px}
-  .hero__trust{gap:8px;font-size:.8125rem;margin-top:26px}
-  .hero__trust li{padding:8px 13px}
 
   .problem__aside{flex-direction:column}
   .problem__grid{gap:20px}
@@ -183,10 +131,11 @@
   .faq__visual{width:min(340px,86%)}
   .acc__btn{padding:17px 18px}
 
-  .final__stage{padding:30px 20px 34px}
-  .final__float{display:none}
-  .final__art{width:min(300px,84%)}
-  .booker__cta{width:100%;max-width:330px;padding:17px 24px}
+  /* final CTA: tighter panel, softer decoration */
+  .cta__panel{padding:clamp(44px,9vw,64px) 22px}
+  .cta__title{max-width:22ch}
+  .cta__orb{filter:blur(56px)}
+  .cta__mesh{background-size:44px 44px}
 
   .foot__top{grid-template-columns:1fr;gap:36px}
   .foot__cols{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -198,29 +147,22 @@
 
 /* ---------- <= 640 : phones ------------------------------- */
 @media (max-width:640px){
-  /* hero: tighter crop so faces land below the copy, not behind it */
-  .hero__bg-img{background-size:285% auto;background-position:50% 0%}
-
   /* keep each sentence of the impact headline on its own line */
   .numbers h2{font-size:1.55rem}
 
-  /* let the CTA headline wrap naturally rather than orphaning "Ways —" */
-  .final__copy h2{font-size:1.5rem}
-  .final__copy h2 br{display:none}
+  /* final CTA: comfortable reading measure and a full-width tap target */
+  .cta__title{max-width:none}
+  .cta__sub{max-width:none}
+  .cta__btn{width:100%;max-width:320px;justify-content:center}
+  .cta__ring--2{display:none}
 
   .stats{grid-template-columns:repeat(2,1fr);gap:30px 0}
   .stat::before{display:none!important}
   .stat{text-align:left;padding:0 8px}
   .stat__ico{margin:0 0 14px}
 
-  .booker__grid{grid-template-columns:1fr;gap:8px}
-  .booker__opt{
-    flex-direction:row;justify-content:flex-start;text-align:left;
-    gap:12px;padding:13px 14px;
-  }
-  .booker__ico{width:34px;height:34px;border-radius:10px}
-  .booker__opt:hover{transform:translateY(-3px) scale(1)}
-  .booker__tick{position:static;margin-left:auto}
+  .cta__panel{padding:38px 18px 44px;border-radius:22px}
+  .cta__orb{filter:blur(44px)}
 
   .svc{flex:0 0 82vw}
   .svc-track{gap:14px}
@@ -231,13 +173,6 @@
 /* ---------- <= 430 : compact phones ---------------------- */
 @media (max-width:430px){
   :root{--pad:18px}
-  .hero{padding-bottom:clamp(190px,56vw,250px)}
-  .hero__title{font-size:clamp(1.95rem,9vw,2.5rem)}
-  .hero__sub{font-size:1rem}
-  .hero__actions{flex-direction:column}
-  .hero__actions .btn{width:100%;min-width:0}
-  .hero__copy .eyebrow{font-size:.6875rem;padding:8px 14px}
-  .hero__accent::after{height:3px}
   .sec-head .eyebrow{font-size:.6875rem;letter-spacing:.07em}
 
   .step{grid-template-columns:1fr}
@@ -253,10 +188,6 @@
 
 /* ---------- <= 360 : smallest supported ------------------ */
 @media (max-width:360px){
-  .hero__bg-img{background-size:345% auto}
-  .hero__trust{flex-direction:column;align-items:center;gap:8px}
-  .hero__trust li{width:100%;justify-content:center}
-  .hero{padding-bottom:clamp(170px,54vw,220px)}
   .svc{flex:0 0 86vw}
   .acc__btn{font-size:.9375rem;padding:16px 15px}
   .faq__visual{width:min(280px,92%)}
@@ -273,7 +204,7 @@
 
 /* ---------- print ---------------------------------------- */
 @media print{
-  .nav,.explore__nav,.dots,.booker__cta,.foot__social{display:none}
+  .nav,.explore__nav,.dots,.cta__btn,.foot__social{display:none}
   .reveal{opacity:1;transform:none}
   body{color:#000}
 }
