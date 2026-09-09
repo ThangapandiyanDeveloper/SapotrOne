@@ -50,26 +50,26 @@
   var STAFF = [
     /* tier 1 — the four that survive on a phone: corners only, so the
        headline and the sub-heading are never covered */
-    { n: 'Sophie', r: '4.9', p: 'heroStaff03', t: 1, x: 4,  y: 12, tx: 2,  ty: 10, mx: 1,  my: 5  },
+    { n: 'Sophie', r: '4.9', p: 'heroStaff01', t: 1, x: 4,  y: 12, tx: 2,  ty: 10, mx: 1,  my: 5  },
     { n: 'Emily',  r: '4.8', p: 'heroStaff02', t: 1, x: 81, y: 12, tx: 72, ty: 9,  mx: 54, my: 5  },
-    { n: 'Grace',  r: '4.9', p: 'heroStaff10', t: 1, x: 5,  y: 74, tx: 3,  ty: 72, mx: 1,  my: 62 },
-    { n: 'James',  r: '4.7', p: 'heroStaff14', t: 1, x: 82, y: 74, tx: 73, ty: 71, mx: 54, my: 62 },
+    { n: 'Grace',  r: '4.9', p: 'heroStaff03', t: 1, x: 5,  y: 74, tx: 3,  ty: 72, mx: 1,  my: 62 },
+    { n: 'James',  r: '4.7', p: 'heroStaff04', t: 1, x: 82, y: 74, tx: 73, ty: 71, mx: 54, my: 62 },
 
     /* tier 2 — tablet up, nine cards. A tablet's copy is nearly as wide
        as the banner, so on that layout the side cards stack above and
        below the headline instead of flanking it. */
-    { n: 'Nina',   r: '4.8', p: 'heroStaff11', t: 2, x: 25, y: 80, tx: 26, ty: 70 },
-    { n: 'Aisha',  r: '4.8', p: 'heroStaff05', t: 2, x: 41, y: 2,  tx: 40, ty: 2  },
-    { n: 'Raj',    r: '4.6', p: 'heroStaff01', t: 2, x: 62, y: 3,  tx: 57, ty: 2  },
-    { n: 'Priya',  r: '4.9', p: 'heroStaff07', t: 2, x: 2,  y: 33, tx: 1,  ty: 20 },
-    { n: 'Daniel', r: '4.7', p: 'heroStaff06', t: 2, x: 85, y: 33, tx: 74, ty: 20 },
+    { n: 'Nina',   r: '4.8', p: 'heroStaff05', t: 2, x: 25, y: 80, tx: 26, ty: 70 },
+    { n: 'Aisha',  r: '4.8', p: 'heroStaff06', t: 2, x: 41, y: 2,  tx: 40, ty: 2  },
+    { n: 'Raj',    r: '4.6', p: 'heroStaff07', t: 2, x: 62, y: 3,  tx: 57, ty: 2  },
+    { n: 'Priya',  r: '4.9', p: 'heroStaff08', t: 2, x: 2,  y: 33, tx: 1,  ty: 20 },
+    { n: 'Daniel', r: '4.7', p: 'heroStaff09', t: 2, x: 85, y: 33, tx: 74, ty: 20 },
 
     /* tier 3 — desktop only, fourteen cards */
-    { n: 'Liam',   r: '4.8', p: 'heroStaff13', t: 3, x: 21, y: 3  },
-    { n: 'Caleb',  r: '4.6', p: 'heroStaff04', t: 3, x: 1,  y: 56 },
-    { n: 'Ruby',   r: '4.7', p: 'heroStaff09', t: 3, x: 86, y: 55 },
-    { n: 'Chloe',  r: '4.8', p: 'heroStaff12', t: 3, x: 65, y: 80 },
-    { n: 'Ava',    r: '4.9', p: 'heroStaff15', t: 3, x: 11, y: 45 }
+    { n: 'Liam',   r: '4.8', p: 'heroStaff10', t: 3, x: 21, y: 3  },
+    { n: 'Caleb',  r: '4.6', p: 'heroStaff11', t: 3, x: 1,  y: 56 },
+    { n: 'Ruby',   r: '4.7', p: 'heroStaff12', t: 3, x: 86, y: 55 },
+    { n: 'Chloe',  r: '4.8', p: 'heroStaff13', t: 3, x: 65, y: 80 },
+    { n: 'Ava',    r: '4.9', p: 'heroStaff14', t: 3, x: 11, y: 45 }
   ];
 
   /* Loose pins, so the map reads as "many" without another 14 cards. */
@@ -87,15 +87,20 @@
   ];
   var PIN_COLOURS = { y: '#FFC107', c: '#12C7C7', r: '#FF4B2B', n: '#0F1738' };
 
-  /* The map is re-framed rather than simply zoomed, so each device gets
-     a composition rather than a crop of the same picture. All three
-     frames are pulled well back: a laptop sees Albany to Onehunga and
-     Kumeu to Waiheke, and even a phone still spans the CBD to Papakura,
-     so the banner reads as staff spread across the region. */
+  /* The map is re-framed per device rather than simply zoomed, so each
+     gets a composition instead of a crop of the same picture. All three
+     frames sit well back: a laptop takes in Orewa down to Papakura and
+     Kumeu across to Waiheke, and even a phone spans the North Shore to
+     Manukau — so the banner reads as staff spread across the region
+     rather than clustered in one suburb.
+
+     The banner's own shape follows the viewport now, so these frames are
+     chosen to suit it: wide on a laptop, nearly square on a tablet,
+     tall on a phone. */
   var MAP_VIEWS = [
-    { max: 600,  box: '260 250 720 700' },
-    { max: 1024, box: '60 120 1180 640' },
-    { max: 1e9,  box: '-150 40 1620 740' }
+    { max: 600,  box: '110 -110 640 1140' },
+    { max: 1024, box: '120 -10 900 1010' },
+    { max: 1e9,  box: '-200 40 1900 922' }
   ];
 
   /* ---------------------------------------------------------
@@ -117,6 +122,55 @@
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  /* ---------------------------------------------------------
+     2b. HEADER HEIGHT
+     The hero fills the viewport the sticky header leaves behind, so
+     it needs the header's real height — which is --nav-h plus a
+     border, and changes at the 1024 breakpoint. Measuring beats
+     hard-coding: publish it as --hero-nav and the CSS does the rest.
+     --------------------------------------------------------- */
+  function initViewportFit() {
+    var nav = qs('#site-nav');
+    var hero = qs('#hero');
+    if (!nav || !hero) return null;
+
+    var last = -1;
+    function measure() {
+      /* the border is part of the space the header occupies */
+      var h = Math.round(nav.getBoundingClientRect().height);
+      if (!h || h === last) return;
+      last = h;
+      hero.style.setProperty('--hero-nav', h + 'px');
+    }
+
+    measure();
+    /* the webfont can change the header's line box */
+    if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+      document.fonts.ready.then(measure);
+    }
+
+    var onResize = debounce(measure, 120);
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+
+    /* a ResizeObserver catches anything a resize event does not — the
+       header growing because a menu opened, say */
+    var ro = null;
+    if ('ResizeObserver' in window) {
+      ro = new ResizeObserver(measure);
+      ro.observe(nav);
+    }
+
+    return {
+      measure: measure,
+      destroy: function () {
+        window.removeEventListener('resize', onResize);
+        window.removeEventListener('orientationchange', onResize);
+        if (ro) ro.disconnect();
+      }
+    };
   }
 
   /* ---------------------------------------------------------
@@ -762,6 +816,12 @@
     if (window.SapotrHeroTrades && window.SapotrHeroTrades.destroy) {
       window.SapotrHeroTrades.destroy();
     }
+    if (window.SapotrHero.fit && window.SapotrHero.fit.destroy) {
+      window.SapotrHero.fit.destroy();
+    }
+
+    /* first, so the hero is the right height before anything paints */
+    window.SapotrHero.fit = initViewportFit();
 
     initMap();
     window.SapotrHeroTrades = initTrades();

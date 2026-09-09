@@ -17,17 +17,35 @@
                                  13. Reduced motion / print
    ============================================================ */
 
-/* ---------- 1. SHELL + PROPORTIONS ----------------------- */
+/* ---------- 1. SHELL + PROPORTIONS -----------------------
+   The whole landing screen belongs to the hero: header, banner,
+   dots and the selection panel, with the next section starting
+   exactly at the fold.
+
+   Rather than adding up guessed heights, the hero is a flex column
+   that fills the viewport left over by the header, and the banner
+   takes whatever the panel does not. That way the arithmetic is the
+   browser's, so it stays exact whatever the header measures, however
+   tall the panel wraps, and at any viewport.
+   --------------------------------------------------------- */
 .hero{
   position:relative;
   isolation:isolate;
   background:#0B112D;
-  padding-bottom:clamp(26px,3.6vw,48px);
 
-  /* the banner visual carries the landing; the selection box sits
-     under it and steals a slice back by overlapping */
-  --hstage:clamp(440px,66vh,680px);
-  --hlift:clamp(30px,4.2vw,52px);      /* box overlap onto the banner */
+  display:flex;
+  flex-direction:column;
+
+  /* js/hero.js measures the real header (it carries a border, and its
+     height changes at 1024) and publishes it as --hero-nav; the
+     fallback covers the moment before that runs, and no-JS */
+  --hero-nav:calc(var(--nav-h) + 1px);
+  min-height:calc(100vh - var(--hero-nav));
+  padding-bottom:clamp(18px,2.4vw,34px);
+
+  /* a floor for the banner, so it never collapses on a short window */
+  --hstage-min:390px;
+  --hlift:clamp(30px,4.2vw,52px);      /* panel overlap onto the banner */
 
   /* one type scale shared by all four banners, so they read as a
      single hero rather than four unrelated slides */
@@ -37,10 +55,12 @@
   --hsub:clamp(1rem,1.55vw,1.26rem);
   --hcopy:960px;
 }
-/* small-viewport units where supported: mobile browser chrome must not
-   crop the banner as the address bar shows and hides */
+/* Small-viewport units where supported. svh is the height with the
+   mobile browser chrome showing, which is what the visitor has on
+   arrival — so the fit is exact at load, and the hero does not
+   re-flow every time the address bar slides away mid-scroll. */
 @supports (height:1svh){
-  .hero{--hstage:clamp(440px,66svh,680px)}
+  .hero{min-height:calc(100svh - var(--hero-nav))}
 }
 
 /* ---------- 2. STAGE + SLIDE TRANSITION ------------------ */
@@ -48,7 +68,8 @@
   position:relative;
   overflow:hidden;
   display:grid;                        /* every slide shares one cell */
-  min-height:var(--hstage);
+  flex:1 1 auto;                        /* absorbs the leftover height */
+  min-height:var(--hstage-min);
   touch-action:pan-y;                  /* horizontal drags are ours, vertical scrolling is not */
   background:#0B112D;
 }
@@ -60,7 +81,9 @@
   display:grid;
   align-content:center;
   justify-items:center;
-  min-height:var(--hstage);
+  /* the slides share one grid row, which the stage stretches them to;
+     the floor only matters if the stage itself ever sizes to content */
+  min-height:var(--hstage-min);
   isolation:isolate;
   opacity:0;
   visibility:hidden;
@@ -101,7 +124,7 @@
    or has failed outright — a designed background rather than the void
    that a bare stage would leave. */
 .hslide--shortage .hslide__media{background:linear-gradient(158deg,#1b2550,#0F1738 58%,#080d22)}
-.hslide--map      .hslide__media{background:linear-gradient(172deg,#C2E0F2,#8CC4E2)}
+.hslide--map      .hslide__media{background:linear-gradient(172deg,#BBDDF4,#7CBBE2)}
 .hslide--old      .hslide__media{background:linear-gradient(160deg,#151b36,#060a1c 66%)}
 .hslide--flex     .hslide__media{background:linear-gradient(152deg,#22305f,#0F1738 60%,#0a0f28)}
 
@@ -118,22 +141,27 @@
 .hslide.is-active .hslide__pic img{animation:hkb 11s var(--ease) both}
 @keyframes hkb{from{transform:scale(1.055)}to{transform:scale(1)}}
 
-/* per-banner focal point — refined again at every breakpoint below */
-.hslide--shortage .hslide__pic img{object-position:50% 12%}
-.hslide--old      .hslide__pic img{object-position:50% 34%}
-.hslide--flex     .hslide__pic img{object-position:50% 28%}
+/* Each asset is already cropped for the shape it serves (see the
+   <picture> in index.html), so the focal point sits near the centre
+   and barely anything is thrown away. Only the chef, who is high in
+   his frame, wants a nudge. */
+.hslide--shortage .hslide__pic img{object-position:50% 46%}
+.hslide--old      .hslide__pic img{object-position:50% 38%}
+.hslide--flex     .hslide__pic img{object-position:50% 50%}
 
 /* readability scrim: a vertical wash for the whole frame plus a
    centred pool of shade directly under the copy */
 .hslide__scrim{position:absolute;inset:0;pointer-events:none}
+/* this shop floor is bright and busy, so the pool of shade under the
+   copy has to be deep enough that the headline never competes with it */
 .hslide--shortage .hslide__scrim{
   background:
-    radial-gradient(74% 52% at 50% 46%,rgba(11,17,45,.88),rgba(11,17,45,.26) 70%,transparent 88%),
+    radial-gradient(70% 46% at 50% 44%,rgba(11,17,45,.90),rgba(11,17,45,.34) 68%,transparent 88%),
     linear-gradient(180deg,
-      rgba(11,17,45,.86) 0%,
-      rgba(11,17,45,.62) 26%,
-      rgba(11,17,45,.50) 54%,
-      rgba(11,17,45,.66) 82%,
+      rgba(11,17,45,.88) 0%,
+      rgba(11,17,45,.66) 26%,
+      rgba(11,17,45,.56) 54%,
+      rgba(11,17,45,.70) 82%,
       rgba(11,17,45,.96) 100%);
 }
 /* this photograph is already a dark interior, so the scrim only has to
@@ -162,13 +190,13 @@
    without closing over the suburbs at the edges */
 .hslide--map .hslide__scrim{
   background:
-    radial-gradient(46% 33% at 50% 46%,rgba(11,17,45,.88),rgba(11,17,45,.50) 56%,transparent 80%),
+    radial-gradient(50% 36% at 50% 46%,rgba(11,17,45,.86),rgba(11,17,45,.46) 58%,transparent 82%),
     linear-gradient(180deg,
-      rgba(11,17,45,.22) 0%,
-      rgba(11,17,45,.02) 16%,
-      rgba(11,17,45,.02) 66%,
-      rgba(11,17,45,.40) 88%,
-      rgba(11,17,45,.88) 100%);
+      rgba(11,17,45,.14) 0%,
+      transparent 14%,
+      transparent 70%,
+      rgba(11,17,45,.34) 88%,
+      rgba(11,17,45,.86) 100%);
 }
 
 /* slow brand light + faint grid — banner 1 only, so the four banners
@@ -262,6 +290,16 @@
 
 .hslide__hl{color:var(--yellow)}
 
+/* SAPOTR is the brand name: one treatment, applied everywhere it
+   appears in hero copy, so it reads identically on every banner —
+   brand yellow, a heavier weight than its neighbours, and a touch of
+   tracking so the capitals do not crowd. Deliberately not flashy. */
+.hbrand{
+  color:var(--yellow);
+  font-weight:800;
+  letter-spacing:.01em;
+}
+
 .hslide__accent{
   position:relative;display:table;
   margin:.34em auto 0;
@@ -270,7 +308,7 @@
   color:#fff;
   text-shadow:0 2px 26px rgba(0,0,0,.42);
 }
-.hslide__accent b{color:var(--yellow);font-weight:800}
+.hslide__accent b{font-weight:800}
 .hslide__accent::after{
   content:'';position:absolute;left:0;right:0;bottom:-.16em;height:4px;border-radius:4px;
   background:linear-gradient(90deg,transparent,var(--yellow) 26%,var(--red) 74%,transparent);
@@ -359,17 +397,17 @@
    breakpoint: each frame in MAP_VIEWS has a different scale. */
 .hmap__labels text{
   font-family:var(--font);
-  font-size:18px;font-weight:700;
+  font-size:22px;font-weight:700;
   fill:#5A6480;letter-spacing:.01em;
   paint-order:stroke;stroke:rgba(255,255,255,.75);stroke-width:3.5px;stroke-linejoin:round;
 }
-.hmap__labels-city{font-size:27px!important;letter-spacing:.13em!important;fill:#3C4665!important}
+.hmap__labels-city{font-size:30px!important;letter-spacing:.13em!important;fill:#3C4665!important}
 /* the outlying suburbs sit back, so the eye reads the centre first */
-.hmap__labels-minor{font-size:15px!important;fill:#79839C!important}
+.hmap__labels-minor{font-size:18px!important;fill:#79839C!important}
 /* keeps the map from meeting the frame as a hard edge */
 .hmap__vignette{
   position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(126% 104% at 50% 50%,transparent 60%,rgba(11,17,45,.16));
+  background:radial-gradient(126% 104% at 50% 50%,transparent 66%,rgba(11,17,45,.10));
 }
 
 .hmap__pins,.hmap__cards{position:absolute;inset:0;pointer-events:none}
@@ -428,17 +466,18 @@
   box-shadow:0 12px 26px -12px rgba(15,23,56,.5),0 2px 5px rgba(15,23,56,.14);
   opacity:0;
 }
+/* The client's photographs are portrait, with the SAPOTR wordmark low
+   on the chest, so the frame is 3:4 rather than square — that keeps the
+   face, the tee and the branding all visible at card size. */
 .hcard__av{
   position:relative;flex:0 0 auto;
-  width:var(--hav,38px);height:var(--hav,38px);
-  border-radius:10px;overflow:hidden;
+  width:calc(var(--hav,40px) * .75);height:var(--hav,40px);
+  border-radius:8px;overflow:hidden;
   background:var(--navy);
 }
-/* The navy tee and the chest mark are part of each avatar file, so the
-   card only has to frame it — see assets/images/hero/staff/. */
 .hcard__av img{
   width:100%;height:100%;
-  object-fit:cover;object-position:50% 50%;
+  object-fit:cover;object-position:50% 12%;
 }
 .hcard__txt{min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.2}
 .hcard__n{
@@ -501,12 +540,12 @@
   animation:hcross .4s var(--ease) both;
   animation-delay:calc(1180ms + var(--i) * 145ms);
 }
-@keyframes hdim{to{opacity:.52;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.04)}}
+@keyframes hdim{to{opacity:.66;border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.04)}}
 @keyframes hcross{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
 
 /* ---------- 9. BANNER 4 — FLEXIBLE STAFFING ------------- */
 /* the three demand phrases light up in turn inside the sentence */
-.hslide--flex .hslide__hl{position:relative;white-space:nowrap}
+.hslide--flex .hslide__hl{position:relative;white-space:nowrap;color:#fff}
 .hslide--flex .hslide__hl::after{
   content:'';position:absolute;left:0;right:0;bottom:-3px;height:2px;border-radius:2px;
   background:var(--yellow);opacity:.55;transform:scaleX(0);transform-origin:left;
@@ -560,7 +599,8 @@
 /* ---------- 11. FLOATING SELECTION BOX ------------------ */
 .hero__selwrap{
   position:relative;z-index:5;
-  margin-top:calc(var(--hlift) * -1);
+  flex:0 0 auto;                       /* natural height; the stage flexes */
+  margin-top:calc(var(--hlift) * -1);  /* overlaps the banner, by design */
 }
 .hsel{
   background:#fff;
@@ -645,11 +685,8 @@
 
 /* ---------- 1440+ : a little more air -------------------- */
 @media (min-width:1440px){
-  .hero{--hstage:clamp(520px,68vh,740px);--hcopy:1040px}
+  .hero{--hstage-min:520px;--hcopy:1040px}
   .hslide--map{--hav:40px}
-}
-@supports (height:1svh){
-  @media (min-width:1440px){ .hero{--hstage:clamp(520px,68svh,740px)} }
 }
 
 /* ---------- <= 1280 --------------------------------------- */
@@ -660,11 +697,9 @@
 
 /* ---------- <= 1024 : tablet landscape ------------------- */
 @media (max-width:1024px){
-  .hero{--hstage:clamp(430px,64vh,620px);--hcopy:820px;--hlift:clamp(28px,4vw,44px)}
+  .hero{--hstage-min:420px;--hcopy:820px;--hlift:clamp(28px,4vw,44px)}
   /* the tablet crop is squarer, so the faces sit a little higher */
-  .hslide--shortage .hslide__pic img{object-position:50% 20%}
-  .hslide--old      .hslide__pic img{object-position:50% 30%}
-  .hslide--flex     .hslide__pic img{object-position:50% 22%}
+
 
   .hslide--map{--hav:34px;--hpin:18px}
   /* thin the map out: only the first two tiers survive */
@@ -681,13 +716,10 @@
      than five and a lonely one */
   .hno{max-width:min(100%,430px)}
 }
-@supports (height:1svh){
-  @media (max-width:1024px){ .hero{--hstage:clamp(430px,64svh,620px)} }
-}
 
 /* ---------- <= 900 : tall tablet portrait ---------------- */
 @media (max-width:900px){
-  .hero{--hstage:clamp(430px,60vh,540px)}
+  .hero{--hstage-min:410px}
   .hslide__panes i:nth-child(3){display:none}
 
   /* --- the selection box becomes one swipeable rail ---
@@ -749,14 +781,11 @@
     padding:10px 16px;font-size:.8125rem;
   }
 }
-@supports (height:1svh){
-  @media (max-width:900px){ .hero{--hstage:clamp(430px,60svh,540px)} }
-}
 
 /* ---------- <= 768 : tablet portrait / large phone ------- */
 @media (max-width:768px){
   .hero{
-    --hstage:clamp(430px,60vh,520px);
+    --hstage-min:400px;
     --hlift:34px;
     --hcopy:100%;
   }
@@ -771,9 +800,7 @@
 
   /* the portrait crops put the subject dead centre, so the copy pool
      of shade has to be deeper than on desktop */
-  .hslide--shortage .hslide__pic img{object-position:56% 22%}
-  .hslide--old      .hslide__pic img{object-position:50% 28%}
-  .hslide--flex     .hslide__pic img{object-position:50% 20%}
+
   /* A phone frame is narrow, so the pool of shade under the copy has to
      reach the edges — but it stays light enough that the workforce in
      the photograph is still clearly the subject of the banner. */
@@ -834,20 +861,19 @@
   .hslide--map{--hav:32px;--hpin:16px;--hcard-max:36%}
   .hcard__a{font-size:.5625rem;gap:3px}
   .hcard__a i{width:4px;height:4px}
-  .hcard--t2,.hpin--t2{display:none}
-  .hmap__labels text{font-size:20px}
-  .hmap__labels-city{font-size:29px!important}
-  .hmap__labels-minor{font-size:17px!important}
+  /* tier 2 now drops at 600 instead, so a tablet keeps nine cards */
+  .hmap__labels text{font-size:17px}
+  .hmap__labels-city{font-size:24px!important}
+  .hmap__labels-minor{font-size:14px!important}
 
-}
-@supports (height:1svh){
-  @media (max-width:768px){ .hero{--hstage:clamp(430px,60svh,520px)} }
 }
 
 /* ---------- <= 600 : the phone map composition ----------- */
 /* matches the <source media> for the mobile crops and the mobile
    map viewBox in js/hero.js, so the whole banner switches together */
 @media (max-width:600px){
+  /* a phone shows tier 1 only: four cards, so the headline stays clear */
+  .hcard--t2,.hpin--t2{display:none}
   .hcard,.hpin{
     left:calc(var(--mx,var(--tx,var(--x))) * 1%);
     top:calc(var(--my,var(--ty,var(--y))) * 1%);
@@ -856,7 +882,7 @@
 
 /* ---------- <= 640 : phones ------------------------------ */
 @media (max-width:640px){
-  .hero{--hstage:clamp(420px,58vh,520px)}
+  .hero{--hstage-min:392px}
   .hslide__title{max-width:none}
   .hslide__accent{margin-top:.4em}
   .hslide__sub{max-width:30ch}
@@ -867,9 +893,6 @@
   /* six chips over two even rows of three, then two-and-two below 360 */
   .hno{max-width:330px;gap:6px}
   .hno__i{font-size:.7rem;padding:5px 10px;gap:5px}
-}
-@supports (height:1svh){
-  @media (max-width:640px){ .hero{--hstage:clamp(420px,58svh,520px)} }
 }
 
 /* ---------- <= 520 --------------------------------------- */
@@ -883,7 +906,7 @@
 
 /* ---------- <= 430 : compact phones --------------------- */
 @media (max-width:430px){
-  .hero{--hstage:clamp(400px,56vh,494px);--hlift:30px}
+  .hero{--hstage-min:370px;--hlift:30px}
   .hslide__eyebrow{font-size:.6875rem;padding:6px 12px;gap:8px}
   .hslide__title{margin-top:12px}
   .hslide__accent::after{height:3px}
@@ -892,12 +915,9 @@
   .hsel{--hopt-h:58px}
   .hopt{min-width:90px}
   .hslide--map{--hav:27px;--hpin:15px;--hcard-max:46%}
-  .hmap__labels text{font-size:25px}
-  .hmap__labels-city{font-size:35px!important}
-  .hmap__labels-minor{font-size:21px!important}
-}
-@supports (height:1svh){
-  @media (max-width:430px){ .hero{--hstage:clamp(400px,56svh,494px)} }
+  .hmap__labels text{font-size:22px}
+  .hmap__labels-city{font-size:30px!important}
+  .hmap__labels-minor{font-size:18px!important}
 }
 
 /* ---------- <= 380 : 375 / 360 class handsets ----------- */
@@ -912,7 +932,7 @@
 
 /* ---------- <= 340 : smallest supported ----------------- */
 @media (max-width:340px){
-  .hero{--hstage:clamp(388px,54vh,450px);--htitle:1.5rem;--htitle-sm:1.4rem}
+  .hero{--hstage-min:352px;--htitle:1.5rem;--htitle-sm:1.4rem}
   .hroll{font-size:.72em}
   .hslide__sub{font-size:.875rem}
   .hslide--map{--hav:24px;--hcard-max:48%}
@@ -920,32 +940,48 @@
   .hopt{min-width:84px;padding:8px 10px}
   .hopt__t{font-size:.6875rem}
 }
-@supports (height:1svh){
-  @media (max-width:340px){ .hero{--hstage:clamp(388px,54svh,450px)} }
-}
 
 /* ---------- short landscape (phone turned sideways) ------
-   A sideways phone is wide but very short, so the vw-based type scale
-   would put a 54px headline into 390px of height. Here the scale is
-   driven by the height that is actually available. */
-@media (max-height:520px) and (orientation:landscape){
+   A sideways phone is wide but very short: the whole landing has to
+   compress into roughly 320px below the header, so the type scale is
+   driven by the height available rather than the width, and every
+   vertical gap is pulled in. Dense by necessity, but the banner, the
+   dots and the panel all still fit above the fold. */
+@media (max-height:560px) and (orientation:landscape){
   .hero{
-    --hstage:420px;
-    --hlift:24px;
-    --htitle:clamp(1.4rem,3.3vw,2.1rem);
-    --htitle-sm:clamp(1.3rem,3vw,1.9rem);
-    --hacc:clamp(1.15rem,2.2vw,1.55rem);
-    --hsub:clamp(.875rem,1.2vw,1rem);
+    --hstage-min:0px;                  /* the flex column sets the height */
+    --hlift:18px;
+    --hopt-h:44px;
+    --htitle:clamp(1.15rem,3vw,1.7rem);
+    --htitle-sm:clamp(1.05rem,2.7vw,1.55rem);
+    --hacc:clamp(1rem,2vw,1.35rem);
+    --hsub:clamp(.8125rem,1.1vw,.9375rem);
+    padding-bottom:8px;
   }
-  .hslide__inner{padding-top:14px;padding-bottom:calc(var(--hlift) + 44px)}
+  .hslide__inner{padding-top:8px;padding-bottom:calc(var(--hlift) + 30px)}
   .hslide__eyebrow{display:none}
   .hslide__title{margin-top:0;max-width:none}
-  .hslide__sub{margin-top:10px;max-width:60ch}
-  .hslide__accent{margin-top:.22em}
-  .hno{margin-top:10px;max-width:640px}
-  .hben{margin-top:10px}
+  .hslide__sub{margin-top:6px;max-width:70ch}
+  .hslide__accent{margin-top:.16em}
+  .hslide__accent::after{bottom:-.1em;height:2px}
+  .hno{margin-top:6px;max-width:none;gap:4px 6px}
+  .hno__i{padding:3px 9px;font-size:.7rem}
+  .hben{margin-top:6px;gap:2px 18px}
+  .hben li{font-size:.78rem}
   .hroll{font-size:1em}
-  .hero__ui{bottom:calc(var(--hlift) + 12px)}
+  .hero__ui{bottom:calc(var(--hlift) + 8px)}
+
+  /* the panel folds to a single compact rail */
+  .hsel{padding:8px 10px 7px;border-radius:14px}
+  .hsel__title{margin-bottom:6px;font-size:.8125rem}
+  .hsel::before,.hsel::after{bottom:7px}
+  .hopt{min-height:var(--hopt-h);min-width:78px;padding:5px 9px;gap:3px}
+  .hopt .ic{width:15px;height:15px}
+  .hopt__t{font-size:.6875rem}
+  .hsel__cta{min-height:var(--hopt-h);padding:6px 13px;font-size:.75rem}
+
+  /* the map needs less furniture at this height */
+  .hcard--t2,.hcard--t3,.hpin--t2,.hpin--t3{display:none}
 }
 
 /* ---------- notched devices ------------------------------ */

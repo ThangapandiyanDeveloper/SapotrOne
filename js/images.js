@@ -7,7 +7,7 @@
 
    Usage in markup:
      <img data-img="storyAvatar1" alt="...">        -> sets src
-     <source data-img-src="heroB1Mobile">           -> sets srcset
+     <source data-img-src="heroB1Tall">             -> sets srcset
      <div data-img-bg="problemPerson"></div>        -> sets background-image
 
    A <picture> (or any ancestor) carrying data-img-when="active" is
@@ -20,33 +20,32 @@
 
   var IMAGE_URLS = {
     /* --- Section 1: hero carousel -----------------------------
-       Three intentional crops per photographic banner, generated
-       from the client's originals: 1920x1080 landscape for laptop /
-       desktop, 1280x960 for tablet, 840x1240 portrait for phones.
+       The hero fills the viewport the header leaves behind, so the
+       banner's shape follows the device: roughly 0.6 on a phone,
+       0.85 on a tall tablet, 1.8-2.4 on a laptop. Hence one crop per
+       shape rather than per width — see the <picture> in index.html,
+       which picks by viewport aspect as well as width.
+
        Banner 2 is a drawn SVG map, so it needs no photograph.
        Replace these values with Cloudinary URLs when the CDN is
        ready — nothing outside this object refers to a hero file. */
-    heroB1Desktop:      'assets/images/hero/b1-desktop.jpg',
-    heroB1Tablet:       'assets/images/hero/b1-tablet.jpg',
-    heroB1Mobile:       'assets/images/hero/b1-mobile.jpg',
+    heroB1Wide:         'assets/images/hero/b1-wide.jpg',     /* retail counter */
+    heroB1Square:       'assets/images/hero/b1-square.jpg',
+    heroB1Tall:         'assets/images/hero/b1-tall.jpg',
 
-    heroB3Desktop:      'assets/images/hero/b3-desktop.jpg',
-    heroB3Tablet:       'assets/images/hero/b3-tablet.jpg',
-    heroB3Mobile:       'assets/images/hero/b3-mobile.jpg',
+    heroB3Wide:         'assets/images/hero/b3-wide.jpg',     /* chef at the pass */
+    heroB3Square:       'assets/images/hero/b3-square.jpg',
+    heroB3Tall:         'assets/images/hero/b3-tall.jpg',
 
-    heroB4Desktop:      'assets/images/hero/b4-desktop.jpg',
-    heroB4Tablet:       'assets/images/hero/b4-tablet.jpg',
-    heroB4Mobile:       'assets/images/hero/b4-mobile.jpg',
+    heroB4Wide:         'assets/images/hero/b4-wide.jpg',     /* logistics at scale */
+    heroB4Square:       'assets/images/hero/b4-square.jpg',
+    heroB4Tall:         'assets/images/hero/b4-tall.jpg',
 
-    /* Banner 2 — the staff on the availability cards. Fourteen different
-       people, one per card, each 256px square (well above the largest
-       rendered size, so they stay crisp at 3x). The navy #0F1738 tee
-       and the chest mark are part of each file.
-
-       PENDING CLIENT ASSETS: composited from the existing library while
-       the uniform shoot is outstanding. Replace each file in
-       assets/images/hero/staff/ with a real photograph of that employee
-       in the tee — same names, nothing else changes. */
+    /* Banner 2 — the staff on the availability cards. Fourteen
+       different people, one per card, sized down from the client's own
+       photographs in assets/Staffs (already in the navy SAPOTR tee with
+       the wordmark on the chest). 168x224, four times the largest
+       rendered size, so they stay crisp at 3x. */
     heroStaff01:        'assets/images/hero/staff/s01.jpg',
     heroStaff02:        'assets/images/hero/staff/s02.jpg',
     heroStaff03:        'assets/images/hero/staff/s03.jpg',
@@ -54,13 +53,13 @@
     heroStaff05:        'assets/images/hero/staff/s05.jpg',
     heroStaff06:        'assets/images/hero/staff/s06.jpg',
     heroStaff07:        'assets/images/hero/staff/s07.jpg',
+    heroStaff08:        'assets/images/hero/staff/s08.jpg',
     heroStaff09:        'assets/images/hero/staff/s09.jpg',
     heroStaff10:        'assets/images/hero/staff/s10.jpg',
     heroStaff11:        'assets/images/hero/staff/s11.jpg',
     heroStaff12:        'assets/images/hero/staff/s12.jpg',
     heroStaff13:        'assets/images/hero/staff/s13.jpg',
     heroStaff14:        'assets/images/hero/staff/s14.jpg',
-    heroStaff15:        'assets/images/hero/staff/s15.jpg',
 
     /* --- shared employee avatars (journey map, Why Sapotr) ---- */
     avatarEmployee1:    'assets/images/avatar-employee-1.jpg',

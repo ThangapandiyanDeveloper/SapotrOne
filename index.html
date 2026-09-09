@@ -22,12 +22,15 @@
        including its own breakpoints, so it must win over responsive.css -->
   <link rel="stylesheet" href="css/hero.css">
 
-  <!-- only the first banner is on the critical path; banners 3 and 4 load
-       once the carousel needs them (see js/hero.js) -->
-  <link rel="preload" as="image" href="assets/images/hero/b1-mobile.jpg" media="(max-width:600px)">
-  <link rel="preload" as="image" href="assets/images/hero/b1-tablet.jpg"
-    media="(min-width:601px) and (max-width:1024px)">
-  <link rel="preload" as="image" href="assets/images/hero/b1-desktop.jpg" media="(min-width:1025px)">
+  <!-- Only banner 1 is on the critical path; the rest are preloaded by
+       js/hero.js at low priority once it runs. The media queries mirror
+       the <picture> on banner 1 exactly, so the preload and the element
+       always agree on which crop is wanted. -->
+  <link rel="preload" as="image" href="assets/images/hero/b1-tall.jpg" media="(max-width:600px)">
+  <link rel="preload" as="image" href="assets/images/hero/b1-square.jpg"
+    media="(min-width:601px) and (max-aspect-ratio:1/1)">
+  <link rel="preload" as="image" href="assets/images/hero/b1-wide.jpg"
+    media="(min-width:601px) and (min-aspect-ratio:1/1)">
 
   <script src="js/images.js"></script>
 </head>
@@ -246,9 +249,12 @@
             <div class="hslide__media" aria-hidden="true">
               <div class="hslide__par" data-depth="6">
                 <picture class="hslide__pic">
-                  <source media="(max-width:600px)" data-img-src="heroB1Mobile">
-                  <source media="(max-width:1024px)" data-img-src="heroB1Tablet">
-                  <img data-img="heroB1Desktop" alt="" width="1920" height="1080" fetchpriority="high"
+                  <!-- art-directed by shape, not only width: the hero fills
+                       the viewport the header leaves, so a phone gives the
+                       banner a tall frame and a laptop a wide one -->
+                  <source media="(max-width:600px)" data-img-src="heroB1Tall">
+                  <source media="(max-aspect-ratio:1/1)" data-img-src="heroB1Square">
+                  <img data-img="heroB1Wide" alt="" width="2000" height="950" fetchpriority="high"
                     decoding="async">
                 </picture>
               </div>
@@ -287,7 +293,7 @@
                 </span>
               </h1>
 
-              <p class="hslide__accent" data-seq="3">Just Tap <b>SAPOTR</b>.</p>
+              <p class="hslide__accent" data-seq="3">Just Tap <b class="hbrand">SAPOTR</b>.</p>
 
               <p class="hslide__sub" data-seq="4">Nearby Staff Support Arrives Instantly. Work Gets Done.</p>
             </div>
@@ -308,8 +314,8 @@
                   preserveAspectRatio="xMidYMid slice" role="presentation" focusable="false">
                   <defs>
                     <linearGradient id="hm-sea" x1="0" y1="0" x2=".6" y2="1">
-                      <stop offset="0" stop-color="#C2E0F2" />
-                      <stop offset="1" stop-color="#8CC4E2" />
+                      <stop offset="0" stop-color="#BBDDF4" />
+                      <stop offset="1" stop-color="#7CBBE2" />
                     </linearGradient>
                     <linearGradient id="hm-land" x1="0" y1="0" x2=".4" y2="1">
                       <stop offset="0" stop-color="#F7F5ED" />
@@ -479,9 +485,12 @@
             <div class="hslide__media" aria-hidden="true">
               <div class="hslide__par" data-depth="5">
                 <picture class="hslide__pic" data-img-when="active">
-                  <source media="(max-width:600px)" data-img-src="heroB3Mobile">
-                  <source media="(max-width:1024px)" data-img-src="heroB3Tablet">
-                  <img data-img="heroB3Desktop" alt="" width="1920" height="1080" decoding="async">
+                  <!-- art-directed by shape, not only width: the hero fills
+                       the viewport the header leaves, so a phone gives the
+                       banner a tall frame and a laptop a wide one -->
+                  <source media="(max-width:600px)" data-img-src="heroB3Tall">
+                  <source media="(max-aspect-ratio:1/1)" data-img-src="heroB3Square">
+                  <img data-img="heroB3Wide" alt="" width="2000" height="950" decoding="async">
                 </picture>
               </div>
               <span class="hslide__scrim"></span>
@@ -515,7 +524,7 @@
                   </svg></li>
               </ul>
 
-              <p class="hslide__accent" data-seq="4">Just Tap <b>SAPOTR</b>.</p>
+              <p class="hslide__accent" data-seq="4">Just Tap <b class="hbrand">SAPOTR</b>.</p>
               <p class="hslide__sub" data-seq="5">Extra Staff Support Arrives. Work Gets Done.</p>
             </div>
           </article>
@@ -527,9 +536,12 @@
             <div class="hslide__media" aria-hidden="true">
               <div class="hslide__par" data-depth="5">
                 <picture class="hslide__pic" data-img-when="active">
-                  <source media="(max-width:600px)" data-img-src="heroB4Mobile">
-                  <source media="(max-width:1024px)" data-img-src="heroB4Tablet">
-                  <img data-img="heroB4Desktop" alt="" width="1920" height="1080" decoding="async">
+                  <!-- art-directed by shape, not only width: the hero fills
+                       the viewport the header leaves, so a phone gives the
+                       banner a tall frame and a laptop a wide one -->
+                  <source media="(max-width:600px)" data-img-src="heroB4Tall">
+                  <source media="(max-aspect-ratio:1/1)" data-img-src="heroB4Square">
+                  <img data-img="heroB4Wide" alt="" width="2000" height="950" decoding="async">
                 </picture>
               </div>
               <span class="hslide__scrim"></span>
@@ -543,7 +555,7 @@
               </h2>
 
               <p class="hslide__sub hslide__sub--wide" data-seq="3">
-                Book SAPOTR Staff Only When You Need Extra Support -
+                Book <b class="hbrand">SAPOTR</b> Staff Only When You Need Extra Support -
                 <span class="hslide__nb"><b class="hslide__hl" style="--i:0">Busy Shifts</b>, <b class="hslide__hl"
                     style="--i:1">Unexpected Shortages</b> &amp; <b class="hslide__hl" style="--i:2">Short-Term
                     Work</b>.</span>
