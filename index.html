@@ -202,8 +202,7 @@
       </a>
 
       <nav class="nav__links" aria-label="Primary">
-        <a href="#why">For Businesses</a>
-        <a href="#partners">For Employee Partners</a>
+        <a href="#why">For Businesses</a>   
         <a href="#support">Support</a>
       </nav>
 
@@ -759,12 +758,16 @@
     <section class="how section" id="how">
       <div class="container">
         <header class="sec-head">
-          <span class="eyebrow reveal"><span class="eyebrow__bar"></span>How Sapotr fits into your day to day</span>
-          <h2 class="reveal" data-delay="60">How Sapotr Fits Into<br>Your Everyday Life?</h2>
-          <p class="sec-head__lead reveal" data-delay="120">When you need extra help / employee for your work?</p>
+          <span class="eyebrow reveal"><span class="eyebrow__bar"></span><span class="eyebrow__txt">Here’s How <b
+                class="how__brand">SAPOTR</b> Fits Into Your day-to-day Businesses</span></span>
+          <h2 class="reveal" data-delay="60">Need Extra Staff Support for Any Shift ?</h2>
+          <p class="sec-head__lead reveal" data-delay="130"><b class="how__lead-strong">Skip the Old Ways -</b>
+            <span class="how__lead-rest"><span>No Calls.</span> <span>No Posts.</span> <span>No
+              Waiting.</span> <span>No Agencies.</span> <span>No Job Portals.</span></span>
+          </p>
         </header>
 
-        <div class="journey" id="journey">
+        <div class="journey reveal" id="journey" data-delay="200">
 
           <ol class="journey__steps">
             <!-- STEP 1 -->
@@ -772,18 +775,21 @@
               <button class="step__btn" type="button" aria-expanded="true">
                 <span class="step__num">1</span>
                 <span class="step__label">
-                  <b>Just Tap</b>
-                  <i>Open Sapotr and Select Service</i>
+                  <b>Just Tap <span class="how__brand">SAPOTR</span></b>
+                  <i>Open SAPOTR and select the Staff you need.</i>
                 </span>
+                <span class="step__prog" aria-hidden="true"><i></i></span>
               </button>
               <div class="step__media">
-                <div class="step__photo">
-                  <img data-img="stepTap" alt="A customer opening the Sapotr app to select a service" width="900"
+                <div class="step__photo step__photo--tap">
+                  <img data-img="stepTap" alt="A customer opening Sapotr to select the staff they need" width="900"
                     height="700" loading="lazy" decoding="async">
                 </div>
                 <div class="otp" aria-hidden="true">
-                  <span class="otp__row otp__row--1"><i class="dot dot--live"></i>Select Staff</span>
-                  
+                  <span class="otp__row"><i class="dot dot--live"></i>Select Staff</span>
+                  <span class="otp__row"><span class="otp__tick"><svg class="ic" aria-hidden="true">
+                        <use href="#i-check"></use>
+                      </svg></span>Staff selected</span>
                 </div>
               </div>
             </li>
@@ -794,8 +800,9 @@
                 <span class="step__num">2</span>
                 <span class="step__label">
                   <b>Book</b>
-                  <i>Instantly book available and reliable support employee nearby</i>
+                  <i>Instantly book available staff nearby.</i>
                 </span>
+                <span class="step__prog" aria-hidden="true"><i></i></span>
               </button>
               <div class="step__media">
                 <div class="map" role="img" aria-label="A map showing available Sapotr employees nearby">
@@ -820,6 +827,11 @@
                     </g>
                   </svg>
 
+                  <!-- route from the nearest available employee to the customer -->
+                  <svg class="map__route" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="map__route-path" d="M92 78C92 124 120 156 182 156" />
+                  </svg>
+
                   <span class="map__pin map__pin--you">
                     <span class="map__you-dot"></span><span class="map__wave"></span>
                   </span>
@@ -829,7 +841,6 @@
                       class="dot dot--live"></i></span>
                   <span class="map__emp map__emp--3"><img data-img="avatarEmployee3" alt="" width="200" height="200"><i
                       class="dot dot--live"></i></span>
-                  <span class="map__route" aria-hidden="true"></span>
 
                   <div class="mini mini--nearby">
                     <span class="mini__ico"><svg class="ic" aria-hidden="true">
@@ -846,9 +857,10 @@
               <button class="step__btn" type="button" aria-expanded="false">
                 <span class="step__num">3</span>
                 <span class="step__label">
-                  <b>Assign</b>
-                  <i>Employee arrives. Share OTP and Assign Work</i>
+                  <b>Staff Arrives</b>
+                  <i>Staff arrives at your workplace. Share the OTP and assign work.</i>
                 </span>
+                <span class="step__prog" aria-hidden="true"><i></i></span>
               </button>
               <div class="step__media">
                 <div class="step__photo step__photo--otp">
@@ -856,10 +868,13 @@
                     alt="The Employee Partner has arrived and the customer shares the booking OTP on their phone to assign the work"
                     width="900" height="700" loading="lazy" decoding="async">
                 </div>
-                <!-- arrival -> OTP -> verified, played while this step is active -->
+                <!-- arrival -> OTP -> assigned, played while this step is active -->
                 <div class="otp" aria-hidden="true">
-                  <span class="otp__row otp__row--1"><i class="dot dot--live"></i>Employee arrived</span>
-                  
+                  <span class="otp__row"><i class="dot dot--live"></i>Employee arrived</span>
+                  <span class="otp__row otp__row--code"><em>Booking OTP</em><b>4 8 2 1</b></span>
+                  <span class="otp__row"><span class="otp__tick"><svg class="ic" aria-hidden="true">
+                        <use href="#i-check"></use>
+                      </svg></span>Work assigned</span>
                 </div>
               </div>
             </li>
@@ -869,12 +884,13 @@
               <button class="step__btn" type="button" aria-expanded="false">
                 <span class="step__num">4</span>
                 <span class="step__label">
-                  <b>Done</b>
-                  <i>Work done</i>
+                  <b>Work Done</b>
+                  <i>Sapotr Completes the assigned work.</i>
                 </span>
+                <span class="step__prog" aria-hidden="true"><i></i></span>
               </button>
               <div class="step__media">
-                <div class="step__photo">
+                <div class="step__photo step__photo--done">
                   <img data-img="stepDone" alt="Completed work — items moved, packed and stacked neatly" width="900"
                     height="700" loading="lazy" decoding="async">
                 </div>
@@ -882,7 +898,7 @@
                   <span class="mini__ok mini__ok--lg"><svg class="ic" aria-hidden="true">
                       <use href="#i-check"></use>
                     </svg></span>
-                  <span class="mini__txt"><b>Work Completed</b><i>Paid for actual work time</i></span>
+                  <span class="mini__txt"><b>Work Completed</b></span>
                 </div>
               </div>
             </li>
@@ -898,7 +914,7 @@
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Why Sapotr</span>
-          <h2 class="reveal" data-delay="60">Why Sapotr.</h2>
+          <h2 class="reveal" data-delay="60">Why Businesses Choose SAPOTR.</h2>
           <p class="sec-head__lead reveal" data-delay="120">Simple to book. Easy to trust.</p>
           <p class="sec-head__note reveal" data-delay="160">Anyone can directly book and assign. No agency or middleman.
           </p>
@@ -1002,35 +1018,30 @@
     </section>
 
     <!-- ============================================================
-     5. EXPLORE — interactive service selector
+    <!-- ============================================================
+     5. EXPLORE — the business industries SAPOTR staffs
+     A seamless, self-advancing rail. No arrow controls: it moves on
+     its own and answers to swipe, drag, trackpad and the dots.
+     See initExplore() in js/main.js.
      ============================================================ -->
     <section class="explore section" id="explore">
       <div class="container">
-        <header class="sec-head sec-head--row">
-          <div>
-            <span class="eyebrow reveal"><span class="eyebrow__bar"></span>Explore</span>
-            <h2 class="reveal" data-delay="60">Trusted across NZ.<br>Extra hands. When you need them.</h2>
-          </div>
-          <div class="explore__nav reveal" data-delay="120">
-            <button class="rnd" type="button" data-svc-prev aria-label="Previous service">
-              <svg class="ic" aria-hidden="true">
-                <use href="#i-chev-left"></use>
-              </svg>
-            </button>
-            <button class="rnd" type="button" data-svc-next aria-label="Next service">
-              <svg class="ic" aria-hidden="true">
-                <use href="#i-chev-right"></use>
-              </svg>
-            </button>
-          </div>
+        <header class="sec-head sec-head--left">
+          <span class="eyebrow reveal"><span class="eyebrow__bar"></span><span class="eyebrow__txt">Businesses Across
+              NZ Trust <b class="how__brand">SAPOTR</b>.</span></span>
+          <h2 class="reveal" data-delay="60">Extra Hands. Extra Support. When you need them.</h2>
+          <p class="sec-head__lead reveal" data-delay="120">From events and hospitality to retail, logistics and more.
+          </p>
         </header>
       </div>
 
-      <div class="explore__viewport reveal" data-delay="160">
+      <div class="explore__viewport reveal" data-delay="160" id="svc-viewport" role="group"
+        aria-roledescription="carousel" aria-label="Business industries SAPOTR supports">
         <ul class="svc-track" id="svc-track">
+          <!-- 1 -->
           <li class="svc is-active" tabindex="0">
-            <div class="svc__img"><img data-img="serviceHomePersonal"
-                alt="Short-term help with household tasks and cleaning" width="900" height="700" loading="lazy"
+            <div class="svc__img"><img data-img="exploreEvents"
+                alt="Event staff carrying canapé platters at a function" width="880" height="605" loading="lazy"
                 decoding="async">
               <span class="svc__tagline"><svg class="ic" aria-hidden="true">
                   <use href="#i-check"></use>
@@ -1038,36 +1049,53 @@
             </div>
             <div class="svc__body">
               <span class="svc__ico svc__ico--yellow"><svg class="ic" aria-hidden="true">
-                  <use href="#i-home"></use>
+                  <use href="#i-sparkle"></use>
                 </svg></span>
-              <h3>Home &amp; Personal</h3>
-              <p>Short-term help for household tasks, organising, cleaning and everyday needs.</p>
+              <h3>Events &amp; Entertainment</h3>
+              <ul class="svc__tags">
+                <li>Concerts</li>
+                <li>Weddings</li>
+                <li>Exhibitions</li>
+                <li>Festivals</li>
+                <li>Promotions</li>
+                <li>Corporate Events</li>
+                <li>Mall Events</li>
+              </ul>
               <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg></span>
             </div>
           </li>
+          <!-- 2 -->
           <li class="svc" tabindex="0">
-            <div class="svc__img"><img data-img="serviceMoving" alt="Extra hands for moving, loading and unloading"
-                width="900" height="700" loading="lazy" decoding="async">
+            <div class="svc__img"><img data-img="exploreHospitality"
+                alt="Hotel and restaurant floor staff at the entrance of a venue" width="880" height="605"
+                loading="lazy" decoding="async">
               <span class="svc__tagline"><svg class="ic" aria-hidden="true">
                   <use href="#i-check"></use>
                 </svg>Verified Employees</span>
             </div>
             <div class="svc__body">
               <span class="svc__ico svc__ico--cyan"><svg class="ic" aria-hidden="true">
-                  <use href="#i-truck"></use>
+                  <use href="#i-cutlery"></use>
                 </svg></span>
-              <h3>Moving &amp; Shifting</h3>
-              <p>Extra hands for moving, loading, unloading, shifting and setup.</p>
+              <h3>Hospitality &amp; Food Services</h3>
+              <ul class="svc__tags">
+                <li>Hotels</li>
+                <li>Restaurants</li>
+                <li>Cafés</li>
+                <li>Catering</li>
+                <li>Food Service</li>
+              </ul>
               <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg></span>
             </div>
           </li>
-          <li class="svc" tabindex="0">
-            <div class="svc__img"><img data-img="serviceEvents"
-                alt="Help for parties, family functions and private events" width="900" height="700" loading="lazy"
+          <!-- 3 -->
+          <li class="svc" tabindex="0" style="--svc-pos:58% 46%">
+            <div class="svc__img"><img data-img="exploreRetail"
+                alt="Retail assistant serving a customer at a store counter" width="880" height="605" loading="lazy"
                 decoding="async">
               <span class="svc__tagline"><svg class="ic" aria-hidden="true">
                   <use href="#i-check"></use>
@@ -1075,18 +1103,25 @@
             </div>
             <div class="svc__body">
               <span class="svc__ico svc__ico--red"><svg class="ic" aria-hidden="true">
-                  <use href="#i-sparkle"></use>
+                  <use href="#i-store"></use>
                 </svg></span>
-              <h3>Events &amp; Celebrations</h3>
-              <p>Help for parties, family functions, gatherings and private events.</p>
+              <h3>Retail &amp; Shopping</h3>
+              <ul class="svc__tags">
+                <li>Retail Stores</li>
+                <li>Supermarkets</li>
+                <li>Showrooms</li>
+                <li>Shopping Centres</li>
+                <li>Malls</li>
+              </ul>
               <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg></span>
             </div>
           </li>
+          <!-- 4 -->
           <li class="svc" tabindex="0">
-            <div class="svc__img"><img data-img="serviceCommunities"
-                alt="Temporary help for apartment and community needs" width="900" height="700" loading="lazy"
+            <div class="svc__img"><img data-img="exploreWarehousing"
+                alt="Racking and picking bays inside a distribution warehouse" width="880" height="605" loading="lazy"
                 decoding="async">
               <span class="svc__tagline"><svg class="ic" aria-hidden="true">
                   <use href="#i-check"></use>
@@ -1096,16 +1131,125 @@
               <span class="svc__ico svc__ico--navy"><svg class="ic" aria-hidden="true">
                   <use href="#i-building"></use>
                 </svg></span>
-              <h3>Apartments &amp; Communities</h3>
-              <p>Temporary help for community activities, common-area work, events and resident needs.</p>
+              <h3>Warehousing &amp; Logistics</h3>
+              <ul class="svc__tags">
+                <li>Warehouses</li>
+                <li>Distribution</li>
+                <li>Fulfilment</li>
+                <li>Loading &amp; Unloading</li>
+                <li>Logistics Operations</li>
+              </ul>
               <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg></span>
             </div>
           </li>
+          <!-- 5 -->
+          <li class="svc" tabindex="0" style="--svc-pos:62% 50%">
+            <div class="svc__img"><img data-img="exploreDelivery"
+                alt="Two workers carrying cartons out to a waiting vehicle" width="880" height="605" loading="lazy"
+                decoding="async">
+              <span class="svc__tagline"><svg class="ic" aria-hidden="true">
+                  <use href="#i-check"></use>
+                </svg>Verified Employees</span>
+            </div>
+            <div class="svc__body">
+              <span class="svc__ico svc__ico--yellow"><svg class="ic" aria-hidden="true">
+                  <use href="#i-truck"></use>
+                </svg></span>
+              <h3>Delivery &amp; On-Demand Services</h3>
+              <ul class="svc__tags">
+                <li>Delivery</li>
+                <li>Drivers</li>
+                <li>Couriers</li>
+                <li>Last-Mile Operations</li>
+              </ul>
+              <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg></span>
+            </div>
+          </li>
+          <!-- 6 -->
+          <li class="svc" tabindex="0" style="--svc-pos:50% 68%">
+            <div class="svc__img"><img data-img="exploreEducation"
+                alt="Exterior of a multi-storey institutional building" width="880" height="605" loading="lazy"
+                decoding="async">
+              <span class="svc__tagline"><svg class="ic" aria-hidden="true">
+                  <use href="#i-check"></use>
+                </svg>Verified Employees</span>
+            </div>
+            <div class="svc__body">
+              <span class="svc__ico svc__ico--cyan"><svg class="ic" aria-hidden="true">
+                  <use href="#i-users"></use>
+                </svg></span>
+              <h3>Education &amp; Institutions</h3>
+              <ul class="svc__tags">
+                <li>Schools</li>
+                <li>Universities</li>
+                <li>Sports Events</li>
+                <li>School Events</li>
+                <li>Institutional Programs</li>
+              </ul>
+              <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg></span>
+            </div>
+          </li>
+          <!-- 7 -->
+          <li class="svc" tabindex="0" style="--svc-pos:56% 50%">
+            <div class="svc__img"><img data-img="exploreConstruction"
+                alt="Worker fixing a fitting to a wall on a property job" width="880" height="605" loading="lazy"
+                decoding="async">
+              <span class="svc__tagline"><svg class="ic" aria-hidden="true">
+                  <use href="#i-check"></use>
+                </svg>Verified Employees</span>
+            </div>
+            <div class="svc__body">
+              <span class="svc__ico svc__ico--red"><svg class="ic" aria-hidden="true">
+                  <use href="#i-wrench"></use>
+                </svg></span>
+              <h3>Construction &amp; Property</h3>
+              <ul class="svc__tags">
+                <li>Construction Sites</li>
+                <li>Property Projects</li>
+                <li>Site Support</li>
+                <li>Maintenance</li>
+                <li>Moving &amp; Setup</li>
+              </ul>
+              <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg></span>
+            </div>
+          </li>
+          <!-- 8 -->
+          <li class="svc" tabindex="0" style="--svc-pos:58% 50%">
+            <div class="svc__img"><img data-img="exploreCleaning"
+                alt="Cleaner wiping down a surface in a serviced space" width="880" height="605" loading="lazy"
+                decoding="async">
+              <span class="svc__tagline"><svg class="ic" aria-hidden="true">
+                  <use href="#i-check"></use>
+                </svg>Verified Employees</span>
+            </div>
+            <div class="svc__body">
+              <span class="svc__ico svc__ico--navy"><svg class="ic" aria-hidden="true">
+                  <use href="#i-home"></use>
+                </svg></span>
+              <h3>Cleaning &amp; Facilities</h3>
+              <ul class="svc__tags">
+                <li>Commercial Cleaning</li>
+                <li>Property Cleaning</li>
+                <li>Facility Support</li>
+                <li>Event Cleanup</li>
+              </ul>
+              <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg></span>
+            </div>
+          </li>
+          <!-- 9 -->
           <li class="svc" tabindex="0">
-            <div class="svc__img"><img data-img="serviceMaintenance"
-                alt="Extra hands for basic maintenance, repairs and property upkeep" width="900" height="700"
+            <div class="svc__img"><img data-img="exploreOther"
+                alt="Three business colleagues standing together at their workplace" width="880" height="605"
                 loading="lazy" decoding="async">
               <span class="svc__tagline"><svg class="ic" aria-hidden="true">
                   <use href="#i-check"></use>
@@ -1113,10 +1257,10 @@
             </div>
             <div class="svc__body">
               <span class="svc__ico svc__ico--yellow"><svg class="ic" aria-hidden="true">
-                  <use href="#i-wrench"></use>
+                  <use href="#i-clasp"></use>
                 </svg></span>
-              <h3>Maintenance &amp; Property Upkeep</h3>
-              <p>Extra hands for basic maintenance, repairs, cleaning and property upkeep.</p>
+              <h3>Other Businesses</h3>
+              <p>Any business can book verified temporary staff when extra support is needed.</p>
               <span class="svc__go">Book an Employee <svg class="ic" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg></span>
@@ -1126,7 +1270,7 @@
       </div>
 
       <div class="container">
-        <div class="dots" id="svc-dots" role="tablist" aria-label="Services"></div>
+        <div class="dots" id="svc-dots" role="tablist" aria-label="Industries"></div>
       </div>
     </section>
 
@@ -1141,7 +1285,8 @@
       <div class="container">
         <header class="sec-head sec-head--invert">
           <span class="eyebrow eyebrow--invert reveal"><span class="eyebrow__bar"></span>Numbers</span>
-          <h2 class="reveal" data-delay="60">Built for NZ. Growing every day.<br>Making work easier.</h2>
+          <h2 class="reveal" data-delay="60">Built for NZ. Growing Every Day.<br><b
+              class="numbers__brand">SAPOTR</b> Supporting Businesses When It Matters.</h2>
         </header>
 
         <ul class="stats" id="stats">
@@ -1150,35 +1295,28 @@
                 <use href="#i-users"></use>
               </svg></span>
             <b class="stat__num" data-count="260" data-suffix="+">0</b>
-            <span class="stat__label">Nearby Verified Sapotr</span>
+            <span class="stat__label">Nearby Verified Staffs</span>
           </li>
           <li class="stat reveal" data-delay="120">
             <span class="stat__ico"><svg class="ic" aria-hidden="true">
                 <use href="#i-building"></use>
               </svg></span>
             <b class="stat__num" data-count="110" data-suffix="+">0</b>
-            <span class="stat__label">Communities</span>
+            <span class="stat__label">Businesses Supported</span>
           </li>
           <li class="stat reveal" data-delay="180">
-            <span class="stat__ico"><svg class="ic" aria-hidden="true">
-                <use href="#i-calendar"></use>
-              </svg></span>
-            <b class="stat__num" data-count="450" data-suffix="+">0</b>
-            <span class="stat__label">Direct Bookings</span>
-          </li>
-          <li class="stat reveal" data-delay="240">
             <span class="stat__ico"><svg class="ic" aria-hidden="true">
                 <use href="#i-clock"></use>
               </svg></span>
             <b class="stat__num" data-count="1100" data-suffix="+">0</b>
             <span class="stat__label">Hours of Work Supported</span>
           </li>
-          <li class="stat reveal" data-delay="300">
+          <li class="stat reveal" data-delay="240">
             <span class="stat__ico"><svg class="ic" aria-hidden="true">
-                <use href="#i-lock"></use>
+                <use href="#i-calendar"></use>
               </svg></span>
-            <b class="stat__num" data-count="700" data-suffix="+">0</b>
-            <span class="stat__label">Secure Payments</span>
+            <b class="stat__num" data-count="450" data-suffix="+">0</b>
+            <span class="stat__label">Bookings Completed</span>
           </li>
         </ul>
       </div>

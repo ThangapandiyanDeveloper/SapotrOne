@@ -91,8 +91,10 @@
 
 /* ---------- <= 900 : numbers wrap ------------------------- */
 @media (max-width:900px){
-  .stats{grid-template-columns:repeat(3,1fr);gap:34px 0}
-  .stat:nth-child(4)::before,.stat:nth-child(1)::before{display:none}
+  /* four stats go 2 x 2; the divider only belongs between a pair, so
+     it comes off whichever stat starts a row */
+  .stats{grid-template-columns:repeat(2,1fr);gap:34px 0}
+  .stat:nth-child(odd)::before{display:none}
   .sec-head--row{flex-direction:column;align-items:flex-start;gap:22px}
   .explore__nav{order:2}
 }
@@ -122,6 +124,8 @@
   .step__num{top:0;left:0;transform:none;width:52px;height:52px}
   .step__label{gap:3px}
   .step__label i{margin:0;max-width:none}
+  /* the pacer sits under the copy, left-aligned with it */
+  .step__prog{margin:10px 0 0}
   .step:not(.is-active) .step__media{opacity:1}
   .step.is-active .step__media{transform:none}
   /* vertical connector */
@@ -176,6 +180,39 @@
   .dots{margin-top:26px}
 }
 
+/* ---------- <= 560 : signals float on the photo ----------- */
+/* Phones keep the desktop composition rather than dropping the five
+   signals into a list under the picture. They go back to being
+   absolutely positioned badges, anchored to .worry__signals — which is
+   stretched over the photo's box — so they line up with the frame at
+   any width. Sides alternate so they read as badges around the image
+   instead of a stacked column, and the taller frame gives each one air.
+   561px and up keeps its own pill-row composition, untouched. */
+@media (max-width:560px){
+  .worry__photo{height:clamp(420px,118vw,520px)}
+  .worry__photo img{object-position:66% 50%}
+  .worry__signals{position:absolute;inset:0;display:block}
+  .worry__q{position:absolute;max-width:min(86%,260px)}
+  .worry__q::after{display:block}
+
+  /* At a phone's width a badge is most of the frame, so they cannot be
+     spread evenly without one landing on his eyes. One sits above the
+     head and the rest pile up below the face, leaving the 12%-44% band
+     clear — the source crop is landscape, so that band holds his
+     expression at every width here. Sides alternate, urgent last. */
+  .worry__q--1{top:2%;right:0;left:auto}
+  .worry__q--2{top:44%;left:0;right:auto}
+  .worry__q--3{top:58%;right:0;left:auto}
+  .worry__q--4{top:72%;left:0;right:auto}
+  .worry__q--5{top:auto;bottom:4%;right:0;left:auto}
+
+  /* the left-anchored pair points its tail back the other way */
+  .worry__q--2::after,.worry__q--4::after{
+    left:auto;right:-5px;
+    border:0;border-right:1px solid var(--line);border-top:1px solid var(--line);
+  }
+}
+
 /* ---------- <= 430 : compact phones ---------------------- */
 @media (max-width:430px){
   :root{--pad:18px}
@@ -185,9 +222,14 @@
   .worry__q{padding:9px 12px;font-size:.78rem;gap:7px}
 
   .step{grid-template-columns:1fr}
-  .step__media{grid-column:1;height:170px}
+  .step__media{grid-column:1;height:180px}
   .step__btn{padding:0 0 12px 64px}
   .step:not(:last-child)::after{left:25px}
+  .step__prog{width:56px}
+  /* status rows stay comfortably clear of a shorter frame */
+  .otp{left:10px;right:10px;bottom:10px;gap:5px}
+  .otp__row{padding:5px 9px}
+  .otp__row--code b{font-size:.875rem;letter-spacing:.12em}
 
   .story{padding:22px}
   .foot__cols{grid-template-columns:1fr}
@@ -204,10 +246,15 @@
   .svc{flex:0 0 86vw}
   .acc__btn{font-size:.9375rem;padding:16px 15px}
   .faq__visual{width:min(280px,92%)}
-  .stats{grid-template-columns:1fr;gap:26px 0}
-  .stat{display:grid;grid-template-columns:46px 1fr;gap:0 14px;align-items:center}
-  .stat__ico{margin:0;grid-row:span 2}
-  .stat__label{margin-top:2px}
+  /* four stats hold the 2 x 2 even here — a single column would push
+     the last figure well below the fold. The icon and the number come
+     down a size instead. */
+  .stats{grid-template-columns:repeat(2,1fr);gap:26px 0}
+  .stat{padding:0 4px}
+  .stat__ico{width:40px;height:40px;border-radius:12px;margin:0 0 12px}
+  .stat__ico .ic{width:20px;height:20px}
+  .stat__num{font-size:1.75rem}
+  .stat__label{font-size:.75rem;margin-top:8px}
 }
 
 /* ---------- hover-less devices: reveal card CTAs ---------- */

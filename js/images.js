@@ -75,12 +75,31 @@
     stepAssign:         'assets/images/step-assign-otp.jpg',
     stepDone:           'assets/images/step-done.jpg',
 
-    /* --- Section 5: explore services ------------------------- */
-    serviceHomePersonal:  'assets/images/service-home-personal.jpg',
-    serviceMoving:        'assets/images/service-moving.jpg',
-    serviceEvents:        'assets/images/service-events.jpg',
-    serviceCommunities:   'assets/images/service-communities.jpg',
-    serviceMaintenance:   'assets/images/service-maintenance.jpg',
+    /* --- Section 5: explore business industries --------------
+       One photograph per industry card.
+
+       exploreHospitality and exploreOther are card-sized crops
+       (880x605 — the card's 16/11 box at 2x) cut from the client's
+       originals, which were 3.5 MB and 9.9 MB portraits: far too
+       heavy for a 300px card, and framed wrong for a landscape box.
+
+       Retail and warehousing point at the hero's own banners. Banner
+       1 is decoded before the rail is ever reached, so those cards
+       cost no extra bytes.
+
+       exploreEducation is a STAND-IN. The asset library holds no
+       school, university or sports-event photograph, so the closest
+       relevant existing image (an institutional building) is used.
+       Replace it here when the client supplies real imagery. */
+    exploreEvents:        'assets/images/service-events.jpg',
+    exploreHospitality:   'assets/images/explore/hospitality.jpg',
+    exploreRetail:        'assets/images/hero/b1-wide.jpg',
+    exploreWarehousing:   'assets/images/hero/b4-wide.jpg',
+    exploreDelivery:      'assets/images/service-moving.jpg',
+    exploreEducation:     'assets/images/service-communities.jpg',
+    exploreConstruction:  'assets/images/service-maintenance.jpg',
+    exploreCleaning:      'assets/images/service-home-personal.jpg',
+    exploreOther:         'assets/images/explore/other-business.jpg',
 
     /* --- Section 7: customer stories ------------------------- */
     storyAvatar1:       'assets/images/story-avatar-1.jpg',

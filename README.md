@@ -248,11 +248,14 @@ placeholders.
 - **"Book an Employee" is front-end only.** No backend, no booking is processed.
 - The final CTA is a booking-style interaction: choosing a service turns the
   **Try Now** button into **Book an Employee**. Nothing is submitted.
-- The service rail auto-scrolls, pausing on hover, focus or when off screen.
+- The industry rail (section 5) loops endlessly through the nine industries,
+  pausing on hover, focus, a recent swipe, when off screen or in a hidden tab.
+  It has no arrow controls: it advances on its own and answers to swipe, drag,
+  trackpad, the dots and the arrow keys.
 - The booking journey auto-advances and stops on hover, focus or click.
 - Statistics count up once when scrolled into view. The numbers themselves are
-  exactly as specified (260+, 110+, 450+, 1100+, 700+).
-- Carousel arrows and dots hide themselves when every card already fits.
+  exactly as specified (260+, 110+, 1100+, 450+).
+- The stories carousel hides its arrows and dots when every card already fits.
 
 ## Accessibility
 

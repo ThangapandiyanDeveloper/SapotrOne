@@ -382,7 +382,33 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 @keyframes signal-drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-7px,0)}}
 /* ---------- 7. HOW IT WORKS ------------------------------ */
 .how{background:#fff}
-.journey{--media-h:216px;--jgap:22px;position:relative}
+
+/* the eyebrow carries a full sentence here, so it wraps as a block
+   with the accent bar pinned to the first line */
+.how .sec-head .eyebrow{
+  max-width:100%;align-items:flex-start;
+  font-size:clamp(.6875rem,.34vw + .61rem,.8125rem);letter-spacing:.1em;line-height:1.55;
+  color:var(--ink-2);overflow-wrap:break-word;
+}
+.how .sec-head .eyebrow .eyebrow__bar{flex:0 0 auto;margin-top:.66em}
+/* one flex item for the whole sentence, so it wraps as text rather than
+   breaking between the words either side of the brand mark */
+.how .sec-head .eyebrow__txt{min-width:0}
+
+/* SAPOTR on a light ground. The hero states the brand in yellow on
+   dark; on white the same mark reads as navy at a heavier weight, and
+   the yellow is kept for the accents that carry the eye. */
+.how__brand{color:var(--navy);font-weight:800;letter-spacing:.02em;white-space:nowrap}
+
+/* the promise, then the four things it replaces */
+.how .sec-head__lead{max-width:46ch;margin-inline:auto}
+.how__lead-strong{color:var(--navy);font-weight:800}
+.how__lead-rest{color:var(--ink-2);font-weight:600}
+/* each thing being replaced stays whole on its line */
+.how__lead-rest>span{white-space:nowrap}
+.how h2{text-wrap:balance}
+
+.journey{--media-h:216px;--jgap:22px;--step-dur:4200ms;position:relative}
 .journey__steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--jgap)}
 .step{position:relative;display:flex;flex-direction:column}
 .step__media{order:1}
@@ -400,12 +426,26 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   position:relative;height:var(--media-h);
   border-radius:var(--r-md);overflow:hidden;background:var(--soft-2);
   border:1px solid var(--line);
-  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s;
+  transition:transform .6s var(--ease),box-shadow .6s var(--ease),
+             border-color .6s var(--ease),opacity .6s var(--ease);
 }
 .step__photo,.step__photo img{width:100%;height:100%}
-.step__photo img{object-fit:cover}
+/* a waiting frame sits a hair closer and quieter, then settles to 1:1
+   as its step takes over — a settle, never a zoom */
+.step__photo img{
+  object-fit:cover;transform:scale(1.035);filter:saturate(.86);
+  transition:transform .7s var(--ease),filter .7s var(--ease);
+}
+.step.is-active .step__photo img{transform:none;filter:none}
+/* focal points: the app on the screen, the partner's face, the handover */
+.step__photo--tap img{object-position:72% 46%}
+.step__photo--otp img{object-position:46% 34%}
+.step__photo--done img{object-position:50% 42%}
+
 .step.is-active .step__media{
-  transform:translateY(-8px);box-shadow:var(--sh-3);border-color:transparent;
+  transform:translateY(-8px);
+  box-shadow:var(--sh-3),0 0 0 1.5px rgba(15,23,56,.06);
+  border-color:transparent;
 }
 .step:not(.is-active) .step__media{opacity:.72}
 
@@ -419,18 +459,48 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   display:grid;place-items:center;
   background:#fff;border:2px solid var(--line);
   font-size:.9375rem;font-weight:800;color:var(--ink-3);
-  transition:.4s var(--ease);
+  transition:.5s var(--ease);
 }
 .step.is-done .step__num{border-color:var(--cyan);color:var(--cyan)}
 .step.is-active .step__num{
   background:var(--navy);border-color:var(--navy);color:var(--yellow);
-  box-shadow:0 0 0 6px rgba(15,23,56,.07);
+  box-shadow:0 0 0 6px rgba(15,23,56,.07),0 10px 20px -10px rgba(15,23,56,.5);
 }
 .step__label{display:flex;flex-direction:column;gap:6px}
-.step__label b{font-size:1.125rem;color:var(--ink-3);transition:color .3s}
-.step__label i{font-style:normal;font-size:.875rem;line-height:1.5;color:var(--ink-3);max-width:230px;margin:0 auto}
+.step__label b{font-size:1.125rem;color:var(--ink-3);transition:color .4s var(--ease)}
+.step__label i{
+  font-style:normal;font-size:.875rem;line-height:1.5;color:var(--ink-3);
+  max-width:230px;margin:0 auto;transition:color .4s var(--ease);
+}
 .step.is-active .step__label b{color:var(--navy)}
 .step.is-active .step__label i{color:var(--ink-2)}
+/* the brand mark in a step title takes the same highlighter the problem
+   section uses, drawn only while that step is live */
+.step__label b .how__brand{
+  color:inherit;
+  background-image:linear-gradient(transparent 62%,rgba(255,193,7,.5) 62%);
+  background-repeat:no-repeat;background-position:0 100%;background-size:0 100%;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  transition:background-size .7s var(--ease) .18s;
+}
+.step.is-active .step__label b .how__brand{background-size:100% 100%}
+
+/* how long the live step holds the floor — paced by --step-dur and
+   frozen whenever the journey itself is paused */
+.step__prog{
+  display:block;width:64px;height:3px;margin:14px auto 0;
+  border-radius:999px;background:var(--line);overflow:hidden;
+  opacity:0;transition:opacity .45s var(--ease);
+}
+.step.is-active .step__prog{opacity:1}
+.step__prog i{
+  display:block;width:100%;height:100%;border-radius:inherit;
+  background:linear-gradient(90deg,var(--yellow),#FFD866);
+  transform:scaleX(0);transform-origin:left center;
+}
+.step.is-active .step__prog i{animation:step-prog var(--step-dur) linear forwards}
+.journey.is-paused .step.is-active .step__prog i{animation-play-state:paused}
+@keyframes step-prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* step overlay cards */
 .mini{
@@ -447,7 +517,7 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .mini__ico .ic{width:17px;height:17px}
 .mini__ok{width:26px;height:26px;border-radius:50%;background:var(--cyan);color:#fff;display:grid;place-items:center;flex:0 0 auto}
 .mini__ok .ic{width:15px;height:15px;stroke-width:3.4}
-.mini__ok--lg{width:34px;height:34px}
+.mini__ok--lg{width:34px;height:34px;position:relative}
 .mini__ok--lg .ic{width:19px;height:19px}
 
 .mini--select{left:12px;bottom:12px;right:12px;flex-direction:column;align-items:flex-start;gap:7px}
@@ -462,9 +532,24 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .mini__chips i.is-on{border-color:var(--yellow);background:var(--yellow-t);color:var(--navy)}
 .mini--nearby{left:12px;bottom:12px}
 .mini--done{left:12px;bottom:12px;right:12px}
+/* the overlay cards belong to the live step, so they rise in with it */
+.mini--nearby,.mini--done{
+  opacity:0;transform:translateY(10px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease);
+}
+.step.is-active .mini--nearby,
+.step.is-active .mini--done{opacity:1;transform:none;transition-delay:.45s}
+/* step 4 — the one moment of confirmation: a check that lands, then settles */
+.step.is-active .mini--done .mini__ok--lg{animation:done-pop .5s var(--ease) .62s both}
+.step.is-active .mini--done .mini__ok--lg::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:2px solid var(--cyan);
+  animation:done-ring 1.5s var(--ease) 1s 2;
+}
+@keyframes done-pop{0%{transform:scale(.62)}62%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes done-ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.8);opacity:0}}
 
-/* step 3 — arrival, OTP, verified. Plays while the step is active. */
-.step__photo--otp img{object-position:46% 34%}
+/* steps 1 and 3 — status rows that tell the step's story in order */
 .otp{
   position:absolute;z-index:2;left:12px;right:12px;bottom:12px;
   display:flex;flex-direction:column;gap:6px;align-items:flex-start;
@@ -473,25 +558,25 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   display:flex;align-items:center;gap:8px;
   background:rgba(255,255,255,.97);backdrop-filter:blur(6px);
   border:1px solid var(--line);border-radius:10px;
-  padding:7px 11px;box-shadow:var(--sh-2);
-  font-size:.75rem;font-weight:700;color:var(--navy);
+  padding:6px 10px;box-shadow:var(--sh-2);
+  font-size:clamp(.6875rem,.3vw + .62rem,.75rem);font-weight:700;color:var(--navy);
   opacity:0;transform:translateY(9px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
 }
-.step.is-active .otp__row{animation:otp-in .5s var(--ease) forwards}
-.step.is-active .otp__row--1{animation-delay:.12s}
-.step.is-active .otp__row--2{animation-delay:.8s}
-.step.is-active .otp__row--3{animation-delay:1.55s}
-@keyframes otp-in{to{opacity:1;transform:none}}
-.otp__row--2{align-self:stretch;justify-content:space-between}
-.otp__row--2 em{font-style:normal;font-size:.625rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-.otp__row--2 b{font-size:1rem;letter-spacing:.18em;color:var(--navy)}
+.step.is-active .otp__row{opacity:1;transform:none}
+.step.is-active .otp__row:nth-child(1){transition-delay:.2s}
+.step.is-active .otp__row:nth-child(2){transition-delay:.72s}
+.step.is-active .otp__row:nth-child(3){transition-delay:1.24s}
+.otp__row--code{align-self:stretch;justify-content:space-between}
+.otp__row--code em{font-style:normal;font-size:.625rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.otp__row--code b{font-size:.9375rem;letter-spacing:.16em;color:var(--navy)}
 .otp__tick{
   width:18px;height:18px;border-radius:50%;flex:0 0 auto;
   background:var(--cyan);color:#fff;display:grid;place-items:center;
 }
 .otp__tick .ic{width:11px;height:11px;stroke-width:3.4}
 
-/* map mockup */
+/* map mockup — everything here moves only while step 2 is live */
 .map{position:relative;width:100%;height:100%;overflow:hidden}
 .map__svg{width:100%;height:100%;object-fit:cover}
 .map__pin--you{position:absolute;left:46%;top:52%;transform:translate(-50%,-50%);z-index:2}
@@ -501,24 +586,37 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 }
 .map__wave{
   position:absolute;inset:-14px;border-radius:50%;border:2px solid var(--red);
-  opacity:.5;animation:pulse 2.6s var(--ease) infinite;
+  opacity:0;transition:opacity .5s var(--ease);
 }
+.step.is-active .map__wave{opacity:.5;animation:pulse 2.6s var(--ease) infinite}
 .map__emp{
   position:absolute;z-index:2;width:34px;height:34px;border-radius:50%;
   border:2.5px solid #fff;overflow:hidden;box-shadow:var(--sh-2);
-  animation:float 6s var(--ease) infinite;
 }
 .map__emp img{width:100%;height:100%;object-fit:cover}
 .map__emp .dot{position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border:2px solid #fff}
 .map__emp .dot--live::after{display:none}
-.map__emp--1{left:20%;top:22%;animation-delay:.2s}
-.map__emp--2{left:70%;top:33%;animation-delay:1.4s}
-.map__emp--3{left:63%;top:70%;animation-delay:2.6s}
-.map__route{
-  position:absolute;z-index:1;left:24%;top:28%;width:24%;height:26%;
-  border-top:2px dashed rgba(15,23,56,.28);border-left:2px dashed rgba(15,23,56,.28);
-  border-radius:14px 0 0 0;
+.map__emp--1{left:20%;top:22%}
+.map__emp--2{left:70%;top:33%}
+.map__emp--3{left:79%;top:64%}
+/* the two nearest partners read as available — one soft ring each,
+   staggered so the map never blinks in unison */
+.step.is-active .map__emp--1{animation:float 6s var(--ease) .2s infinite,emp-ready 3s var(--ease) .5s infinite}
+.step.is-active .map__emp--2{animation:float 6s var(--ease) 1.4s infinite,emp-ready 3s var(--ease) 2s infinite}
+.step.is-active .map__emp--3{animation:float 6s var(--ease) 2.6s infinite}
+@keyframes emp-ready{
+  0%{box-shadow:var(--sh-2),0 0 0 0 rgba(18,199,199,.5)}
+  55%{box-shadow:var(--sh-2),0 0 0 9px rgba(18,199,199,0)}
+  100%{box-shadow:var(--sh-2),0 0 0 0 rgba(18,199,199,0)}
 }
+/* the route from the nearest partner to you, drifting your way */
+.map__route{position:absolute;z-index:1;inset:0;width:100%;height:100%;overflow:visible}
+.map__route-path{
+  fill:none;stroke:rgba(15,23,56,.34);stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:6 5;opacity:0;transition:opacity .6s var(--ease) .25s;
+}
+.step.is-active .map__route-path{opacity:1;animation:route-flow 4.5s linear infinite}
+@keyframes route-flow{to{stroke-dashoffset:-11}}
 
 /* ---------- 8. WHY SAPOTR (bento) ----------------------- */
 .why{background:var(--soft)}
@@ -659,11 +757,36 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 
 /* ---------- 9. EXPLORE ---------------------------------- */
 .explore{background:#fff;overflow:hidden}
-.explore__viewport{overflow:hidden;padding:10px 0 6px}
+/* overflow:clip, not hidden. `hidden` still makes a scroll container,
+   so tabbing to a card the rail has translated off screen lets the
+   browser scroll this box to reveal it — which shifts the clipper out
+   from under a transform-positioned rail and never comes back. `clip`
+   creates no scrollport at all. `hidden` stays first as the fallback
+   for engines that do not know `clip`; initExplore also pins
+   scrollLeft for those. */
+.explore__viewport{overflow:hidden;overflow:clip;padding:10px 0 6px}
+
+/* the eyebrow carries a whole sentence here, so it wraps as text with
+   the bar held on the first line — the same treatment section 3 uses */
+.explore .sec-head .eyebrow{align-items:flex-start;max-width:46ch;line-height:1.55}
+.explore .sec-head .eyebrow .eyebrow__bar{flex:0 0 auto;margin-top:.62em}
+.explore .sec-head .eyebrow__txt{min-width:0}
+.explore h2{text-wrap:balance}
+.explore .sec-head__lead{color:var(--ink-2)}
+
 .svc-track{
   display:flex;gap:22px;
   padding-inline:max(var(--pad),calc((100vw - 1200px)/2));
   transition:transform .75s var(--ease);will-change:transform;
+  /* the rail is dragged, so a horizontal gesture belongs to it while a
+     vertical one still scrolls the page */
+  touch-action:pan-y;cursor:grab;
+}
+/* while a drag is live the rail tracks the finger directly: no easing,
+   and no text selection sliding out from under the pointer */
+.explore__viewport.is-dragging .svc-track{
+  transition:none;cursor:grabbing;
+  -webkit-user-select:none;user-select:none;
 }
 .svc{
   flex:0 0 300px;
@@ -672,7 +795,14 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s;
 }
 .svc__img{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--soft-2)}
-.svc__img img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+/* --svc-pos holds the focal point for the few sources whose subject is
+   not dead centre; the rest keep the default */
+.svc__img img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:var(--svc-pos,50% 50%);
+  transition:transform .9s var(--ease);
+  -webkit-user-drag:none;user-drag:none;
+}
 /* overlay revealed on hover / when the card is the active one */
 .svc__img::after{
   content:'';position:absolute;inset:0;
@@ -693,7 +823,11 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .svc:hover .svc__img::after,.svc:focus-visible .svc__img::after,.svc.is-active .svc__img::after{opacity:1}
 .svc:hover .svc__tagline,.svc:focus-visible .svc__tagline,.svc.is-active .svc__tagline{opacity:1;transform:none}
 .svc__body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
-.svc__ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;margin:-40px 0 14px;position:relative;background:#fff;box-shadow:var(--sh-2)}
+.svc__ico{
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  margin:-40px 0 14px;position:relative;background:#fff;box-shadow:var(--sh-2);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
 .svc__ico .ic{width:20px;height:20px}
 .svc__ico--yellow{color:#B98300}
 .svc__ico--cyan{color:#0B8C8C}
@@ -701,17 +835,46 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .svc__ico--navy{color:var(--navy)}
 .svc h3{margin-bottom:8px;font-size:1.0625rem}
 .svc p{font-size:.875rem;line-height:1.55;color:var(--ink-2)}
+
+/* the industry's areas of work. A list rather than one long string, so
+   a screen reader announces "list, 7 items" instead of reading a row
+   of bullet characters; the separators are drawn, not spoken. */
+.svc__tags{
+  display:flex;flex-wrap:wrap;
+  font-size:.875rem;line-height:1.55;color:var(--ink-2);
+}
+.svc__tags li{display:inline-flex;align-items:baseline}
+.svc__tags li:not(:last-child)::after{
+  content:'•';margin:0 .48em;color:var(--ink-3);opacity:.55;
+}
+
+/* margin-top:auto pins the CTA to the foot of the card, so the nine
+   industries — from four areas of work to seven — still line up */
 .svc__go{
-  display:inline-flex;align-items:center;gap:7px;margin-top:16px;
+  display:inline-flex;align-items:center;gap:7px;margin-top:auto;padding-top:16px;
   font-size:.8125rem;font-weight:700;color:var(--navy);
   opacity:0;transform:translateY(6px);transition:.4s var(--ease);
 }
-.svc__go .ic{width:16px;height:16px}
+.svc__go .ic{width:16px;height:16px;transition:transform .4s var(--ease)}
 .svc:hover,.svc:focus-visible,.svc.is-active{
   transform:translateY(-6px);box-shadow:var(--sh-3);border-color:transparent;
 }
-.svc:hover .svc__img img,.svc.is-active .svc__img img{transform:scale(1.06)}
+.svc:hover .svc__img img,.svc.is-active .svc__img img{transform:scale(1.04)}
 .svc:hover .svc__go,.svc:focus-visible .svc__go,.svc.is-active .svc__go{opacity:1;transform:none}
+/* the icon lifts with the card, and the arrow nudges on a real hover */
+.svc:hover .svc__ico,.svc:focus-visible .svc__ico,.svc.is-active .svc__ico{
+  transform:translateY(-3px);box-shadow:var(--sh-3);
+}
+.svc:hover .svc__go .ic{transform:translateX(4px)}
+/* keyboard focus is drawn on the card, not inside it */
+.svc:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+
+/* nine dots are the rail's only control, so each one is 8px of ink on
+   a 34px target — a finger's width. Scoped: section 7's pager keeps
+   its arrows and is left alone. */
+.explore .dots{position:relative;z-index:1}
+.explore .dots button{position:relative}
+.explore .dots button::after{content:'';position:absolute;inset:-13px -3px}
 
 /* ---------- 10. NUMBERS -------------------------------- */
 .numbers{background:linear-gradient(170deg,#141D45,var(--navy) 62%);color:#fff;overflow:hidden;isolation:isolate}
@@ -750,7 +913,7 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   0%,100%{transform:translate3d(0,0,0) scale(1.08)}
   50%{transform:translate3d(-7%,-6%,0) scale(1)}
 }
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
 .stat{
   position:relative;text-align:center;padding:6px clamp(8px,1.6vw,20px);
 }
@@ -763,11 +926,32 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   display:grid;place-items:center;
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
   color:var(--cyan);
+  transition:border-color .45s var(--ease),background-color .45s var(--ease);
 }
 .stat__ico .ic{width:23px;height:23px}
 .stat:nth-child(2) .stat__ico{color:var(--yellow)}
 .stat:nth-child(3) .stat__ico{color:var(--red)}
-.stat:nth-child(5) .stat__ico{color:var(--yellow)}
+.stat:nth-child(4) .stat__ico{color:var(--yellow)}
+/* the icon settles in with its number rather than ahead of it */
+.stat .stat__ico{
+  opacity:0;transform:scale(.92);
+  transition:opacity .6s var(--ease) .1s,transform .6s var(--ease) .1s,
+             border-color .45s var(--ease),background-color .45s var(--ease);
+}
+.stat.is-in .stat__ico{opacity:1;transform:none}
+
+/* Desktop only: a stat answers to the pointer, nothing moves on touch.
+   Longhand, because .stat is also a .reveal — a `transition` shorthand
+   here would drop the reveal's own opacity fade. */
+@media (hover:hover){
+  .stat{
+    transition-property:opacity,transform;
+    transition-duration:.75s,.45s;
+    transition-timing-function:var(--ease);
+  }
+  .stat:hover{transform:translateY(-4px)}
+  .stat:hover .stat__ico{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24)}
+}
 .stat__num{
   display:block;font-size:clamp(2rem,3.4vw,2.9rem);font-weight:800;
   letter-spacing:-.035em;line-height:1;color:#fff;
@@ -778,7 +962,14 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   line-height:1.4;color:rgba(255,255,255,.62);
 }
 
+/* 900 is deliberate: it is the width at which text-wrap:balance breaks
+   the second sentence as "SAPOTR Supporting Businesses / When It
+   Matters." Widening it strands "Matters." alone on a third line. */
 .numbers .sec-head{max-width:900px}
+.numbers h2{text-wrap:balance}
+/* SAPOTR on the dark band takes the hero's treatment — brand yellow at
+   a heavier weight — so the mark reads the same on navy everywhere */
+.numbers__brand{color:var(--yellow);font-weight:800;letter-spacing:.01em}
 
 /* ---------- 11. CUSTOMER STORIES ----------------------- */
 .stories{background:var(--soft)}
@@ -1146,8 +1337,22 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   /* section 2: the story is told by the copy, never by the motion */
   .worry__q,.worry.is-in .worry__q{opacity:1;transform:none;animation:none;transition-delay:0s}
   .bubble--out .bubble__hl{background-size:100% 100%}
+  /* section 3: the journey is told by the copy and the stills, never
+     by the motion — every state stays visible, nothing keeps moving */
   .step:not(.is-active) .step__media{opacity:1}
+  .step__photo img{transform:none;filter:none}
+  .step__prog{display:none}
+  .step__label b .how__brand{background-size:100% 100%}
+  .mini--nearby,.mini--done{opacity:1;transform:none}
+  .map__wave{opacity:.5}
+  .map__route-path{opacity:1}
+  /* section 5: the rail stops advancing on its own (see initExplore),
+     and what movement remains is instant rather than eased */
   .svc__go{opacity:1;transform:none}
+  .svc__tagline{opacity:1;transform:none}
+  .svc-track{transition:none}
+  /* section 6: the figures and their icons are simply there */
+  .stat .stat__ico{opacity:1;transform:none}
   .otp__row{opacity:1;transform:none}
   .tile::before{transform:scaleX(1)}
   .acc__inner{opacity:1;transform:none}
