@@ -263,6 +263,71 @@
   }
 
   /* ==========================================================
+     2b. VERIFICATION LEDGER — every SAPOTR is verified
+     ----------------------------------------------------------
+     The section between 4 and 5. Reading a record verifies it: the
+     node takes its tick, the card draws its accent rule, the badge
+     lights, and the artefact plays its own small confirmation. The
+     spine fills behind them and the credential's gauge counts up.
+
+     Two custom properties carry the state, both written once per
+     record and both animated by the compositor:
+       --fill on .verification__ledger  (0 to 1, the spine)
+       --p    on .vcred__gauge          (0 to 1, the ring)
+     There is no scroll handler and no animation loop — an
+     IntersectionObserver fires seven times in the life of the page
+     and then unobserves itself.
+
+     With motion reduced, or on an engine without IntersectionObserver,
+     every record starts verified and the gauge starts full. That is
+     the honest state: the copy never claims anything the scroll
+     revealed, so nothing is lost by showing it at once.
+     ========================================================== */
+  function initVerification() {
+    var root = qs('#verification');
+    if (!root) return;
+
+    var items = qsa('.vcheck', root);
+    if (!items.length) return;
+
+    var ledger = qs('.verification__ledger', root);
+    var gauge = qs('.vcred__gauge', root);
+    var count = qs('[data-verified-count]', root);
+    var total = items.length;
+
+    function paint(n) {
+      var p = (n / total).toFixed(3);
+      if (ledger) ledger.style.setProperty('--fill', p);
+      if (gauge) gauge.style.setProperty('--p', p);
+      if (count) count.textContent = String(n);
+    }
+
+    if (reduced.matches || !('IntersectionObserver' in window)) {
+      for (var i = 0; i < total; i++) items[i].classList.add('is-verified');
+      paint(total);
+      return;
+    }
+
+    paint(0);
+
+    /* The count is how many records have been read, not which — a
+       reader who lands mid-section from a deep link verifies several
+       at once and the gauge simply agrees with them. */
+    var done = 0;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-verified');
+        io.unobserve(entry.target);
+        done++;
+        paint(done);
+      });
+    }, { threshold: 0.4, rootMargin: '0px 0px -12% 0px' });
+
+    for (var j = 0; j < total; j++) io.observe(items[j]);
+  }
+
+  /* ==========================================================
      3. CAROUSEL — the customer stories rail (section 7)
      ----------------------------------------------------------
      A paged, looping rail. How many cards a page holds is whatever
@@ -1093,6 +1158,7 @@
   function init() {
     initNav();
     initJourney();
+    initVerification();
     initExplore();
     initStories();
     initAccordion();

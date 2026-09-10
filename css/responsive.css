@@ -323,6 +323,113 @@
   .svc__go{opacity:1;transform:none}
 }
 
+/* ============================================================
+   VERIFIED — every SAPOTR is verified
+   Its own block, kept together and last, so the ledger can be
+   reshaped without reading past it. Nothing here selects outside
+   .verification / .vcred / .vcheck / .vart.
+
+   Three compositions, not one shrunk three times:
+     >  900  credential held beside the ledger, sticky
+     <= 900  credential lies down above the ledger, photo beside meta
+     <= 600  the ledger becomes the journey — artefact and heading on
+             one line, the sentence across the full card width
+   ============================================================ */
+
+/* ---------- <= 1180 : the credential gives back some width - */
+@media (max-width:1180px){
+  .verification__layout{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+}
+
+/* ---------- <= 900 : one column, credential lying down ----- */
+@media (max-width:900px){
+  .verification__layout{grid-template-columns:minmax(0,1fr);gap:clamp(26px,4vw,40px)}
+  /* sticky is only worth having beside something to scroll past */
+  .verification__aside{position:static;top:auto}
+
+  .vcred{
+    display:grid;
+    grid-template-columns:minmax(0,240px) minmax(0,1fr);
+    grid-template-areas:"shot top" "shot meta";
+    grid-template-rows:auto 1fr;
+    column-gap:clamp(18px,3vw,28px);row-gap:14px;
+    padding:clamp(16px,2.4vw,22px);
+  }
+  .vcred__top{grid-area:top;margin-bottom:0;align-self:start}
+  .vcred__id{grid-area:shot;align-self:start}
+  .vcred__meta{grid-area:meta;margin-top:0;align-self:center}
+}
+
+/* ---------- <= 600 : the vertical verification journey ----- */
+@media (max-width:600px){
+  .vcred{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:"top" "shot" "meta";
+    grid-template-rows:auto auto auto;
+    row-gap:14px;
+  }
+  .vcred__id{width:100%;max-width:340px;margin:0 auto}
+  .vcred__meta{align-self:auto}
+
+  .verification__ledger{--node:36px;--spine:14px}
+  .vcheck__node{font-size:.75rem;border-width:2px}
+  .vcheck__node .ic{width:16px;height:16px;padding:2.5px;right:-6px;bottom:-5px;box-shadow:0 0 0 2px #fff}
+
+  /* artefact and heading share the first line, then the sentence runs
+     the whole width of the card — a 150px measure is not a paragraph */
+  .vcheck__card{
+    grid-template-columns:auto minmax(0,1fr);
+    grid-template-areas:"art head" "copy copy";
+    column-gap:14px;row-gap:13px;
+    padding:16px;
+  }
+  .vcheck__head{align-self:center}
+  .vart{--art:96px;align-self:start}
+  .vcheck__head h3{font-size:1.0625rem}
+  .vcheck__ico{width:36px;height:36px;border-radius:11px}
+  .vcheck__ico .ic{width:19px;height:19px}
+  .vcheck__copy p{font-size:.9375rem;max-width:none}
+  .vcheck__badge{margin-top:12px}
+}
+
+/* ---------- <= 430 : compact phones ------------------------ */
+@media (max-width:430px){
+  .verification__ledger{--node:32px;--spine:12px}
+  .vcheck__node{font-size:.6875rem}
+  .vcheck__node .ic{width:15px;height:15px;padding:2.5px;right:-6px;bottom:-5px}
+  .vcheck__card{padding:15px;column-gap:12px}
+  .vart{--art:86px}
+  .vcheck__head{gap:11px}
+  .vcheck__head h3{font-size:1rem}
+  .vcred__seal{padding:6px 11px;font-size:.6875rem}
+  .vcred__gauge{width:50px;height:50px}
+  .vcred__count{font-size:1rem}
+}
+
+/* ---------- <= 360 : smallest supported -------------------- */
+@media (max-width:360px){
+  .verification__ledger{--node:30px;--spine:10px}
+  .vcheck__card{padding:14px}
+  .vart{--art:78px}
+  .vcheck__head{gap:10px}
+  .vcheck__ico{width:32px;height:32px;border-radius:10px}
+  .vcheck__ico .ic{width:17px;height:17px}
+  .vcheck__copy p{font-size:.90625rem}
+  .vcred__text i{font-size:.78125rem}
+}
+
+/* ---------- hover-less devices ----------------------------
+   Nothing in the ledger is hidden behind hover — the verified state
+   comes from the scroll — so there is nothing to reveal here. The
+   photo simply holds still. */
+@media (hover:none){
+  .vcheck:hover .vart__img{transform:none}
+  /* the docs photo keeps the offset it is composed at */
+  .vcheck:hover .vart--docs .vart__img{transform:translate(14%,4%) rotate(4deg)}
+  .vcheck:hover .vcheck__card{transform:none;box-shadow:none;border-color:var(--line)}
+  .vcheck:hover .vcheck__ico{transform:none}
+}
+
 /* ---------- print ---------------------------------------- */
 @media print{
   .nav,.explore__nav,.dots,.cta__btn,.foot__social{display:none}

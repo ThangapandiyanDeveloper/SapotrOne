@@ -784,6 +784,453 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .is-in .viz-reliable__off:nth-child(2)::after{transition-delay:.15s}
 .is-in .viz-reliable__off:nth-child(3)::after{transition-delay:.3s}
 
+/* ---------- VERIFIED — every SAPOTR is verified ---------
+   Sits between 8 and 9 on the page. Everything is namespaced
+   .verification / .vcred / .vcheck / .vart, so nothing here can reach
+   the bento above it or the industry rail below it.
+
+   The composition is a record, not a card grid: a staff credential
+   held on the left, and a ledger of the seven checks behind it running
+   down a spine on the right. A record fills its node, draws its rule
+   and lights its badge as it is read; the credential's gauge counts
+   the checks off. initVerification() in js/main.js owns the two custom
+   properties that drive it — --fill on the ledger and --p on the gauge
+   — and adds .is-verified to each record. With motion off, or without
+   IntersectionObserver, every record is simply already verified, which
+   is the honest state: the copy is the same either way.
+
+   The section is deliberately light. Two dark bands already carry the
+   page (the numbers and the closing panel); trust here reads calmer in
+   white with one navy anchor in it. Breakpoints: css/responsive.css.
+   ------------------------------------------------------------ */
+.verification{
+  background:linear-gradient(180deg,#FAFBFE 0%,#FFF 42%,#FFF 100%);
+  isolation:isolate;
+}
+/* one soft brand light, so the ground is never a flat slab. Nothing
+   overflows the section, so it needs no clipper — which matters,
+   because a clipper here would break the sticky credential. */
+.verification__aura{
+  position:absolute;z-index:-1;inset:0;pointer-events:none;
+  background:
+    radial-gradient(40% 34% at 88% 4%,rgba(18,199,199,.13),transparent 70%),
+    radial-gradient(32% 30% at 2% 70%,rgba(255,193,7,.10),transparent 72%);
+}
+
+.verification .sec-head{max-width:780px}
+/* a long, careful sentence — it reads better at book weight than at
+   the lead's usual 600 */
+.verification .sec-head__lead{
+  font-weight:500;color:var(--ink-2);
+  font-size:clamp(1rem,1.2vw,1.125rem);line-height:1.68;
+}
+
+/* the brand name: navy at .brand's weight, under a rule that runs
+   verified-teal into brand-yellow once the heading is revealed.
+   Colour never carries it alone — the weight does too. */
+.verification__brand{position:relative;display:inline-block}
+.verification__brand::after{
+  content:'';position:absolute;left:0;right:0;bottom:-.06em;height:.14em;
+  border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--yellow));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .9s var(--ease) .35s;
+}
+.verification h2.is-in .verification__brand::after{transform:scaleX(1)}
+
+.verification__layout{
+  display:grid;
+  grid-template-columns:minmax(0,360px) minmax(0,1fr);
+  gap:clamp(28px,3.4vw,64px);
+  align-items:start;
+}
+.verification__aside{position:sticky;top:calc(var(--nav-h) + 26px)}
+
+/* screen-reader copy: the seven checks stated once as a sentence, so
+   the gauge's counting is decoration rather than information */
+.verification__sr{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);
+  white-space:nowrap;border:0;
+}
+
+/* ---- the credential -------------------------------------- */
+.vcred{
+  position:relative;margin:0;isolation:isolate;overflow:hidden;
+  padding:clamp(16px,1.5vw,20px);
+  border-radius:var(--r-lg);
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  background:
+    radial-gradient(120% 90% at 50% -12%,#1E2A5E 0%,transparent 58%),
+    linear-gradient(158deg,#182253 0%,#101838 56%,#0B112E 100%);
+  box-shadow:var(--sh-3);
+}
+.vcred__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.vcred__label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.6875rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.9);
+}
+.vcred__label .ic{width:17px;height:17px;color:var(--cyan)}
+.vcred__nz{
+  font-size:.625rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:rgba(255,255,255,.66);
+  border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 10px;
+  white-space:nowrap;
+}
+
+/* the photograph and the seal pinned to its lower edge travel as one
+   block, so every layout below places them together */
+.vcred__id{position:relative}
+.vcred__shot{
+  position:relative;aspect-ratio:1/1;
+  border-radius:var(--r-md);overflow:hidden;background:#0B112E;
+}
+.vcred__shot img{width:100%;height:100%;object-fit:cover}
+
+/* four corner brackets in one element — the identity-frame language
+   the first record repeats at artefact scale */
+.vcred__brackets{
+  position:absolute;inset:12px;pointer-events:none;opacity:.92;
+  background:
+    linear-gradient(var(--cyan),var(--cyan)) 0 0/18px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 0/2px 18px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 0/18px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 0/2px 18px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 100%/18px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 100%/2px 18px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 100%/18px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 100%/2px 18px no-repeat;
+}
+/* the sweep runs twice on reveal and then stops for good — a check
+   being made, not a machine left running */
+.vcred__scan{
+  position:absolute;left:0;right:0;top:0;height:36%;opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(18,199,199,.32),transparent);
+}
+.vcred.is-in .vcred__scan{animation:vcred-scan 2.4s var(--ease) .45s 2}
+@keyframes vcred-scan{
+  0%{transform:translateY(-100%);opacity:0}
+  14%{opacity:1}
+  86%{opacity:1}
+  100%{transform:translateY(180%);opacity:0}
+}
+
+.vcred__seal{
+  position:relative;z-index:2;
+  display:flex;width:max-content;margin:-17px auto 0;
+  align-items:center;gap:7px;
+  padding:7px 13px;border-radius:999px;
+  font-size:.75rem;font-weight:700;letter-spacing:-.005em;
+  background:var(--cyan);color:#06282E;
+  box-shadow:0 8px 20px -10px rgba(0,0,0,.7);
+}
+.vcred__seal .ic{width:15px;height:15px;stroke-width:2.8}
+
+.vcred__meta{display:flex;align-items:center;gap:14px;margin-top:16px}
+.vcred__gauge{position:relative;flex:0 0 auto;width:56px;height:56px;display:grid;place-items:center}
+.vcred__gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.vcred__gauge circle{fill:none;stroke-width:3.4;stroke-linecap:round}
+.vcred__track{stroke:rgba(255,255,255,.15)}
+.vcred__arc{
+  stroke:var(--cyan);
+  stroke-dasharray:100;
+  stroke-dashoffset:calc(100 - (var(--p,0) * 100));
+  transition:stroke-dashoffset .85s var(--ease);
+}
+.vcred__count{
+  position:absolute;font-size:1.0625rem;font-weight:800;
+  letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums;
+}
+.vcred__text{display:block;min-width:0}
+.vcred__text b{display:block;font-size:.9375rem;font-weight:700;color:#fff;line-height:1.35}
+.vcred__text i{display:block;margin-top:3px;font-style:normal;font-size:.8125rem;line-height:1.5;color:rgba(255,255,255,.62)}
+
+/* ---- the ledger ------------------------------------------ */
+.verification__ledger{position:relative;--node:44px;--spine:20px}
+/* the spine runs node-centre to node-centre, and fills to --fill */
+.verification__spine{
+  position:absolute;left:calc(var(--node) / 2 - 1px);
+  top:calc(var(--node) / 2);bottom:calc(var(--node) / 2);
+  width:2px;border-radius:2px;background:var(--line);overflow:hidden;
+}
+.verification__spine i{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--cyan) 0%,var(--cyan) 55%,var(--yellow) 100%);
+  transform:scaleY(var(--fill,0));transform-origin:top;
+  transition:transform .95s var(--ease);
+}
+.verification__rail{display:grid;gap:clamp(14px,1.5vw,20px)}
+
+.vcheck{
+  position:relative;
+  padding-left:calc(var(--node) + var(--spine));
+  --accent:var(--cyan);--accent-t:var(--cyan-t);--accent-ink:#0B8C8C;
+}
+.vcheck[data-accent="yellow"]{--accent:var(--yellow);--accent-t:var(--yellow-t);--accent-ink:#B98300}
+.vcheck[data-accent="navy"]{--accent:var(--navy);--accent-t:var(--navy-t);--accent-ink:var(--navy)}
+
+/* the node keeps its number for good — the tick is a pip on its
+   shoulder, so the ledger can still be read as 01 to 07 */
+.vcheck__node{
+  position:absolute;left:0;top:0;z-index:2;
+  width:var(--node);height:var(--node);border-radius:50%;
+  display:grid;place-items:center;
+  background:#fff;border:2px solid var(--line);
+  font-size:.8125rem;font-weight:800;letter-spacing:.01em;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;
+  transition:border-color .5s var(--ease),color .5s var(--ease),box-shadow .5s var(--ease);
+}
+.vcheck__node .ic{
+  position:absolute;right:-5px;bottom:-3px;
+  width:19px;height:19px;padding:3.5px;border-radius:50%;
+  background:var(--cyan);color:#fff;stroke-width:3.2;
+  box-shadow:0 0 0 2.5px #fff;
+  opacity:0;transform:scale(.3);
+  transition:opacity .35s var(--ease) .1s,transform .5s cubic-bezier(.2,1.5,.4,1) .1s;
+}
+.vcheck.is-verified .vcheck__node{
+  border-color:var(--accent);color:var(--accent-ink);
+  box-shadow:0 0 0 5px var(--accent-t);
+}
+.vcheck.is-verified .vcheck__node .ic{opacity:1;transform:none}
+
+.vcheck__card{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"head art" "copy art";
+  grid-template-rows:auto 1fr;
+  column-gap:clamp(16px,1.9vw,28px);row-gap:10px;
+  align-items:stretch;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  padding:clamp(18px,1.9vw,24px);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease);
+}
+/* the accent rule down the leading edge, drawn as the record verifies */
+.vcheck__card::before{
+  content:'';position:absolute;z-index:2;left:0;top:0;bottom:0;width:3px;
+  background:var(--accent);
+  transform:scaleY(0);transform-origin:top;
+  transition:transform .75s var(--ease);
+}
+.vcheck.is-verified .vcheck__card::before{transform:scaleY(1)}
+/* accent wash, revealed on hover — the same treatment the bento uses */
+.vcheck__card::after{
+  content:'';position:absolute;z-index:-1;inset:0;opacity:0;
+  background:radial-gradient(72% 120% at 100% 0%,var(--accent-t),transparent 70%);
+  transition:opacity .45s var(--ease);
+}
+.vcheck:hover .vcheck__card,
+.vcheck:focus-visible .vcheck__card{transform:translateY(-4px);box-shadow:var(--sh-3);border-color:transparent}
+.vcheck:hover .vcheck__card::after,
+.vcheck:focus-visible .vcheck__card::after{opacity:1}
+/* the ring belongs on the card, not around the node and the card both */
+.vcheck:focus-visible{outline:none}
+.vcheck:focus-visible .vcheck__card{outline:3px solid var(--cyan);outline-offset:3px}
+
+.vcheck__head{grid-area:head;display:flex;align-items:center;gap:13px;min-width:0}
+.vcheck__head h3{min-width:0}
+/* a flex column so the badge can sit on the card's foot however tall
+   the artefact makes the row — the seven cards then read as a set */
+.vcheck__copy{grid-area:copy;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.vcheck__ico{
+  flex:0 0 auto;width:40px;height:40px;border-radius:12px;
+  display:grid;place-items:center;
+  background:var(--accent-t);color:var(--accent-ink);
+  transition:transform .45s var(--ease);
+}
+.vcheck__ico .ic{width:20px;height:20px}
+.vcheck:hover .vcheck__ico{transform:translateY(-2px) scale(1.07)}
+.vcheck__copy p{font-size:.9375rem;line-height:1.62;color:var(--ink-2);max-width:48ch;margin-bottom:16px}
+.vcheck__badge{
+  margin-top:auto;display:inline-flex;align-items:center;gap:7px;
+  padding:6px 12px;border-radius:999px;
+  font-size:.6875rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);border:1px solid var(--line);background:#fff;
+  transition:color .5s var(--ease),background-color .5s var(--ease),border-color .5s var(--ease);
+}
+.vcheck__badge .ic{width:14px;height:14px;stroke-width:2.8;opacity:.4;transition:opacity .5s var(--ease) .15s,color .5s var(--ease)}
+.vcheck.is-verified .vcheck__badge{color:#0B8C8C;background:var(--cyan-t);border-color:transparent}
+.vcheck.is-verified .vcheck__badge .ic{opacity:1;color:var(--cyan)}
+
+/* ---- the artefacts ---------------------------------------
+   One per record, all on the same 3:4 footprint so the ledger keeps
+   its rhythm, but no two built the same way: the check is drawn
+   around the face rather than stated beside it. Every piece of chrome
+   is CSS over the photograph — no extra bytes, and it animates on the
+   compositor. */
+.vart{
+  grid-area:art;align-self:center;margin:0;
+  --art:clamp(96px,12vw,148px);
+  position:relative;width:var(--art);aspect-ratio:3/4;
+  border-radius:var(--r-sm);overflow:hidden;background:var(--soft-2);
+  transition:transform .5s var(--ease);
+}
+.vart__img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.vcheck:hover .vart__img,.vcheck:focus-visible .vart__img{transform:scale(1.05)}
+
+/* 01 identity — the frame an ID is read inside, and the read itself */
+.vart--id .vart__brackets{
+  position:absolute;inset:8px;z-index:2;pointer-events:none;
+  opacity:0;transition:opacity .6s var(--ease) .15s;
+  background:
+    linear-gradient(var(--cyan),var(--cyan)) 0 0/13px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 0/2px 13px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 0/13px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 0/2px 13px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 100%/13px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 0 100%/2px 13px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 100%/13px 2px no-repeat,
+    linear-gradient(var(--cyan),var(--cyan)) 100% 100%/2px 13px no-repeat;
+}
+.vcheck.is-verified .vart--id .vart__brackets{opacity:1}
+.vart--id .vart__scan{
+  position:absolute;left:0;right:0;top:0;height:40%;z-index:2;opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(18,199,199,.4),transparent);
+}
+.vcheck.is-verified .vart--id .vart__scan{animation:vart-scan 2s var(--ease) .2s 1}
+@keyframes vart-scan{
+  0%{transform:translateY(-100%);opacity:0}
+  16%{opacity:1}
+  84%{opacity:1}
+  100%{transform:translateY(170%);opacity:0}
+}
+
+/* 02 right to work — the eligibility stamp, pressed on when the
+   record verifies */
+.vart--work .vart__stamp{
+  position:absolute;left:50%;top:71%;z-index:2;
+  transform:translate(-50%,-50%) rotate(-9deg) scale(1.5);
+  padding:5px 10px;border-radius:6px;white-space:nowrap;
+  font-size:.5625rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:#0B8C8C;background:rgba(255,255,255,.94);
+  border:2px solid rgba(18,199,199,.9);
+  opacity:0;transition:opacity .35s var(--ease) .2s,transform .5s cubic-bezier(.2,1.3,.4,1) .2s;
+}
+.vcheck.is-verified .vart--work .vart__stamp{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1)}
+
+/* 03 police — a calm shield and two quiet rings. Screening reads as
+   safety here, never as enforcement. */
+.vart--police,.vart--profile{
+  display:grid;place-items:center;
+  background:linear-gradient(158deg,#F4F7FC,#E9EEF7);
+}
+.vart--police > *,.vart--profile > *{grid-area:1/1}
+.vart--police .vart__img,.vart--profile .vart__img{
+  width:72%;height:auto;aspect-ratio:1/1;border-radius:50%;
+  object-position:50% 16%;
+  box-shadow:0 10px 24px -14px rgba(15,23,56,.6);
+}
+.vart--police .vart__rings{position:relative;width:100%;height:100%;display:grid;place-items:center}
+.vart--police .vart__rings i{
+  grid-area:1/1;border-radius:50%;border:1.5px solid rgba(18,199,199,.35);
+  opacity:0;transition:opacity .6s var(--ease),width .8s var(--ease),height .8s var(--ease);
+  width:72%;height:54%;
+}
+.vcheck.is-verified .vart--police .vart__rings i:nth-child(1){opacity:1;width:84%;height:63%}
+.vcheck.is-verified .vart--police .vart__rings i:nth-child(2){opacity:.6;width:96%;height:72%;transition-delay:.12s}
+.vart--police .vart__shield{
+  align-self:end;justify-self:end;z-index:2;
+  margin:0 12% 26% 0;
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:var(--cyan);color:#fff;box-shadow:0 0 0 3px #fff;
+  opacity:0;transform:scale(.4);
+  transition:opacity .35s var(--ease) .25s,transform .5s cubic-bezier(.2,1.5,.4,1) .25s;
+}
+.vart--police .vart__shield .ic{width:14px;height:14px;stroke-width:2.2}
+.vcheck.is-verified .vart--police .vart__shield{opacity:1;transform:none}
+
+/* 04 profile — the picture itself, and the ring closing around it */
+.vart--profile .vart__ring{
+  width:84%;aspect-ratio:1/1;border-radius:50%;
+  border:2px dashed rgba(15,23,56,.16);
+  transition:border-color .6s var(--ease),border-style .6s;
+}
+.vcheck.is-verified .vart--profile .vart__ring{border-style:solid;border-color:var(--yellow)}
+.vart--profile .vart__tick{
+  align-self:end;justify-self:end;z-index:2;
+  margin:0 10% 24% 0;
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:var(--cyan);color:#fff;box-shadow:0 0 0 3px #fff;
+  opacity:0;transform:scale(.4);
+  transition:opacity .35s var(--ease) .3s,transform .5s cubic-bezier(.2,1.5,.4,1) .3s;
+}
+.vart--profile .vart__tick .ic{width:15px;height:15px;stroke-width:3}
+.vcheck.is-verified .vart--profile .vart__tick{opacity:1;transform:none}
+
+/* 05 documents — the licences and certificates the photo is filed
+   with, each sheet ruled and ticked */
+.vart--docs{display:grid;place-items:center;background:linear-gradient(158deg,#F5F7FC,#EBEFF8)}
+.vart--docs > *{grid-area:1/1}
+.vart--docs .vart__img{
+  width:56%;height:auto;aspect-ratio:3/4;border-radius:7px;z-index:2;
+  transform:translate(14%,4%) rotate(4deg);
+  box-shadow:0 10px 22px -12px rgba(15,23,56,.55);
+  transition:transform .6s var(--ease);
+}
+.vcheck:hover .vart--docs .vart__img{transform:translate(14%,4%) rotate(4deg) scale(1.04)}
+.vart--docs .vart__sheets{position:relative;width:100%;height:100%}
+.vart--docs .vart__sheets i{
+  position:absolute;left:50%;top:50%;width:52%;height:62%;
+  background:#fff;border:1px solid var(--line);border-radius:7px;
+  box-shadow:var(--sh-1);
+}
+.vart--docs .vart__sheets i:nth-child(1){transform:translate(-72%,-56%) rotate(-11deg)}
+.vart--docs .vart__sheets i:nth-child(2){transform:translate(-62%,-48%) rotate(-4deg)}
+/* ruled lines, then a tick drawn in the corner once the record verifies */
+.vart--docs .vart__sheets i::before{
+  content:'';position:absolute;left:7px;right:7px;top:9px;height:1.5px;
+  background:var(--line);box-shadow:0 5px 0 var(--line),0 10px 0 var(--line);
+}
+.vart--docs .vart__sheets i::after{
+  content:'';position:absolute;left:8px;bottom:9px;width:9px;height:5px;
+  border:solid var(--cyan);border-width:0 0 2px 2px;
+  transform:rotate(-45deg) scale(.4);opacity:0;
+  transition:opacity .3s var(--ease),transform .45s cubic-bezier(.2,1.5,.4,1);
+}
+.vcheck.is-verified .vart--docs .vart__sheets i::after{opacity:1;transform:rotate(-45deg) scale(1)}
+.vcheck.is-verified .vart--docs .vart__sheets i:nth-child(2)::after{transition-delay:.14s}
+
+/* 06 safety — hi-vis, and the readiness steps filling one by one */
+.vart--safety .vart__hivis{
+  position:absolute;left:-12%;right:-12%;bottom:13%;height:13%;z-index:2;
+  transform:rotate(-6deg);
+  background:repeating-linear-gradient(135deg,
+    rgba(255,193,7,.96) 0 9px,rgba(15,23,56,.88) 9px 18px);
+  opacity:0;transition:opacity .55s var(--ease) .1s;
+}
+.vcheck.is-verified .vart--safety .vart__hivis{opacity:.95}
+.vart--safety .vart__steps{
+  position:absolute;left:7px;top:7px;z-index:3;display:flex;gap:3px;
+  padding:5px 6px;border-radius:999px;background:rgba(15,23,56,.72);
+}
+.vart--safety .vart__steps i{
+  width:13px;height:3px;border-radius:2px;background:rgba(255,255,255,.3);
+  transition:background-color .4s var(--ease);
+}
+.vcheck.is-verified .vart--safety .vart__steps i{background:var(--yellow)}
+.vcheck.is-verified .vart--safety .vart__steps i:nth-child(2){transition-delay:.14s}
+.vcheck.is-verified .vart--safety .vart__steps i:nth-child(3){transition-delay:.28s}
+
+/* 07 performance — the rating the completed work builds, lit one
+   star at a time */
+.vart--rating .vart__stars{
+  position:absolute;left:7px;right:7px;bottom:7px;z-index:3;
+  display:flex;justify-content:center;gap:2px;
+  padding:5px 4px;border-radius:8px;background:rgba(15,23,56,.74);
+}
+.vart--rating .vart__stars .ic{
+  width:12px;height:12px;stroke-width:1.9;
+  color:rgba(255,255,255,.34);fill:none;
+  transition:color .35s var(--ease),fill .35s var(--ease);
+}
+.vcheck.is-verified .vart--rating .vart__stars .ic{color:var(--yellow);fill:var(--yellow)}
+.vcheck.is-verified .vart--rating .vart__stars .ic:nth-child(2){transition-delay:.1s}
+.vcheck.is-verified .vart--rating .vart__stars .ic:nth-child(3){transition-delay:.2s}
+.vcheck.is-verified .vart--rating .vart__stars .ic:nth-child(4){transition-delay:.3s}
+.vcheck.is-verified .vart--rating .vart__stars .ic:nth-child(5){transition-delay:.4s}
+
 /* ---------- 9. EXPLORE ---------------------------------- */
 .explore{
   background:#fff;overflow:hidden;
@@ -1456,6 +1903,18 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   .mini--nearby,.mini--done{opacity:1;transform:none}
   .map__wave{opacity:.5}
   .map__route-path{opacity:1}
+  /* the verification ledger: initVerification marks every record
+     verified at once, so the states below are simply the states —
+     nothing sweeps, stamps or counts. The section says exactly the
+     same thing either way. */
+  .vcred__scan,.vart__scan{display:none}
+  .vcheck__card::before{transform:scaleY(1)}
+  .vcheck__node .ic,.vart--work .vart__stamp,
+  .vart--police .vart__shield,.vart--profile .vart__tick{opacity:1;transform:none}
+  .vart--work .vart__stamp{transform:translate(-50%,-50%) rotate(-9deg)}
+  .vart--docs .vart__sheets i::after{opacity:1;transform:rotate(-45deg)}
+  .verification__brand::after{transform:scaleX(1)}
+  .vcheck:hover .vcheck__card{transform:none}
   /* section 5: the rail stops advancing on its own (see initExplore),
      and what movement remains is instant rather than eased */
   .svc__go{opacity:1;transform:none}

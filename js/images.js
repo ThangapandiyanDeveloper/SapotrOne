@@ -75,6 +75,31 @@
     stepAssign:         'assets/images/step-assign-otp.jpg',
     stepDone:           'assets/images/step-done.jpg',
 
+    /* --- Every SAPOTR is verified (sits between 4 and 5) ---
+       The verification ledger's own asset set. Eight of the client's
+       own staff portraits, one per verification record plus the large
+       credential portrait — eight different people, none of them used
+       anywhere else on the site. Recropped from assets/Staffs to the
+       shapes this section renders (280x372 for the record artefacts,
+       roughly 2x their largest rendered size; 620x620 for the
+       credential panel) so the section costs ~160 KB rather than the
+       2 MB the originals weigh.
+
+       These are portraits, not concept photography: the verification
+       idea each record carries is drawn around the face by the
+       artefact chrome in the markup (the ID frame, the eligibility
+       stamp, the shield, the document sheets, the readiness ticks,
+       the rating meter). Replace a value here if the client later
+       supplies a purpose-shot photograph for that check. */
+    verificationCredential:   'assets/images/verification/staff-credential.jpg',
+    verificationIdentity:     'assets/images/verification/identity.jpg',
+    verificationRightToWork:  'assets/images/verification/right-to-work.jpg',
+    verificationPolice:       'assets/images/verification/police-check.jpg',
+    verificationProfile:      'assets/images/verification/profile.jpg',
+    verificationDocuments:    'assets/images/verification/documents.jpg',
+    verificationSafety:       'assets/images/verification/safety.jpg',
+    verificationPerformance:  'assets/images/verification/performance.jpg',
+
     /* --- Section 5: explore business industries --------------
        One photograph per industry card.
 
