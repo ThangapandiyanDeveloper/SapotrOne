@@ -10,6 +10,44 @@
   :root{--pad:32px}
 }
 
+/* ---------- 768+ : the industry rail is contained ---------
+   On a phone the rail is deliberately full bleed. From tablet up that
+   reads as cards spilling out of both browser edges, so the rail is
+   pulled back onto the same content column as the Section 5 heading.
+
+   The maths mirrors .container exactly — max-width:1200px minus its
+   --pad either side — so the rail's content box IS the container's
+   content box and the leading card starts directly under the heading
+   at every width. The rail then stops growing where the container
+   does, rather than stretching across a large monitor.
+
+   --rail-bleed is added to the width and taken straight back as
+   padding, which widens only the clip box: the leading card's shadow
+   survives, and because the bleed is smaller than the gap, the card
+   behind it stays hidden.
+   ---------------------------------------------------------- */
+@media (min-width:768px){
+  .explore__viewport{
+    width:calc(100% - var(--pad) * 2 + var(--rail-bleed) * 2);
+    max-width:calc(1200px - var(--pad) * 2 + var(--rail-bleed) * 2);
+    margin-inline:auto;
+    padding-inline:var(--rail-bleed);
+  }
+  /* the 100vw gutter is what pushed the rail out to the browser edges;
+     the contained viewport positions the rail now */
+  .svc-track{padding-inline:0}
+}
+
+/* ---------- 901-1060 : three whole cards ------------------
+   Across most of the range a 300px card leaves a generous half-card
+   peek at the closing edge. In this band alone the fourth card would
+   land 10-40px inside the rail, which reads as an accidental clip
+   rather than a peek — so the rail shows three whole cards instead,
+   sized to fill it exactly. */
+@media (min-width:901px) and (max-width:1060px){
+  .svc{flex-basis:calc((100% - var(--rail-gap) * 2) / 3)}
+}
+
 /* ---------- <= 1280 : tighten the journey media ----------- */
 @media (max-width:1280px){
   .journey{--media-h:196px}
@@ -97,6 +135,22 @@
   .stat:nth-child(odd)::before{display:none}
   .sec-head--row{flex-direction:column;align-items:flex-start;gap:22px}
   .explore__nav{order:2}
+
+  /* final CTA stacks: the copy re-centres above the photograph, and the
+     photograph goes wide-and-short so it supports the message without
+     pushing the button below the fold */
+  .cta__inner{
+    grid-template-columns:1fr;
+    gap:clamp(28px,5vw,38px);
+    text-align:center;max-width:640px;
+  }
+  .cta__title{margin-inline:auto;max-width:16ch}
+  .cta__sub{margin-inline:auto;max-width:36ch}
+  /* stacked, the photograph is measured against the copy rather than the
+     panel: at the full 640 it becomes the section and the headline reads
+     as a caption, so it is capped and centred under the button */
+  .cta__visual{order:2;width:min(100%,480px);margin-inline:auto}
+  .cta__shot{aspect-ratio:16/10}
 }
 
 /* ---------- <= 768 : tablet portrait / large phone -------- */
@@ -231,7 +285,14 @@
   .otp__row{padding:5px 9px}
   .otp__row--code b{font-size:.875rem;letter-spacing:.12em}
 
+  /* one story fills the phone, so the card can afford to be a touch
+     tighter without the quote losing its measure */
   .story{padding:22px}
+  .story__title{font-size:.9375rem}
+  .story__text{font-size:.875rem}
+  .story__av{width:46px;height:46px}
+  .story__quote{width:26px;height:26px;margin-bottom:10px}
+
   .foot__cols{grid-template-columns:1fr}
   .foot__col--dl{grid-column:span 1;flex-direction:column;align-items:stretch}
   .foot__bar{flex-direction:column;align-items:flex-start;gap:6px}

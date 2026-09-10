@@ -11,46 +11,99 @@
   function qsa(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
 
   /* ==========================================================
-     CUSTOMER STORIES — CONTENT
+     CUSTOMER STORIES — CONTENT (section 7)
      ----------------------------------------------------------
-     PLACEHOLDER CONTENT.
-     The written specification does not supply testimonial copy;
-     the entries below are transcribed from the client's own
-     reference mock-up so the section can be presented. Replace
-     each entry with a real, approved customer story before the
-     site goes live.
+     Nine client-supplied stories, used verbatim. Each carries the
+     key of its own portrait (see js/images.js — nine different
+     people, none of them reused from anywhere else on the site) and
+     the alt text that describes who is in it.
 
-     TESTIMONIAL_MODE
-       'reference' — show the reference copy below (default)
-       'blank'     — show empty, clearly-marked content slots
+     The section makes no claim the platform does not: these are
+     presented as customer stories, not as verified reviews.
      ========================================================== */
-  var TESTIMONIAL_MODE = 'reference';
-
   var TESTIMONIALS = [
     {
-      quote: 'Sapotr helped us get reliable helpers for our moving day. Super easy and very professional.',
+      title: 'Last-Minute Staff Shortage',
+      quote: '“We were short-staffed at the last minute. I opened SAPOTR, booked someone nearby, and got the extra hands we needed.”',
+      name: 'Mark D.',
+      role: 'Retail Store Owner',
+      location: 'Auckland, New Zealand',
+      photo: 'storyMarkD',
+      alt: 'Mark D., retail store owner in Auckland'
+    },
+    {
+      title: 'No More Calling Around',
+      quote: '“I usually spend so much time calling around and waiting for replies. This time, I booked staff directly through SAPOTR and got back to running my business.”',
       name: 'Sarah T.',
-      service: 'Moving & Shifting',
-      location: 'Auckland',
-      photo: 'storyAvatar1'
+      role: 'Restaurant Manager',
+      location: 'Wellington, New Zealand',
+      photo: 'storySarahT',
+      alt: 'Sarah T., restaurant manager in Wellington'
     },
     {
-      quote: 'We needed extra hands for our event. Booked in minutes and everything went smoothly.',
+      title: 'No Facebook Posts & Waiting',
+      quote: '“Posting on Facebook and waiting for someone to respond takes time. With SAPOTR, I can book the staff I need directly.”',
       name: 'James L.',
-      service: 'Events & Celebrations',
-      location: 'Wellington',
-      photo: 'storyAvatar2'
+      role: 'Showroom Owner',
+      location: 'Christchurch, New Zealand',
+      photo: 'storyJamesL',
+      alt: 'James L., showroom owner in Christchurch'
     },
     {
-      quote: 'Great experience! Employees arrive on time, do the job well, and the app is easy to use.',
-      name: 'Priya K.',
-      service: 'Home & Personal',
-      location: 'Hamilton',
-      photo: 'storyAvatar3'
+      title: 'A Few Hours of Help',
+      quote: '“Sometimes we only need extra hands for a few hours. SAPOTR gives us that flexibility without taking on another permanent employee.”',
+      name: 'Priya S.',
+      role: 'Café Manager',
+      location: 'Hamilton, New Zealand',
+      photo: 'storyPriyaS',
+      alt: 'Priya S., café manager in Hamilton'
+    },
+    {
+      title: 'Half-Day Support',
+      quote: '“We needed extra help for half a day. I booked someone through SAPOTR and didn’t have to spend hours looking for people.”',
+      name: 'Daniel R.',
+      role: 'Hospitality Manager',
+      location: 'Tauranga, New Zealand',
+      photo: 'storyDanielR',
+      alt: 'Daniel R., hospitality manager in Tauranga'
+    },
+    {
+      title: 'Full-Day Booking',
+      quote: '“We had a full day of extra work coming up, so we booked temporary staff through SAPOTR. It was exactly the support we needed.”',
+      name: 'Emma W.',
+      role: 'Event Manager',
+      location: 'Queenstown, New Zealand',
+      photo: 'storyEmmaW',
+      alt: 'Emma W., event manager in Queenstown'
+    },
+    {
+      title: 'Book in Advance',
+      quote: '“We knew we had a busy day coming up, so I booked our extra staff in advance. It made planning much easier.”',
+      name: 'Chris M.',
+      role: 'Warehouse Manager',
+      location: 'Palmerston North, New Zealand',
+      photo: 'storyChrisM',
+      alt: 'Chris M., warehouse manager in Palmerston North'
+    },
+    {
+      title: 'Unexpected Replacement',
+      quote: '“One of our staff called in sick before a busy shift. We needed someone quickly, so I booked temporary support through SAPOTR.”',
+      name: 'Alex K.',
+      role: 'Operations Manager',
+      location: 'Dunedin, New Zealand',
+      photo: 'storyAlexK',
+      alt: 'Alex K., operations manager in Dunedin'
+    },
+    {
+      title: 'My Time Was Saved',
+      quote: '“I thought finding someone at the last minute would take hours. I booked through SAPOTR myself, and it saved me a lot of time.”',
+      name: 'Tom B.',
+      role: 'Business Owner',
+      location: 'Napier, New Zealand',
+      photo: 'storyTomB',
+      alt: 'Tom B., business owner in Napier'
     }
   ];
-
-  var BLANK_STORY = { quote: '', name: '', service: '', location: '', photo: '' };
 
   /* ==========================================================
      1. NAVIGATION
@@ -210,137 +263,348 @@
   }
 
   /* ==========================================================
-     3. CAROUSEL — shared engine
-     Used by the customer stories. A clamped, arrow-driven pager:
-     the industry rail in section 5 loops instead, so it runs on
-     its own engine (initExplore, below).
+     3. CAROUSEL — the customer stories rail (section 7)
+     ----------------------------------------------------------
+     A paged, looping rail. How many cards a page holds is whatever
+     the CSS fits — three on a desktop, two on a tablet, one on a
+     phone — and the rail always moves a whole page, so a card is
+     never left half in view and the arrows, the dots, the autoplay
+     and a finger all advance by exactly the same amount.
+
+     THE LOOP. `need` copies of the tail sit before the originals and
+     `need` copies of the head after them, so whichever page is
+     arriving from either edge is already rendered. Position N is a
+     clone of position 0, pixel for pixel, so once the rail has moved
+     past the last story it is re-seated on the real one with the
+     transition switched off and nothing shows. The re-seat happens
+     lazily — at the start of the next move rather than on a
+     transitionend that may not fire — so the rail cannot get stuck.
+
+     PAGES STAY ON A CARD. `cur` is always a real card index, and a
+     move adds or subtracts a whole page, so every page boundary lands
+     on a card. With nine stories that is a clean three-page cycle on
+     a desktop and a nine-page one on a phone.
+
+     ONE CLOCK. A single interval runs for the life of the page and
+     early-returns while the rail is held (hover, drag, a recent
+     gesture), off screen, or in a hidden tab. Nothing anywhere else
+     creates a timer, so there is nothing to duplicate.
+
+     The industry rail in section 5 runs its own engine (initExplore,
+     below): it moves one card at a time and is full bleed, neither of
+     which this one does.
      ========================================================== */
-  function createCarousel(opts) {
+  function createStoryRail(opts) {
+    var viewport = qs(opts.viewport);
     var track = qs(opts.track);
-    if (!track) return null;
+    if (!viewport || !track) return null;
 
     var slides = qsa(':scope > li', track);
-    if (!slides.length) return null;
+    var N = slides.length;
+    if (!N) return null;
 
     var dotsBox = opts.dots ? qs(opts.dots) : null;
     var prev = opts.prev ? qs(opts.prev) : null;
     var next = opts.next ? qs(opts.next) : null;
 
-    var index = 0;
-    var timer = null;
-    var paused = false;
+    var INTERVAL = opts.interval || 5200;  /* a story is worth reading */
+    var HOLD = 3400;                       /* how long a touched rail is left alone */
 
-    /* how many slides fit — determines the furthest valid index.
-       The track may carry inline padding (the full-bleed service rail),
-       so measure the usable width rather than the whole viewport. */
+    var cur = 0;        /* logical card; -per..N+per between moves */
+    var per = 1;        /* cards in a page — measured, not assumed */
+    var base = 0;       /* child index of the first real card */
+    var need = 0;       /* clones per side */
+    var stepPx = 0;     /* one card plus one gap */
+    var cells = [];     /* every li, tagged with the story it shows */
+
+    var timer = null;
+    var onScreen = false;
+    var hovering = false;
+    var dragging = false;
+    var holdUntil = 0;
+
+    function norm(i) { return ((i % N) + N) % N; }
+    function hold() { holdUntil = Date.now() + HOLD; }
+    function gcd(a, b) { while (b) { var t = a % b; a = b; b = t; } return a; }
+
+    /* ---- measurement ------------------------------------- */
     function metrics() {
       var cs = window.getComputedStyle(track);
       var gap = parseFloat(cs.columnGap || cs.gap || '0') || 0;
-      var padL = parseFloat(cs.paddingLeft || '0') || 0;
-      var padR = parseFloat(cs.paddingRight || '0') || 0;
-      var view = track.parentElement.getBoundingClientRect().width - padL - padR;
-      return { slideW: slides[0].getBoundingClientRect().width, gap: gap, view: view };
+      var card = slides[0].getBoundingClientRect().width;
+      return { card: card, gap: gap, step: card + gap, vw: viewport.getBoundingClientRect().width };
     }
 
-    function perView() {
+    /* The CSS decides the page size: the card's flex-basis is written so
+       a whole number of them fits the viewport at every breakpoint, and
+       this reads that number back rather than restating the maths. */
+    function measure() {
       var m = metrics();
-      if (!m.slideW) return 1;
-      return Math.max(1, Math.floor((m.view + m.gap) / (m.slideW + m.gap) + 0.02));
+      stepPx = m.step;
+      per = m.step ? Math.max(1, Math.min(N, Math.floor((m.vw + m.gap) / m.step + 0.02))) : 1;
     }
 
-    function maxIndex() {
-      return Math.max(0, slides.length - perView());
+    /* a page can only start on a card, so a new page size snaps `cur`
+       back onto one of its own boundaries */
+    function snap() { cur = norm(Math.floor(norm(cur) / per) * per); }
+
+    /* ---- clones ------------------------------------------
+       A move leaves `cur` at most one page outside [0,N), and a drag can
+       throw the rail one page further again, so a page either side of
+       that — 2 x per — covers every pixel that can be asked for. */
+    function mkClone(i) {
+      var c = slides[norm(i)].cloneNode(true);
+      c.setAttribute('data-clone', String(norm(i)));
+      c.setAttribute('aria-hidden', 'true');   /* announced once, as the original */
+      c.removeAttribute('tabindex');           /* and never a tab stop */
+      c.classList.remove('is-active');
+      return c;
     }
 
-    /* a rail that shows everything at once needs no controls */
-    function syncControls() {
-      var idle = maxIndex() === 0;
-      [prev, next].forEach(function (b) { if (b) b.hidden = idle; });
-      if (dotsBox) dotsBox.hidden = idle;
-    }
+    function buildClones() {
+      qsa('[data-clone]', track).forEach(function (n) { track.removeChild(n); });
 
-    function apply() {
-      var m = metrics();
-      var offset = index * (m.slideW + m.gap);
+      need = Math.max(1, Math.min(N, per * 2));
 
-      track.style.transform = 'translate3d(' + (-offset) + 'px,0,0)';
-
-      slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
-
-      if (dotsBox) {
-        qsa('button', dotsBox).forEach(function (d, i) {
-          d.setAttribute('aria-selected', i === index ? 'true' : 'false');
-        });
+      var head = document.createDocumentFragment();
+      var tail = document.createDocumentFragment();
+      for (var i = 0; i < need; i++) {
+        head.appendChild(mkClone(N - need + i));
+        tail.appendChild(mkClone(i));
       }
-      if (prev) prev.disabled = index <= 0;
-      if (next) next.disabled = index >= maxIndex();
-      syncControls();
+      track.insertBefore(head, track.firstChild);
+      track.appendChild(tail);
+      base = need;
+
+      cells = qsa(':scope > li', track).map(function (el) {
+        var of = el.getAttribute('data-clone');
+        return { el: el, idx: of === null ? slides.indexOf(el) : parseInt(of, 10) };
+      });
+
+      /* clones inherit resolved src attributes, but ask anyway in case
+         this ever runs before the image pass */
+      if (window.SapotrImages) window.SapotrImages.resolve(track);
     }
 
-    function go(i) {
-      var max = maxIndex();
-      index = i < 0 ? max : (i > max ? 0 : i);
-      apply();
+    /* ---- moving ------------------------------------------ */
+    function paint(px) { track.style.transform = 'translate3d(' + px + 'px,0,0)'; }
+    function offsetFor(i) { return -(base + i) * stepPx; }
+
+    /* an instant re-seat, used to hop between a clone and the real card
+       it stands in for — identical pixels, so nothing shows */
+    function seat(i) {
+      cur = i;
+      track.style.transition = 'none';
+      paint(offsetFor(i));
+      void track.offsetWidth;        /* commit it before easing returns */
+      track.style.transition = '';
     }
 
-    /* dots — one per reachable position */
+    function slide(i) {
+      cur = i;
+      track.style.transition = '';
+      paint(offsetFor(i));
+    }
+
+    /* every move starts by coming back to a real card, so `cur` can
+       never wander further than one page outside the set */
+    function reseat() {
+      if (cur >= N) seat(cur - N);
+      else if (cur < 0) seat(cur + N);
+    }
+
+    function go(pages) {
+      reseat();
+      slide(cur + pages * per);
+      sync();
+    }
+
+    function goTo(i) {
+      reseat();
+      slide(i);
+      sync();
+    }
+
+    function sync() {
+      var live = norm(cur);
+
+      /* the whole live page reads as active — the clone standing in for
+         one of its cards included, so the seam is invisible in style as
+         well as in position. --in is the card's place in the page, which
+         staggers the settle from left to right. */
+      cells.forEach(function (c) {
+        var at = norm(c.idx - live);
+        var on = at < per;
+        c.el.classList.toggle('is-active', on);
+        c.el.style.setProperty('--in', on ? at : 0);
+      });
+
+      /* a rail that shows every story at once needs no controls */
+      var idle = per >= N;
+      if (prev) prev.hidden = idle;
+      if (next) next.hidden = idle;
+      if (!dotsBox) return;
+      dotsBox.hidden = idle;
+
+      var active = live / gcd(N, per);
+      qsa('button', dotsBox).forEach(function (d, i) {
+        d.setAttribute('aria-selected', i === active ? 'true' : 'false');
+        d.tabIndex = i === active ? 0 : -1;
+      });
+    }
+
+    /* ---- dots: one per page the rail can start on --------
+       Advancing by `per` from 0 visits every multiple of gcd(N,per)
+       before it comes back round, so that is exactly how many stops
+       there are: three on a desktop, one per story on a phone. */
     function buildDots() {
       if (!dotsBox) return;
+      var g = gcd(N, per);
+      var count = N / g;
       dotsBox.innerHTML = '';
-      for (var d = 0; d <= maxIndex(); d++) {
+      for (var d = 0; d < count; d++) {
         (function (i) {
           var b = document.createElement('button');
           b.type = 'button';
           b.setAttribute('role', 'tab');
-          b.setAttribute('aria-label', (opts.label || 'Slide') + ' ' + (i + 1));
-          b.addEventListener('click', function () { paused = true; go(i); });
+          b.setAttribute('aria-label', 'Go to story ' + (i * g + 1));
+          b.tabIndex = i === 0 ? 0 : -1;
+          b.addEventListener('click', function () { hold(); goTo(i * g); });
           dotsBox.appendChild(b);
         })(d);
       }
     }
-    buildDots();
 
-    if (prev) prev.addEventListener('click', function () { paused = true; go(index - 1); });
-    if (next) next.addEventListener('click', function () { paused = true; go(index + 1); });
-
-    /* keyboard support on the slides themselves */
-    slides.forEach(function (s, i) {
-      s.addEventListener('focus', function () { paused = true; go(Math.min(i, maxIndex())); });
-      s.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowRight') { e.preventDefault(); paused = true; go(index + 1); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); paused = true; go(index - 1); }
-      });
-      s.addEventListener('mouseenter', function () { paused = true; });
-    });
-    track.addEventListener('mouseleave', function () { paused = false; });
-
-    /* auto-scroll */
-    function start() {
-      if (!opts.auto || reduced.matches || timer) return;
-      timer = window.setInterval(function () {
-        if (!paused) go(index + 1);
-      }, opts.interval || 4200);
+    /* ---- the clock --------------------------------------- */
+    function tick() {
+      if (dragging || hovering || !onScreen || document.hidden) return;
+      if (Date.now() < holdUntil) return;
+      go(1);
     }
-    function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+    function start() {
+      if (timer || reduced.matches) return;
+      timer = window.setInterval(tick, INTERVAL);
+    }
+    function stop() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
 
+    /* ---- drag: finger, and mouse where there is one ------
+       touch-action:pan-y on the track (see styles.css) leaves the
+       vertical axis to the page, so scrolling down the page is never
+       mistaken for a swipe across the rail. */
+    var pointerId = null, dragStartX = 0, dragFrom = 0, dragDx = 0;
+
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      if (per >= N) return;
+      reseat();                       /* always drag from a real card */
+      dragging = true;
+      pointerId = e.pointerId;
+      dragStartX = e.clientX;
+      dragFrom = offsetFor(cur);
+      dragDx = 0;
+      viewport.classList.add('is-dragging');
+      if (track.setPointerCapture) {
+        try { track.setPointerCapture(e.pointerId); } catch (err) { /* not captureable */ }
+      }
+    });
+
+    track.addEventListener('pointermove', function (e) {
+      if (!dragging || e.pointerId !== pointerId) return;
+      /* one page is as far as a single drag goes — which is exactly how
+         much clone buffer sits beyond the page already in view */
+      var limit = stepPx * per;
+      dragDx = Math.max(-limit, Math.min(limit, e.clientX - dragStartX));
+      paint(dragFrom + dragDx);
+    });
+
+    function endDrag(e) {
+      if (!dragging || (e && e.pointerId !== pointerId)) return;
+      dragging = false;
+      pointerId = null;
+      viewport.classList.remove('is-dragging');
+      hold();
+      /* a short flick still counts; anything less settles back. One page
+         per gesture, so a fast swipe can never skip a story. */
+      var threshold = Math.min(64, stepPx * 0.18);
+      go(Math.abs(dragDx) > threshold ? (dragDx < 0 ? 1 : -1) : 0);
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    /* a portrait must not become a native drag payload mid-swipe */
+    track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+    /* ---- arrows ------------------------------------------ */
+    if (prev) prev.addEventListener('click', function () { hold(); go(-1); });
+    if (next) next.addEventListener('click', function () { hold(); go(1); });
+
+    /* ---- pointer resting on the rail holds it ------------ */
+    if (!window.matchMedia || window.matchMedia('(hover: hover)').matches) {
+      viewport.addEventListener('mouseenter', function () { hovering = true; });
+      viewport.addEventListener('mouseleave', function () { hovering = false; });
+    }
+
+    /* The viewport is a scrollport as well as a clip box, so bringing a
+       focused card into view would scroll it and leave the rail
+       permanently offset. The rail is positioned by transform alone, so
+       this box must never hold a scroll offset. */
+    viewport.addEventListener('scroll', function () {
+      if (viewport.scrollLeft !== 0) viewport.scrollLeft = 0;
+    });
+
+    /* ---- keyboard on the cards themselves ---------------- */
+    slides.forEach(function (s, i) {
+      s.addEventListener('focus', function () {
+        hold();
+        goTo(norm(Math.floor(i / per) * per));
+      });
+      s.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); hold(); go(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); hold(); go(-1); }
+      });
+    });
+
+    /* ---- rebuild on a real layout change ----------------- */
+    function rebuild() {
+      measure();
+      snap();
+      buildClones();
+      buildDots();
+      seat(norm(cur));
+      sync();
+    }
+
+    var onResize = debounce(function () {
+      var was = per;
+      measure();
+      if (per !== was) { rebuild(); return; }
+      seat(norm(cur));            /* same page size, new card width */
+      sync();
+    }, 160);
+    window.addEventListener('resize', onResize, { passive: true });
+    window.addEventListener('orientationchange', onResize);
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); return; }
+      if (onScreen) { hold(); start(); }
+    });
+
+    /* only run while the rail is actually on screen */
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
-      }, { threshold: 0.2 }).observe(track.parentElement);
+        entries.forEach(function (entry) {
+          onScreen = entry.isIntersecting;
+          if (onScreen) start(); else stop();
+        });
+      }, { threshold: 0.2 }).observe(viewport);
     } else {
+      onScreen = true;
       start();
     }
 
-    /* re-measure on resize, and rebuild the dots if the count changed */
-    var lastMax = maxIndex();
-    window.addEventListener('resize', debounce(function () {
-      var nowMax = maxIndex();
-      if (nowMax !== lastMax) { lastMax = nowMax; buildDots(); }
-      go(Math.min(index, nowMax));
-    }, 160));
-
-    apply();
-    return { go: go, apply: apply };
+    rebuild();
+    return { go: go, goTo: goTo };
   }
 
   function debounce(fn, wait) {
@@ -355,10 +619,9 @@
   /* ==========================================================
      4. EXPLORE — the industry rail (section 5)
      ----------------------------------------------------------
-     Its own engine rather than createCarousel(), because this rail
-     loops without end, is dragged directly and carries no arrow
-     controls — none of which the shared clamped engine does.
-     Section 7 keeps using createCarousel() unchanged.
+     Its own engine rather than createStoryRail(), because this rail
+     moves a single card at a time, runs full bleed on a phone and
+     carries no arrow controls — none of which the stories rail does.
 
      THE LOOP. `need` copies of the tail sit before the originals and
      `need` copies of the head after them, so whichever slide is
@@ -406,12 +669,17 @@
     /* ---- measurement ------------------------------------- */
     function metrics() {
       var cs = window.getComputedStyle(track);
+      var vs = window.getComputedStyle(viewport);
       var gap = parseFloat(cs.columnGap || cs.gap || '0') || 0;
       var cardW = slides[0].getBoundingClientRect().width;
       return {
         card: cardW,
         step: cardW + gap,
-        padL: parseFloat(cs.paddingLeft) || 0,
+        /* the rail's inset from the clip box: the track's own gutter
+           while the rail runs full bleed on a phone, the viewport's
+           padding once it is contained from 768px up. Read both, so
+           the clone count is right in either composition. */
+        padL: (parseFloat(cs.paddingLeft) || 0) + (parseFloat(vs.paddingLeft) || 0),
         vw: viewport.getBoundingClientRect().width
       };
     }
@@ -673,63 +941,63 @@
 
   /* ==========================================================
      5. CUSTOMER STORIES — render then carousel
+     The cards are built from TESTIMONIALS rather than written out in
+     the markup, so a story is edited in one place and the carousel
+     picks up the new count without any other change.
      ========================================================== */
   function initStories() {
     var track = qs('#story-track');
     if (!track) return;
 
-    var blank = TESTIMONIAL_MODE === 'blank';
-    var data = blank ? [BLANK_STORY, BLANK_STORY, BLANK_STORY] : TESTIMONIALS;
+    var total = TESTIMONIALS.length;
 
-    var html = data.map(function (s) {
-      var quote = s.quote
-        ? escapeHtml(s.quote)
-        : '<span class="acc__pending" data-content-slot="story-quote">Customer quote to be supplied.</span>';
-      var name = s.name ? escapeHtml(s.name) : 'Customer name';
-      var service = s.service ? escapeHtml(s.service) : 'Service type';
-      var location = s.location ? escapeHtml(s.location) : 'Location';
-
-      /* a photograph where we have one, initials otherwise */
-      var avatar = s.photo
-        ? '<span class="story__av"><img data-img="' + s.photo + '" alt="" width="400" height="400" loading="lazy" decoding="async"></span>'
-        : '<span class="story__av story__av--blank" aria-hidden="true">' +
-            (s.name ? s.name.charAt(0).toUpperCase() : '&mdash;') + '</span>';
-
+    track.innerHTML = TESTIMONIALS.map(function (s, i) {
       return '' +
-        '<li class="story" tabindex="0" data-placeholder="' + (blank ? 'true' : 'reference') + '">' +
+        '<li class="story" tabindex="0" role="group" aria-roledescription="slide"' +
+            ' aria-label="Story ' + (i + 1) + ' of ' + total + '">' +
           '<svg class="story__quote ic" aria-hidden="true"><use href="#i-quote"></use></svg>' +
-          '<p class="story__text">' + quote + '</p>' +
+          '<h3 class="story__title">' + escapeHtml(s.title) + '</h3>' +
+          '<p class="story__text">' + brandMark(escapeHtml(s.quote)) + '</p>' +
           '<div class="story__foot">' +
-            avatar +
+            '<span class="story__av">' +
+              '<img data-img="' + s.photo + '" alt="' + escapeHtml(s.alt) + '"' +
+                ' width="320" height="320" loading="lazy" decoding="async">' +
+            '</span>' +
             '<span class="story__meta">' +
-              '<b>' + name + '</b>' +
-              '<i><svg class="ic" aria-hidden="true"><use href="#i-pin"></use></svg>' + location + '</i>' +
+              '<b>' + escapeHtml(s.name) + '</b>' +
+              '<em>' + escapeHtml(s.role) + '</em>' +
+              '<i><svg class="ic" aria-hidden="true"><use href="#i-pin"></use></svg>' +
+                escapeHtml(s.location) + '</i>' +
             '</span>' +
           '</div>' +
-          '<span class="story__badge">' + service + '</span>' +
         '</li>';
     }).join('');
-
-    track.innerHTML = html;
 
     /* the cards were just injected — resolve their image keys */
     if (window.SapotrImages) window.SapotrImages.resolve(track);
 
-    createCarousel({
+    createStoryRail({
+      viewport: '.stories__viewport',
       track: '#story-track',
       dots: '#story-dots',
       prev: '[data-story-prev]',
-      next: '[data-story-next]',
-      label: 'Story',
-      auto: false
+      next: '[data-story-next]'
     });
+  }
+
+  /* the brand name takes its shared mark wherever it appears in a quote.
+     Runs after escapeHtml, so the span it adds is the only markup in
+     there — the customer's own words are never interpreted as HTML. */
+  function brandMark(html) {
+    return html.replace(/SAPOTR/g, '<span class="brand">SAPOTR</span>');
   }
 
   function escapeHtml(str) {
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   /* ==========================================================

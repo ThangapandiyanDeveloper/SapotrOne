@@ -6,7 +6,7 @@
    below with the Cloudinary URLs. Nothing else needs to change.
 
    Usage in markup:
-     <img data-img="storyAvatar1" alt="...">        -> sets src
+     <img data-img="storyMarkD" alt="...">         -> sets src
      <source data-img-src="heroB1Tall">             -> sets srcset
      <div data-img-bg="problemPerson"></div>        -> sets background-image
 
@@ -62,10 +62,10 @@
     heroStaff14:        'assets/images/hero/staff/s14.jpg',
 
     /* --- shared employee avatars (journey map, Why Sapotr) ---- */
-    avatarEmployee1:    'assets/images/avatar-employee-1.jpg',
-    avatarEmployee2:    'assets/images/avatar-employee-2.jpg',
-    avatarEmployee3:    'assets/images/avatar-employee-3.jpg',
-    avatarEmployee4:    'assets/images/avatar-employee-4.jpg',
+    avatarEmployee1:    'assets/Staffs/Male1.png',
+    avatarEmployee2:    'assets/Staffs/Female1.png',
+    avatarEmployee3:    'assets/Staffs/Male2.png',
+    avatarEmployee4:    'assets/Staffs/Female2.png',
 
     /* --- Section 2: the problem ------------------------------ */
     problemPerson:      'assets/images/problem-person.jpg',
@@ -101,13 +101,30 @@
     exploreCleaning:      'assets/images/service-home-personal.jpg',
     exploreOther:         'assets/images/explore/other-business.jpg',
 
-    /* --- Section 7: customer stories ------------------------- */
-    storyAvatar1:       'assets/images/story-avatar-1.jpg',
-    storyAvatar2:       'assets/images/story-avatar-2.jpg',
-    storyAvatar3:       'assets/images/story-avatar-3.jpg',
+    /* --- Section 7: customer stories -------------------------
+       One portrait per story — nine different people, none of them
+       reused from anywhere else on the site. Each is cropped square
+       and centred on the face at 320x320, roughly six times the
+       50px the avatar renders at, so it stays crisp at 3x. */
+    storyMarkD:         'assets/images/stories/mark-d.jpg',
+    storySarahT:        'assets/images/stories/sarah-t.jpg',
+    storyJamesL:        'assets/images/stories/james-l.jpg',
+    storyPriyaS:        'assets/images/stories/priya-s.jpg',
+    storyDanielR:       'assets/images/stories/daniel-r.jpg',
+    storyEmmaW:         'assets/images/stories/emma-w.jpg',
+    storyChrisM:        'assets/images/stories/chris-m.jpg',
+    storyAlexK:         'assets/images/stories/alex-k.jpg',
+    storyTomB:          'assets/images/stories/tom-b.jpg',
 
     /* --- Section 8: FAQ ------------------------------------- */
     faqIllustration:    'assets/images/faq-illustration.svg',
+
+    /* --- Section 9: final CTA -------------------------------
+       New asset, used nowhere else: a manager walking the aisle with
+       the extra staff member she booked — the closing panel's whole
+       argument in one frame. 1280x900 so the visual card stays sharp
+       at 2x without paying for a hero-sized file. */
+    ctaTeamAtWork:      'assets/images/cta/nz-team-at-work.jpg',
 
 
     /* --- Brand assets (supplied by client) ------------------- */

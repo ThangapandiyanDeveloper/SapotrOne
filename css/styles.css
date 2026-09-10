@@ -184,6 +184,35 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 /* float */
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
+/* ---------- SAPOTR BRAND MARK ----------------------------
+   One treatment for the brand name wherever it appears in copy, so it
+   reads the same on every section. It is the treatment the hero
+   (.hbrand), the journey (.how__brand) and the numbers band
+   (.numbers__brand) already use, lifted out so the rest of the page
+   can share it: navy at a heavier weight than its neighbours, with a
+   touch of tracking so the capitals do not crowd. Colour alone never
+   carries the meaning — the weight does too — and navy on any of the
+   site's light grounds is well past AA. On the three dark surfaces the
+   mark already has a treatment of its own; the one place .brand lands
+   on dark, the closing panel, overrides the colour there.
+   Deliberately not a logo: no gradient, no second colour. */
+.brand{color:var(--navy);font-weight:800;letter-spacing:.012em;white-space:nowrap}
+
+/* Heading variant: the same navy mark, under the yellow highlighter the
+   problem section sweeps in. Drawn once the heading is revealed.
+   The band starts low — at a section heading's size a half-height
+   highlighter is a slab, and what wants to read as an underline is an
+   underline. It is a fraction of the line box, so it holds that
+   proportion from 320px to 1440. */
+.brand--mark{
+  color:var(--navy);
+  background-image:linear-gradient(transparent 74%,rgba(255,193,7,.6) 74%);
+  background-repeat:no-repeat;background-position:0 100%;background-size:0 100%;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  transition:background-size .8s var(--ease) .3s;
+}
+.is-in .brand--mark,.brand--mark.is-in{background-size:100% 100%}
+
 /* ---------- 4. NAVIGATION -------------------------------- */
 .nav{
   position:sticky;top:0;z-index:100;
@@ -756,7 +785,14 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .is-in .viz-reliable__off:nth-child(3)::after{transition-delay:.3s}
 
 /* ---------- 9. EXPLORE ---------------------------------- */
-.explore{background:#fff;overflow:hidden}
+.explore{
+  background:#fff;overflow:hidden;
+  --rail-gap:22px;
+  /* how far the rail's clip box reaches past its content box. Kept well
+     under --rail-gap, so the leading card's soft shadow is never cut but
+     the card behind it can never peek through either. */
+  --rail-bleed:10px;
+}
 /* overflow:clip, not hidden. `hidden` still makes a scroll container,
    so tabbing to a card the rail has translated off screen lets the
    browser scroll this box to reveal it — which shifts the clipper out
@@ -775,7 +811,11 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .explore .sec-head__lead{color:var(--ink-2)}
 
 .svc-track{
-  display:flex;gap:22px;
+  display:flex;gap:var(--rail-gap);
+  /* Phone composition: the rail runs full bleed, this gutter puts the
+     leading card under the heading and the next one runs off the screen
+     edge as a peek. From 768px up the rail is contained instead and the
+     viewport carries the inset — see responsive.css. */
   padding-inline:max(var(--pad),calc((100vw - 1200px)/2));
   transition:transform .75s var(--ease);will-change:transform;
   /* the rail is dragged, so a horizontal gesture belongs to it while a
@@ -971,49 +1011,73 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
    a heavier weight — so the mark reads the same on navy everywhere */
 .numbers__brand{color:var(--yellow);font-weight:800;letter-spacing:.01em}
 
-/* ---------- 11. CUSTOMER STORIES ----------------------- */
+/* ---------- 11. CUSTOMER STORIES -----------------------
+   A paged, looping rail: three cards a page on the desktop, two on a
+   tablet, one on a phone, and it always advances by a whole page so a
+   card is never left half in view. The engine lives in js/main.js
+   (initStories); everything here is presentation.
+
+   Every card sits in one flex row, so the row equalises them: the
+   longest quote sets the height and all nine match it. */
 .stories{background:var(--soft)}
+/* balanced, so the heading never leaves SAPOTR stranded on a line of
+   its own with the arrows floating beside the gap */
+.stories .sec-head h2{text-wrap:balance}
 .stories__viewport{overflow:hidden;padding:8px 0}
-.story-track{display:flex;gap:22px;transition:transform .75s var(--ease)}
+.story-track{
+  display:flex;gap:22px;
+  transition:transform .72s var(--ease);
+  /* the finger owns the horizontal axis, the page keeps the vertical */
+  touch-action:pan-y;cursor:grab;
+}
+.stories__viewport.is-dragging .story-track{cursor:grabbing;transition:none}
 .story{
   position:relative;
   flex:0 0 calc((100% - 44px)/3);
   background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
   padding:28px;display:flex;flex-direction:column;
-  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s;
+  /* off-page cards sit back a little and settle as their page arrives;
+     --in is the card's place in the page, set by initStories, and
+     staggers the settle left to right */
+  opacity:.42;transform:translateY(10px);
+  transition:
+    opacity .6s var(--ease) calc(var(--in,0) * 80ms),
+    transform .6s var(--ease) calc(var(--in,0) * 80ms),
+    box-shadow .4s var(--ease),
+    border-color .4s;
 }
-.story:hover,.story:focus-visible{transform:translateY(-6px);box-shadow:var(--sh-3);border-color:transparent}
-.story__quote{width:30px;height:30px;color:var(--yellow);stroke:none;margin-bottom:14px}
-.story__text{font-size:1rem;line-height:1.6;color:var(--ink);font-weight:500;flex:1}
-.story__foot{display:flex;align-items:center;gap:13px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line-2)}
+.story.is-active{opacity:1;transform:none}
+.story:hover,.story:focus-visible{box-shadow:var(--sh-3);border-color:transparent}
+.story.is-active:hover,.story.is-active:focus-visible{transform:translateY(-6px)}
+.story__quote{width:30px;height:30px;color:var(--yellow);stroke:none;margin-bottom:12px}
+/* the one-line headline the customer's story is about */
+.story__title{
+  font-size:1rem;font-weight:800;line-height:1.3;letter-spacing:-.016em;
+  color:var(--navy);margin-bottom:10px;
+}
+.story__text{font-size:.9375rem;line-height:1.62;color:var(--ink-2);font-weight:500;flex:1}
+.story__foot{display:flex;align-items:center;gap:13px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-2)}
 .story__av{
-  width:50px;height:50px;border-radius:50%;flex:0 0 auto;overflow:hidden;
+  width:52px;height:52px;border-radius:50%;flex:0 0 auto;overflow:hidden;
   border:2px solid #fff;box-shadow:0 0 0 1px var(--line),var(--sh-1);
+  transition:box-shadow .4s var(--ease);
 }
+/* the portraits are already cropped square on the face, so the box
+   simply fills — no per-image nudging needed */
 .story__av img{
-  width:100%;height:100%;object-fit:cover;object-position:50% 22%;
+  width:100%;height:100%;object-fit:cover;display:block;
   transition:transform .6s var(--ease);
 }
-.story:hover .story__av img{transform:scale(1.12)}
-.story__av--blank{
-  display:grid;place-items:center;font-size:.9375rem;font-weight:800;
-  background:var(--navy-t);color:var(--navy);
-}
-.story__meta{display:flex;flex-direction:column;line-height:1.4;min-width:0}
+.story:hover .story__av{box-shadow:0 0 0 1px var(--yellow),var(--sh-1)}
+.story:hover .story__av img{transform:scale(1.08)}
+.story__meta{display:flex;flex-direction:column;gap:1px;line-height:1.35;min-width:0}
 .story__meta b{font-size:.9375rem;color:var(--navy)}
+.story__meta em{font-style:normal;font-size:.8125rem;font-weight:600;color:var(--ink-2)}
 .story__meta i{
   font-style:normal;font-size:.75rem;font-weight:600;color:var(--ink-3);
-  display:flex;align-items:center;gap:5px;
+  display:flex;align-items:center;gap:5px;margin-top:2px;
 }
 .story__meta .ic{width:12px;height:12px;color:var(--red);flex:0 0 auto}
-/* service badge, top-right */
-.story__badge{
-  position:absolute;top:22px;right:22px;
-  font-size:.625rem;font-weight:700;letter-spacing:.04em;
-  color:#0B8C8C;background:var(--cyan-t);
-  border-radius:999px;padding:5px 11px;
-  max-width:52%;text-align:right;line-height:1.3;
-}
 
 /* ---------- 12. FAQ ------------------------------------ */
 .faq{background:#fff;overflow:hidden;isolation:isolate}
@@ -1118,10 +1182,6 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .acc__inner a{color:var(--navy);font-weight:700;border-bottom:1px solid rgba(15,23,56,.25)}
 .acc__inner a:hover{border-bottom-color:var(--navy)}
 .acc__inner p{font-size:.9375rem;line-height:1.62;color:var(--ink-2)}
-.acc__pending{
-  border-left:2px dashed var(--line);padding-left:14px;
-  color:var(--ink-3)!important;font-style:italic;font-size:.875rem!important;
-}
 
 
 /* ---------- 13. FINAL CTA ------------------------------ */
@@ -1134,7 +1194,10 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   position:relative;isolation:isolate;overflow:hidden;
   max-width:1240px;margin:0 auto;
   border-radius:clamp(24px,3vw,40px);
-  padding:clamp(52px,8vw,116px) clamp(24px,5vw,80px);
+  /* the panel now carries a photograph as well as the headline, so the
+     vertical padding comes back in — the visual gives it the height the
+     old all-text panel needed padding for */
+  padding:clamp(48px,5.6vw,76px) clamp(24px,5vw,72px);
   background:
     radial-gradient(120% 90% at 50% 0%,#1E2A5E 0%,transparent 58%),
     linear-gradient(158deg,#182253 0%,#101838 54%,#0B112E 100%),
@@ -1211,12 +1274,21 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   to{transform:translate(-50%,-50%) rotate(360deg) scale(1)}
 }
 
-/* ---- content ---- */
-.cta__content{position:relative;z-index:1;max-width:1040px;margin:0 auto}
+/* ---- content ----
+   Copy leads on the left, the photograph supports it on the right.
+   Below 900px the two stack and the copy re-centres (responsive.css). */
+.cta__inner{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  align-items:center;gap:clamp(30px,4.2vw,60px);
+  max-width:1100px;margin:0 auto;text-align:left;
+}
+.cta__content{position:relative;z-index:1;min-width:0}
 .cta__title{
-  margin:0 auto;max-width:15.5em;
+  margin:0;max-width:13ch;
   text-wrap:balance;
-  font-size:clamp(1.9rem,4.4vw,4rem);
+  font-size:clamp(1.9rem,3.6vw,3.25rem);
   line-height:1.04;letter-spacing:-.034em;font-weight:800;
   color:#fff;text-shadow:0 4px 40px rgba(0,0,0,.34);
   /* headline arrives blurred and sharpens — needs its own transition
@@ -1226,9 +1298,47 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 }
 .cta__title.is-in{filter:blur(0)}
 .cta__sub{
-  margin:clamp(18px,2vw,26px) auto 0;max-width:32ch;
-  font-size:clamp(1rem,1.5vw,1.25rem);font-weight:600;
+  margin:clamp(16px,1.8vw,22px) 0 0;max-width:34ch;
+  font-size:clamp(1rem,1.35vw,1.1875rem);font-weight:600;
   color:var(--yellow);
+}
+/* SAPOTR on the yellow supporting line: the yellow mark would vanish
+   into it, so the brand takes the panel's own white at full weight */
+.cta__sub .brand{color:#fff}
+
+/* ---- the photograph ----
+   A NZ warehouse manager walking the aisle with the extra staff she
+   booked. It sits in a rounded card, veiled into the panel from the
+   bottom-left so the copy always wins the eye, and drifts a couple of
+   percent so the closing panel is never quite still. */
+.cta__visual{position:relative;isolation:isolate;will-change:transform}
+.cta__visual-glow{
+  position:absolute;z-index:-1;inset:-12% -9%;pointer-events:none;
+  background:radial-gradient(56% 52% at 52% 48%,rgba(18,199,199,.34),transparent 70%);
+  filter:blur(40px);
+}
+.cta__shot{
+  position:relative;margin:0;overflow:hidden;background:#0B112E;
+  aspect-ratio:4/3;
+  border-radius:clamp(18px,2vw,28px);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 40px 84px -34px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.14);
+}
+.cta__shot img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;object-position:50% 38%;
+  animation:cta-shot 22s var(--ease) infinite;
+}
+@keyframes cta-shot{
+  0%,100%{transform:scale(1.03) translate3d(0,0,0)}
+  50%{transform:scale(1.08) translate3d(-1%,-.6%,0)}
+}
+/* veiled into the panel rather than pasted onto it */
+.cta__shot::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(11,17,46,0) 46%,rgba(11,17,46,.5) 100%),
+    linear-gradient(90deg,rgba(11,17,46,.42),rgba(11,17,46,0) 44%);
 }
 
 /* ---- Try Now ---- */
@@ -1356,5 +1466,13 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   .otp__row{opacity:1;transform:none}
   .tile::before{transform:scaleX(1)}
   .acc__inner{opacity:1;transform:none}
+  /* section 7: the rail stops advancing on its own (see initStories),
+     every card is simply there, and paging is instant rather than eased */
+  .story{opacity:1;transform:none;transition:none}
+  .story.is-active:hover,.story.is-active:focus-visible{transform:none}
+  .story-track{transition:none}
+  .brand--mark{background-size:100% 100%}
+  /* section 9: the photograph holds still */
+  .cta__shot img{animation:none;transform:none}
 }
 
