@@ -152,8 +152,14 @@
     ctaTeamAtWork:      'assets/images/cta/nz-team-at-work.jpg',
 
 
+    /* --- TEMPORARY DEVELOPER SECTION — REMOVE WITH THE SECTION
+       The one asset the temporary creator-credit block uses. Delete
+       this entry when .dev-credit is removed from index.html. */
+    developerCredit:    'assets/images/hero/Developerimage.png',
+
     /* --- Brand assets (supplied by client) ------------------- */
     logoWordmark:       'assets/logos/sapotr-wordmark.png',
+    logofooterWordmark:       'assets/logos/Sapotrfooterlogo.png',
     logoMark:           'assets/logos/sapotr-mark.png'
   };
 

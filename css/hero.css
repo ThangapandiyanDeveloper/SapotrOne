@@ -294,8 +294,10 @@
    appears in hero copy, so it reads identically on every banner —
    brand yellow, a heavier weight than its neighbours, and a touch of
    tracking so the capitals do not crowd. Deliberately not flashy. */
+/* colour comes from the shared brand system in css/styles.css
+   (.brand-sapotr--yellow / .hbrand); the hero keeps only the tracking
+   its own banner type was tuned to. */
 .hbrand{
-  color:var(--yellow);
   font-weight:800;
   letter-spacing:.01em;
 }

@@ -184,34 +184,39 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 /* float */
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-/* ---------- SAPOTR BRAND MARK ----------------------------
-   One treatment for the brand name wherever it appears in copy, so it
-   reads the same on every section. It is the treatment the hero
-   (.hbrand), the journey (.how__brand) and the numbers band
-   (.numbers__brand) already use, lifted out so the rest of the page
-   can share it: navy at a heavier weight than its neighbours, with a
-   touch of tracking so the capitals do not crowd. Colour alone never
-   carries the meaning — the weight does too — and navy on any of the
-   site's light grounds is well past AA. On the three dark surfaces the
-   mark already has a treatment of its own; the one place .brand lands
-   on dark, the closing panel, overrides the colour there.
-   Deliberately not a logo: no gradient, no second colour. */
-.brand{color:var(--navy);font-weight:800;letter-spacing:.012em;white-space:nowrap}
+/* ---------- SAPOTR BRAND NAME ---------------------------
+   One system for the brand name wherever it appears in copy. The
+   treatment is purely typographic: a heavier weight than its
+   neighbours, a touch of tracking so the capitals do not crowd, and
+   one brand colour chosen for the ground the mark is standing on.
+   No background, no underline, no box - the weight carries the
+   emphasis as much as the colour does, so the mark never depends on
+   colour alone to be read as the brand.
 
-/* Heading variant: the same navy mark, under the yellow highlighter the
-   problem section sweeps in. Drawn once the heading is revealed.
-   The band starts low — at a section heading's size a half-height
-   highlighter is a slab, and what wants to read as an underline is an
-   underline. It is a fraction of the line box, so it holds that
-   proportion from 320px to 1440. */
-.brand--mark{
-  color:var(--navy);
-  background-image:linear-gradient(transparent 74%,rgba(255,193,7,.6) 74%);
-  background-repeat:no-repeat;background-position:0 100%;background-size:0 100%;
-  -webkit-box-decoration-break:clone;box-decoration-break:clone;
-  transition:background-size .8s var(--ease) .3s;
-}
-.is-in .brand--mark,.brand--mark.is-in{background-size:100% 100%}
+     .brand-sapotr           base - weight + tracking, navy
+     .brand-sapotr--navy     light grounds; the default (17.5:1 on white)
+     .brand-sapotr--red      light grounds, display sizes only - #FF4B2B
+                             clears 3:1, so headings, never body copy
+     .brand-sapotr--yellow   dark grounds - 10.7:1 on navy
+     .brand-sapotr--teal     dark grounds, supportive/verification tone
+                             - 8.3:1 on navy
+
+   The three section-scoped marks the page already shipped with -
+   .hbrand (hero, css/hero.css), .how__brand (journey) and
+   .numbers__brand (dark band) - are the same system under older
+   names. They take their colour from the rules below and keep only
+   the tracking their own section was tuned to, so each colour lives
+   in exactly one place. */
+.brand-sapotr{font-weight:800;letter-spacing:.012em;white-space:nowrap}
+
+.brand-sapotr,
+.brand-sapotr--navy,
+.how__brand{color:var(--navy)}
+.brand-sapotr--red{color:var(--red)}
+.brand-sapotr--yellow,
+.hbrand,
+.numbers__brand{color:var(--yellow)}
+.brand-sapotr--teal{color:var(--cyan)}
 
 /* ---------- 4. NAVIGATION -------------------------------- */
 .nav{
@@ -333,7 +338,6 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .bubble--in p{background:#fff;border-bottom-left-radius:5px}
 .bubble--out{align-self:flex-end}
 .bubble--out p{background:#E2F6F4;border-bottom-right-radius:5px}
-.bubble--out strong{color:var(--red)}
 .bubble__ok{
   display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;
   background:var(--cyan);color:#fff;margin-right:6px;vertical-align:-3px;
@@ -427,7 +431,7 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 /* SAPOTR on a light ground. The hero states the brand in yellow on
    dark; on white the same mark reads as navy at a heavier weight, and
    the yellow is kept for the accents that carry the eye. */
-.how__brand{color:var(--navy);font-weight:800;letter-spacing:.02em;white-space:nowrap}
+.how__brand{font-weight:800;letter-spacing:.02em;white-space:nowrap}
 
 /* the promise, then the four things it replaces */
 .how .sec-head__lead{max-width:46ch;margin-inline:auto}
@@ -824,18 +828,6 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   font-weight:500;color:var(--ink-2);
   font-size:clamp(1rem,1.2vw,1.125rem);line-height:1.68;
 }
-
-/* the brand name: navy at .brand's weight, under a rule that runs
-   verified-teal into brand-yellow once the heading is revealed.
-   Colour never carries it alone — the weight does too. */
-.verification__brand{position:relative;display:inline-block}
-.verification__brand::after{
-  content:'';position:absolute;left:0;right:0;bottom:-.06em;height:.14em;
-  border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--yellow));
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .9s var(--ease) .35s;
-}
-.verification h2.is-in .verification__brand::after{transform:scaleX(1)}
 
 .verification__layout{
   display:grid;
@@ -1456,7 +1448,7 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 .numbers h2{text-wrap:balance}
 /* SAPOTR on the dark band takes the hero's treatment — brand yellow at
    a heavier weight — so the mark reads the same on navy everywhere */
-.numbers__brand{color:var(--yellow);font-weight:800;letter-spacing:.01em}
+.numbers__brand{font-weight:800;letter-spacing:.01em}
 
 /* ---------- 11. CUSTOMER STORIES -----------------------
    A paged, looping rail: three cards a page on the desktop, two on a
@@ -1751,7 +1743,7 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 }
 /* SAPOTR on the yellow supporting line: the yellow mark would vanish
    into it, so the brand takes the panel's own white at full weight */
-.cta__sub .brand{color:#fff}
+.cta__sub .brand-sapotr{color:#fff}
 
 /* ---- the photograph ----
    A NZ warehouse manager walking the aisle with the extra staff she
@@ -1831,8 +1823,8 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
 /* ---------- 14. FOOTER -------------------------------- */
 .foot{background:var(--navy);color:rgba(255,255,255,.68);padding:clamp(52px,6vw,80px) 0 26px}
 .foot__top{display:grid;grid-template-columns:300px minmax(0,1fr);gap:clamp(32px,5vw,64px)}
-.foot__logo{display:inline-grid;place-items:center;background:#fff;border-radius:var(--r-sm);padding:11px 16px}
-.foot__logo img{height:26px;width:auto}
+.foot__logo{display:inline-grid;place-items:center;background:#0F1738;border-radius:var(--r-sm);padding:15px 20px}
+.foot__logo img{height:46px;width:auto}
 .foot__brand p{margin-top:18px;font-size:.875rem;line-height:1.6;max-width:34ch}
 .foot__social{display:flex;gap:9px;margin-top:22px}
 .foot__social a{
@@ -1913,7 +1905,6 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   .vart--police .vart__shield,.vart--profile .vart__tick{opacity:1;transform:none}
   .vart--work .vart__stamp{transform:translate(-50%,-50%) rotate(-9deg)}
   .vart--docs .vart__sheets i::after{opacity:1;transform:rotate(-45deg)}
-  .verification__brand::after{transform:scaleX(1)}
   .vcheck:hover .vcheck__card{transform:none}
   /* section 5: the rail stops advancing on its own (see initExplore),
      and what movement remains is instant rather than eased */
@@ -1930,8 +1921,290 @@ h3{font-size:1.1875rem;letter-spacing:-.018em;line-height:1.25}
   .story{opacity:1;transform:none;transition:none}
   .story.is-active:hover,.story.is-active:focus-visible{transform:none}
   .story-track{transition:none}
-  .brand--mark{background-size:100% 100%}
   /* section 9: the photograph holds still */
   .cta__shot img{animation:none;transform:none}
 }
 
+/* ============================================================
+   TEMPORARY DEVELOPER SECTION — REMOVE BEFORE FINAL PRODUCTION IF REQUIRED
+
+   Everything below is namespaced .dev-credit* and every keyframe is
+   prefixed dev*, so this whole block can be deleted in one cut with
+   the <section> in index.html and the developerCredit entry in
+   js/images.js. Nothing above this line references any of it.
+
+   The section sits between the closing CTA and the footer, so it has
+   a light edge at the top (the CTA ground, poured over the navy in
+   two waves) and a brand ribbon at the bottom that seams it into the
+   navy footer. Motion is continuous but slow — a drifting wave, a
+   spinning frame light, a sheen across the chips, an outline ticker
+   and the ribbon — and all of it stops under prefers-reduced-motion.
+   Reveals reuse the existing .reveal / data-delay system: no new JS.
+   ============================================================ */
+.dev-credit{
+  position:relative;isolation:isolate;overflow:hidden;
+  padding:clamp(104px,11vw,152px) 0 0;
+  color:rgba(255,255,255,.72);
+  background:linear-gradient(158deg,#141E48 0%,#0F1738 52%,#0B1130 100%);
+}
+
+/* ---- the top edge -------------------------------------- */
+.dev-credit__wave{position:absolute;inset:0 0 auto;height:clamp(62px,7.5vw,116px);z-index:2;pointer-events:none}
+.dev-credit__wave svg{position:absolute;left:0;top:0;height:100%;display:block}
+/* back layer: 2880 units wide = exactly two periods of the same
+   curve, so translating it by half its width returns it to itself */
+.dev-credit__wave-back{
+  width:200%;top:9px;
+  fill:rgba(18,199,199,.16);
+  animation:devWave 34s linear infinite;
+}
+.dev-credit__wave-front{width:100%;fill:var(--soft)}
+
+/* ---- two slow brand lights, so the navy is never a flat slab ---- */
+.dev-credit__glow{
+  position:absolute;z-index:0;border-radius:50%;pointer-events:none;
+  filter:blur(70px);
+}
+.dev-credit__glow--a{
+  width:min(48vw,520px);aspect-ratio:1;left:-9%;top:18%;
+  background:rgba(18,199,199,.26);
+  animation:devFloatA 24s ease-in-out infinite;
+}
+.dev-credit__glow--b{
+  width:min(42vw,450px);aspect-ratio:1;right:-7%;bottom:4%;
+  background:rgba(255,193,7,.18);
+  animation:devFloatB 29s ease-in-out infinite;
+}
+
+/* ---- layout --------------------------------------------
+   Narrower than the 1200 the business content runs at: a credit
+   block should not claim the full width of the page above it. */
+.dev-credit__inner{position:relative;z-index:3;max-width:1000px}
+
+.dev-credit__eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cyan);
+}
+.dev-credit__bar{width:22px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--yellow))}
+
+.dev-credit__card{
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1fr);
+  align-items:center;
+  gap:clamp(26px,4vw,56px);
+  margin-top:clamp(22px,2.8vw,34px);
+  padding:clamp(20px,2.5vw,32px);
+  border-radius:clamp(20px,2.4vw,30px);
+  background:linear-gradient(150deg,rgba(255,255,255,.08),rgba(255,255,255,.028));
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 30px 70px -34px rgba(0,0,0,.7);
+}
+
+/* ---- the photograph ------------------------------------
+   A 2px frame with a light travelling round it. The asset is a wide
+   crop, so it is held at 16/11 and centred slightly right of middle —
+   that keeps the hands, not the empty left edge, in frame at every
+   width. */
+.dev-credit__media{
+  position:relative;margin:0;padding:2px;overflow:hidden;isolation:isolate;
+  --dev-r:clamp(16px,2.1vw,22px);
+  border-radius:var(--dev-r);
+  background:rgba(255,255,255,.12);
+  box-shadow:0 22px 50px -24px rgba(0,0,0,.7);
+  transition:box-shadow .45s var(--ease);
+}
+.dev-credit__media::before{
+  content:'';position:absolute;left:50%;top:50%;z-index:0;
+  width:170%;aspect-ratio:1;
+  /* the keyframe re-states this, so the frame stays centred when the
+     animation is switched off for reduced motion */
+  transform:translate(-50%,-50%);
+  background:conic-gradient(from 0deg,transparent 0deg 252deg,rgba(18,199,199,.95) 302deg,rgba(255,193,7,.95) 342deg,transparent 360deg);
+  animation:devSpin 9s linear infinite;
+}
+.dev-credit__image{
+  position:relative;z-index:1;
+  width:100%;aspect-ratio:16/11;
+  object-fit:cover;object-position:58% 50%;
+  border-radius:calc(var(--dev-r) - 2px);
+  transition:transform .7s var(--ease),filter .7s var(--ease);
+}
+.dev-credit__media:hover{box-shadow:0 30px 64px -22px rgba(0,0,0,.8)}
+.dev-credit__media:hover .dev-credit__image{transform:scale(1.035);filter:saturate(1.06)}
+
+/* ---- the credit itself ---------------------------------- */
+.dev-credit__name{
+  margin:0;color:#fff;
+  font-size:clamp(1.9rem,4.2vw,2.85rem);font-weight:800;
+  letter-spacing:-.03em;line-height:1.05;
+}
+.dev-credit__role{
+  margin:9px 0 0;color:var(--yellow);
+  font-size:clamp(1rem,1.5vw,1.1875rem);font-weight:700;letter-spacing:-.01em;
+}
+.dev-credit__place{
+  margin:12px 0 0;display:inline-flex;align-items:center;gap:7px;
+  font-size:.9375rem;font-weight:600;color:rgba(255,255,255,.66);
+}
+.dev-credit__place .ic{width:16px;height:16px;color:var(--cyan)}
+
+.dev-credit__skills{display:flex;flex-wrap:wrap;gap:9px;margin:clamp(18px,2.2vw,24px) 0 0}
+.dev-credit__skills li{
+  position:relative;overflow:hidden;
+  padding:9px 16px;border-radius:999px;
+  font-size:.875rem;font-weight:700;color:#fff;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+}
+/* one slow sheen per chip, staggered by --i */
+.dev-credit__skills li::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.22) 50%,transparent 64%);
+  transform:translateX(-130%);
+  animation:devSheen 8s var(--ease) infinite;
+  animation-delay:calc(var(--i,0) * .6s);
+}
+
+.dev-credit__contact{display:flex;flex-wrap:wrap;gap:10px;margin:clamp(20px,2.4vw,26px) 0 0}
+.dev-credit__contact a{
+  display:inline-flex;align-items:center;gap:11px;
+  padding:10px 18px 10px 11px;border-radius:14px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  transition:transform .25s var(--ease),background-color .25s,border-color .25s,box-shadow .25s var(--ease);
+}
+.dev-credit__contact a:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.09);
+  border-color:rgba(18,199,199,.55);
+  box-shadow:0 14px 30px -16px rgba(0,0,0,.8);
+}
+.dev-credit__ico{
+  width:34px;height:34px;flex:0 0 auto;border-radius:10px;
+  display:grid;place-items:center;
+  background:rgba(18,199,199,.14);color:var(--cyan);
+}
+.dev-credit__contact li:nth-child(2) .dev-credit__ico{background:rgba(255,75,43,.15);color:var(--red)}
+.dev-credit__ico .ic{width:17px;height:17px}
+.dev-credit__ct{display:flex;flex-direction:column;line-height:1.28;min-width:0;text-align:left}
+.dev-credit__ct i{
+  font-style:normal;font-size:.6875rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.52);
+}
+.dev-credit__ct b{font-size:.9375rem;font-weight:700;color:#fff}
+
+/* ---- the running strip ----------------------------------
+   Outline type, faded at both ends, drifting one full tile every 46s.
+   The two spans are identical, so -50% lands exactly on the start. */
+.dev-credit__ticker{
+  position:relative;z-index:1;overflow:hidden;
+  margin-top:clamp(40px,5vw,64px);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 13%,#000 87%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 13%,#000 87%,transparent);
+}
+.dev-credit__ticker-track{display:flex;width:max-content;animation:devTicker 46s linear infinite}
+.dev-credit__ticker-track span{
+  display:flex;align-items:center;flex:0 0 auto;white-space:nowrap;
+  font-size:clamp(1.55rem,4.6vw,3rem);font-weight:800;letter-spacing:-.02em;
+  color:rgba(255,255,255,.07);
+}
+@supports (-webkit-text-stroke:1px #000){
+  .dev-credit__ticker-track span{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2)}
+}
+.dev-credit__ticker-track i{
+  font-style:normal;font-size:.46em;margin:0 .62em;
+  color:rgba(255,193,7,.55);-webkit-text-stroke:0;
+}
+
+/* ---- the seam into the footer --------------------------- */
+.dev-credit__seam{
+  display:block;position:relative;z-index:2;
+  margin-top:clamp(26px,3vw,40px);height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--yellow),var(--red),var(--cyan));
+  background-size:200% 100%;
+  animation:devRibbon 18s linear infinite;
+}
+
+/* ---- keyframes ------------------------------------------ */
+@keyframes devWave{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes devSpin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes devSheen{0%{transform:translateX(-130%)}26%,100%{transform:translateX(130%)}}
+@keyframes devTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes devRibbon{from{background-position:0 0}to{background-position:-200% 0}}
+@keyframes devFloatA{0%,100%{transform:translate(0,0)}50%{transform:translate(6%,-8%)}}
+@keyframes devFloatB{0%,100%{transform:translate(0,0)}50%{transform:translate(-7%,6%)}}
+
+/* ---- breakpoints ----------------------------------------
+   Stacked from 900 down — the two-column credit is not squeezed, it
+   is recomposed: image, then name, role, location, skills, contact,
+   centred. The wave and the ticker stay, at their own scale. */
+@media (max-width:900px){
+  .dev-credit{padding-top:clamp(88px,13vw,116px)}
+  .dev-credit__inner{max-width:620px}
+  .dev-credit__eyebrow{display:flex;justify-content:center}
+  .dev-credit__card{grid-template-columns:minmax(0,1fr);gap:clamp(22px,4vw,30px);text-align:center}
+  .dev-credit__media{width:100%;max-width:460px;margin-inline:auto}
+  .dev-credit__place{margin-inline:auto}
+  .dev-credit__skills,.dev-credit__contact{justify-content:center}
+}
+
+@media (max-width:560px){
+  .dev-credit{padding-top:clamp(74px,17vw,96px)}
+  .dev-credit__image{aspect-ratio:16/10}
+  .dev-credit__card{padding:18px}
+  .dev-credit__skills{gap:8px}
+  .dev-credit__skills li{padding:8px 14px;font-size:.8125rem}
+  .dev-credit__contact{gap:9px}
+  .dev-credit__contact a{width:100%;padding:10px 14px 10px 10px}
+  .dev-credit__ticker{margin-top:clamp(30px,7vw,42px)}
+}
+
+@media (max-width:430px){
+  .dev-credit__card{padding:15px;border-radius:20px}
+  .dev-credit__name{font-size:1.75rem}
+  .dev-credit__role{font-size:1rem}
+  .dev-credit__place{font-size:.875rem}
+  .dev-credit__ico{width:32px;height:32px;border-radius:9px}
+  .dev-credit__ticker-track span{font-size:1.4rem}
+}
+
+@media (max-width:360px){
+  .dev-credit__card{padding:13px}
+  .dev-credit__name{font-size:1.5625rem;letter-spacing:-.025em}
+  .dev-credit__skills li{padding:7px 12px;font-size:.78125rem}
+  .dev-credit__ct b{font-size:.875rem}
+  .dev-credit__ticker-track span{font-size:1.25rem}
+}
+
+/* ultra-wide: the credit holds its column, it does not stretch */
+@media (min-width:1600px){
+  .dev-credit__inner{max-width:1060px}
+}
+
+/* hover-less devices: nothing here is hidden behind hover */
+@media (hover:none){
+  .dev-credit__media:hover .dev-credit__image{transform:none;filter:none}
+  .dev-credit__media:hover{box-shadow:0 22px 50px -24px rgba(0,0,0,.7)}
+  .dev-credit__contact a:hover{transform:none}
+}
+
+/* ---- reduced motion -------------------------------------
+   Everything the section says is said by the copy. The continuous
+   motion stops entirely and each layer rests in a composed position;
+   nothing is hidden and nothing shifts. */
+@media (prefers-reduced-motion:reduce){
+  .dev-credit__wave-back,
+  .dev-credit__glow,
+  .dev-credit__media::before,
+  .dev-credit__skills li::after,
+  .dev-credit__ticker-track,
+  .dev-credit__seam{animation:none!important}
+  .dev-credit__wave-back{transform:none!important}
+  .dev-credit__ticker-track{transform:none!important}
+  .dev-credit__skills li::after{opacity:0}
+  .dev-credit__media::before{opacity:.6}
+  .dev-credit__seam{background:linear-gradient(90deg,var(--cyan),var(--yellow),var(--red));background-size:100% 100%}
+  .dev-credit__media:hover .dev-credit__image{transform:none;filter:none}
+}
+/* ==== end TEMPORARY DEVELOPER SECTION ===================== */

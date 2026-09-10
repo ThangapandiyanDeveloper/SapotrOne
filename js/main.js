@@ -1054,7 +1054,7 @@
      Runs after escapeHtml, so the span it adds is the only markup in
      there — the customer's own words are never interpreted as HTML. */
   function brandMark(html) {
-    return html.replace(/SAPOTR/g, '<span class="brand">SAPOTR</span>');
+    return html.replace(/SAPOTR/g, '<span class="brand-sapotr">SAPOTR</span>');
   }
 
   function escapeHtml(str) {
